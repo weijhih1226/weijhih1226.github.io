@@ -1,4 +1,6 @@
 body {
     background-image: "../../image/background.jpg";
+    background-repeat: no-repeat;
+    background-color:#888888;
     background-size: cover;
 }
