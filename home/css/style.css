@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+TC");
+
 body {
     background-image: url("../../image/background.jpg");
     background-repeat: no-repeat;
@@ -5,4 +7,9 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-position: top center;
+}
+
+h1{
+    font-family: 'Noto Sans TC';
+    text-align: center
 }
