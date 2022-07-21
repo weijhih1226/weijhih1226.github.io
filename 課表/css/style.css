@@ -1,0 +1,59 @@
+.header {
+    font-size: 3em;
+    font-weight: 900;
+    text-align: center;
+    background: rgba(131, 191, 250, 0.8);
+    height: 2em;
+    margin: 1em;
+    padding: 1em;
+}
+
+#head {
+    font-size: 2em;
+    text-align: center;
+    color: blue;
+}
+
+table {
+    border: 1px solid #123456;
+    /* 置中 */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+caption {
+    height: 3em;
+    color: #fff;
+    background: rgba(0, 26, 255, 0.5);
+    text-align: center;
+    caption-side: top;
+}
+
+th {
+    width: 8em;
+    color: #fff;
+    background: rgba(39, 58, 228, 0.5);
+    vertical-align: auto;
+}
+
+td {
+    /* background: royalblue; */
+    vertical-align: auto;
+}
+
+
+/* 奇數列顏色 */
+
+tr:nth-child(odd) {
+    background: royalblue;
+    height: 3em;
+}
+
+
+/* 偶數列顏色 */
+
+tr:nth-child(even) {
+    background: cornflowerblue;
+    height: 3em;
+}
