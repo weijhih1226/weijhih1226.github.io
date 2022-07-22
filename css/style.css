@@ -2,14 +2,14 @@
 
 body {
     background-image: url("../image/background.jpg");
-    background-repeat: no-repeat;
     background-color: #ffffff;
+    background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     background-position: top center;
 }
 
-h1{
+h1 {
     font-family: 'Noto Sans TC';
     font-size: 5em;
     color: #ffffff;
