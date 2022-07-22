@@ -7,7 +7,7 @@ head, body {
 }
 
 body {
-    background-image: url("../../image/background.jpg");
+    background-image: url("../image/background.jpg");
     background-color: #ffffff;
     background-repeat: no-repeat;
     background-size: cover;
@@ -38,7 +38,7 @@ h1 {
 }
 
 .btn div {
-    background-color: #1F3144;
+    background-color: rgba(255, 255, 255, 0.5);
     display: inline-block;
     
     width: 10em;
