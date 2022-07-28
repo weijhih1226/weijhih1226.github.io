@@ -10,7 +10,7 @@ html {
     font-size: 16px;
     height: 100%;
     background-image: url("../image/background.jpg");
-    background-color: #ffffff;
+    background-color: #fff;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -43,11 +43,13 @@ html {
     margin: .5em 1em;
     height: 3em;
     width: 7em;
-    border: 2px solid #fff;
+    border: 2px solid #D0D0D0;
     border-radius: .5em;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px);
     display: inline-block;
     cursor: pointer;
+    opacity: 0.7;
+    transition: 0.5s;
 
     /* Font */
     line-height: 3em;
@@ -57,13 +59,15 @@ html {
     letter-spacing: .05em;
 }
 
-.btn div h3{
-    /* height: 1em;*/
-    padding: .7em 0;
-    line-height: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.btn div:hover {
+    backdrop-filter: blur(6px);
+    opacity: 1;
+    border-color: #fff;
+    color: #fff;
+    /* border-width: 3px; */
+    /* border-color: #30a9de; */
+    /* color: #30a9de; */
+    /* font-weight: bold; */
 }
 
 .icon {
@@ -75,5 +79,20 @@ html {
     position: relative;
     height: 8vh;
     margin: 0 .5em;
+    transition: 0.5s;
+    /* display: none; */
+}
+
+/* #fb {
+    background-image: url('image/icon/facebook2.png');
+    background-repeat: no-repeat;
+    width: 8vh;
+    height: 8vh;
     display: inline-block;
 }
+
+#fb:hover img{
+    background-image: url('image/icon/facebook2.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+} */
