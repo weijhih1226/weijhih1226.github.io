@@ -22,20 +22,25 @@ html {
 }
 
 .title {
-    line-height : 50vh;
+    height: 50vh;
+    line-height: 3em;
     font-family: 'Noto Sans TC';
     font-size: 3em;
     color: #D0D0D0;
     letter-spacing: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn {
-    line-height: 30vh;
+    height: 30vh;
+    line-height: 3em;
 }
 
 .btn div {
     /* Box */
-    margin: 0 1em;
+    margin: .5em 1em;
     height: 3em;
     width: 7em;
     border: 2px solid #fff;
@@ -52,11 +57,23 @@ html {
     letter-spacing: .05em;
 }
 
+.btn div h3{
+    /* height: 1em;*/
+    padding: .7em 0;
+    line-height: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .icon {
-    line-height: 20vh;
+    height: 20vh;
 }
 
 .icon img{
+    z-index: 1;
+    position: relative;
     height: 8vh;
     margin: 0 .5em;
+    display: inline-block;
 }
