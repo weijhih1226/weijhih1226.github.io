@@ -27,7 +27,7 @@ body {
     flex-wrap: wrap;
 }
 
-.title_block {
+#title_block {
     height: 50vh;
     width: 100%;
     line-height: 1.3em;
@@ -41,7 +41,7 @@ body {
     align-items: center;        /* option: flex-start | center | flex-end | stretch */
 }
 
-.btn_block {
+#btn_block {
     /* height: 30vh; */
     width: 100%;
     line-height: 30vh;
@@ -51,7 +51,7 @@ body {
     flex-wrap: wrap;
 }
 
-.btn_block div {
+.btn_outer div {
     /* Box */
     height: 3em;
     width: 7em;
@@ -71,44 +71,68 @@ body {
     letter-spacing: .05em;
 }
 
-.btn_block div:hover {
+.btn_outer div:hover {
     backdrop-filter: blur(6px);
     opacity: 1;
     border-color: #fff;
     color: #fff;
+    box-shadow: 0 0 50px #fff;
     /* border-width: 3px; */
     /* border-color: #30a9de; */
     /* color: #30a9de; */
     /* font-weight: bold; */
 }
 
-.icon_block {
+#icon_block {
     height: 20vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
-    position: relative;
+    letter-spacing: 1em;
 }
 
-.icon_block img{
+.icon_outer {
+    margin: 1vh;
+}
+
+#icon_block div {
     height: 8vh;
-    margin: 0 .5em;
-    transition: 0.5s;
-    /* display: none; */
-}
-
-/* #fb {
-    background-image: url('image/icon/facebook2.png');
-    background-repeat: no-repeat;
     width: 8vh;
-    height: 8vh;
-    display: inline-block;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: background-image .5s ease-in-out;
+    text-indent: 101%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+
+    /* Transition */
+    -moz-transition: all .6s ease-in-out;
+    -webkit-transition: all .6s ease-in-out;
+    -ms-transition: all .6s ease-in-out;
+    -o-transition: all .6s ease-in-out;
+    transition: all .6s ease-in-out;
 }
 
-#fb:hover img{
-    background-image: url('image/icon/facebook2.png');
-    background-repeat: no-repeat;
-    display: inline-block;
-} */
+#icon_block div:hover {
+    -moz-transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	-ms-transform: scale(1.2);
+	-o-transform: scale(1.2);
+	transform: scale(1.2);
+    box-shadow: 0 0 20px #fff;
+}
+
+#fb {background-image: url('../image/icon/facebook.png');}
+#fb:hover {background-image: url('../image/icon/facebook2.png');}
+#ig {background-image: url('../image/icon/instagram.png');}
+#ig:hover {background-image: url('../image/icon/instagram2.png');}
+#yt {background-image: url('../image/icon/youtube.png');}
+#yt:hover {background-image: url('../image/icon/youtube2.png');}
+#lk {background-image: url('../image/icon/linkedin.png');}
+#lk:hover {background-image: url('../image/icon/linkedin2.png');}
+#ml {background-image: url('../image/icon/email.png');}
+#ml:hover {background-image: url('../image/icon/email2.png');}
