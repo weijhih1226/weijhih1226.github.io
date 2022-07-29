@@ -4,6 +4,24 @@
     margin: 0;
     padding: 0;
     text-align: center;
+    text-decoration: none;
+}
+
+*:hover::after {
+    position: relative;
+    font-family: 'Noto Sans TC';
+    font-size: 16px;
+    letter-spacing: .1em;
+    color: #000;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid #fff;
+    border-radius: .5em;
+    padding: 1vh;
+    transition: all .5s ease-in-out;
+}
+
+*:hover::after:hover {
+
 }
 
 html {
@@ -89,21 +107,23 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    letter-spacing: 1em;
+    letter-spacing: 10px;
 }
 
 .icon_outer {
+    height: 8vh;
+    width: 8vh;
     margin: 1vh;
+    border-radius: 50%;
 }
 
-#icon_block div {
+.icon_outer div {
     height: 8vh;
     width: 8vh;
     border-radius: 50%;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
-    transition: background-image .5s ease-in-out;
     text-indent: 101%;
     overflow: hidden;
     white-space: nowrap;
@@ -117,7 +137,7 @@ body {
     transition: all .6s ease-in-out;
 }
 
-#icon_block div:hover {
+.icon_outer div:hover {
     -moz-transform: scale(1.2);
 	-webkit-transform: scale(1.2);
 	-ms-transform: scale(1.2);
@@ -128,6 +148,13 @@ body {
 
 #fb {background-image: url('../image/icon/facebook.png');}
 #fb:hover {background-image: url('../image/icon/facebook2.png');}
+
+/* #fb_outer:hover::after {
+    top: -16vh;
+    left: 0vh;
+    content: 'facebook';
+} */
+
 #ig {background-image: url('../image/icon/instagram.png');}
 #ig:hover {background-image: url('../image/icon/instagram2.png');}
 #yt {background-image: url('../image/icon/youtube.png');}
