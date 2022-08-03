@@ -5,6 +5,7 @@
     padding: 0;
     text-align: center;
     text-decoration: none;
+    color: #D0D0D0;
 }
 
 html {
@@ -36,7 +37,6 @@ body {
     font-size: 6em;
     font-weight: bold;
     text-shadow: 0em 0em 0.2em #333;
-    color: #D0D0D0;
     letter-spacing: .2em;
     display: flex;
     justify-content: center;    /* option: flex-start | center | flex-end | space-between | space-around | space-evenly */
@@ -53,6 +53,14 @@ body {
     flex-wrap: wrap;
 }
 
+/* .btn_outer { */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* background-color: #30a9de; */
+    /* line-height: 3em; */
+/* } */
+
 .btn_outer div {
     /* Box */
     height: 3em;
@@ -64,13 +72,42 @@ body {
     cursor: pointer;
     opacity: 0.7;
     transition: 0.5s;
+    background-color: #30a9de;
 
     /* Font */
     line-height: 3em;
     font-family: 'Noto Sans TC';
     font-size: 3em;
-    color: #D0D0D0;
     letter-spacing: .05em;
+}
+
+/* .btn_outer div {
+    background-color: #30a9de;
+    width: 200vw;
+    height: 200vw;
+    opacity: 0.4;
+    position: absolute;
+    top: -75vw;
+    left: 50%;
+    margin-left:-100vw;
+    margin-top: -100vw;
+    border-radius: 43%;
+    animation: rotate 9000ms infinite linear;
+    &:nth-child(1){animation: rotate 12000ms infinite linear;}
+    &:nth-child(2){
+      animation: rotate 15000ms infinite linear;
+      opacity: 0.1;
+      background-color: #777;
+    }
+} */
+
+@keyframes rotate {
+    0%{
+      transform: rotate(0deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
 }
 
 .btn_outer div:hover {
@@ -130,30 +167,28 @@ body {
 
 .icon_inner {
     margin: 1vh;
+    margin-top: 0vh;
     transition: all .6s ease-in-out;
 }
 
 .icon_inner:hover {
-    margin-top: -1vh;
+    margin-top: -2vh;
     filter: brightness(200%)
 }
 
 *::after {
     position: relative;
+    top: 1.5vh;
+    left: 0vh;
     font-family: 'Noto Sans TC';
-    font-size: 10px;
-    letter-spacing: .1em;
+    font-size: 14px;
+    letter-spacing: 1px;
     color: #fff;
     background-color: rgba(255, 255, 255, .3);
     border: 1px solid #fff;
     border-radius: .5em;
-    padding: 1vh;
+    padding: 6px;
     transition: all .5s ease-in-out;
-}
-
-*:hover::after {
-    top: 1.5vh;
-    left: 0vh; 
 }
 
 #fb {background-image: url('../image/icon/facebook.png');}
