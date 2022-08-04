@@ -251,8 +251,8 @@ body:hover {color: #D0D0D0;}
 #ml_outer:hover::after {content: 'E-mail'}
 
 #about_block {
-    height: 80vh;
-    width: 80vw;
+    height: 70vh;
+    width: 70vw;
     padding: 3em;
     position: absolute;
     backdrop-filter: blur(2px);
