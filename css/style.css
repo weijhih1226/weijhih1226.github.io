@@ -251,9 +251,8 @@ body:hover {color: #D0D0D0;}
 #ml_outer:hover::after {content: 'E-mail'}
 
 #about_block {
-    height: 70vh;
-    width: 70vw;
-    padding: 3em;
+    height: 80vh;
+    width: 80vw;
     position: absolute;
     backdrop-filter: blur(2px);
     background-color: rgba(255, 255, 255, .9);
@@ -278,6 +277,23 @@ body:hover {color: #D0D0D0;}
     cursor: pointer;
 }
 
+#about_outer {
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#about_side {
+    height: 100%;
+    width: 30%;
+}
+
+#about_side_inner {
+    padding: 3em;
+}
+
 #about_side img{
     height: 10em;
     width: 10em;
@@ -285,6 +301,12 @@ body:hover {color: #D0D0D0;}
     position: relative;
     display: block;
 }
+
+#about_content {
+    height: 100%;
+    width: 70%;
+}
+
 
 #box{
     width: 100px;
