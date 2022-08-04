@@ -1,0 +1,79 @@
+body {
+    font-family: "微軟正黑體";
+    font-size: 26px;
+    margin: 0;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    /* background-color: #7ab0e6; */
+    /* background-color: rgba(0, 153, 255, 0.4); */
+    /* height: 5em; */
+    height: 5em;
+}
+
+nav ul {
+    text-align: right;
+}
+
+nav ul li {
+    display: inline-block;
+    padding: 0 1em;
+    margin-left: 0.5em;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 1000;
+}
+
+#section1 {
+    height: 50vh;
+    background-size: cover;
+    padding: 1em;
+    background-image: url(https://i.ytimg.com/vi/mm_M7TE2qJ0/maxresdefault.jpg)
+}
+
+#section1 h2 {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 2.5em;
+}
+
+#section2 {
+    padding-top: 3em;
+    background-color: powderblue;
+    position: relative;
+}
+
+img {
+    padding-top: 0em;
+    height: 300px;
+    width: 300px;
+    margin-top: 1em;
+    margin-left: 1em;
+    position: absolute;
+    border-radius: 100%;
+    box-shadow: 0em 0em 1em rgba(50, 100, 255, 0.8)
+}
+
+.table {
+    padding-top: 1em;
+    border: 1px solid #fff;
+    font-family: "標楷體";
+    position: relative;
+    margin-top: 2em;
+    margin-left: 15em;
+    width: 35em;
+    text-align: center;
+}
+
+td {
+    font-size: 1em;
+    border-bottom: 1px solid royalblue;
+}

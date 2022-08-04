@@ -21,7 +21,7 @@ html {
 
 body {
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, .1);
     color: transparent;
     overflow: auto;
     display: flex;
@@ -47,7 +47,7 @@ body:hover {color: #D0D0D0;}
     font-family: 'Noto Sans TC';
     font-size: 6em;
     font-weight: bold;
-    text-shadow: 0em 0em 0.2em #333;
+    text-shadow: 0 0 .2em #333;
     letter-spacing: .2em;
     display: flex;
     justify-content: center;    /* option: flex-start | center | flex-end | space-between | space-around | space-evenly */
@@ -73,6 +73,7 @@ body:hover {color: #D0D0D0;}
     /* Box */
     height: 3em;
     width: 7em;
+    background-color: rgba(0, 0, 0, .3);
     border: 2px solid #D0D0D0;
     border-radius: .5em;
     backdrop-filter: blur(2px);
@@ -111,6 +112,7 @@ body:hover {color: #D0D0D0;}
 
 .btn_bg a {
     display: block;
+    text-shadow: 0 0 .2em #333;
     transition: 0.5s;
 }
 
@@ -212,6 +214,8 @@ body:hover {color: #D0D0D0;}
 .icon_inner {
     margin: 1vh;
     margin-top: 0vh;
+    background-color: rgba(0, 0, 0, .3);
+    box-shadow: 0 0 15px #000;
     transition: all .6s ease-in-out;
 }
 
@@ -223,12 +227,12 @@ body:hover {color: #D0D0D0;}
 *::after {
     position: relative;
     top: 1.5vh;
-    left: 0vh;
+    left: 0%;
     font-family: 'Noto Sans TC';
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 1px;
     color: #fff;
-    background-color: rgba(255, 255, 255, .3);
+    background-color: rgba(0, 0, 0, .3);
     border: 1px solid #fff;
     border-radius: .5em;
     padding: 6px;
@@ -246,31 +250,40 @@ body:hover {color: #D0D0D0;}
 #lk_outer:hover::after {content: 'LinkedIn';}
 #ml_outer:hover::after {content: 'E-mail'}
 
-#about_box {
+#about_block {
     height: 80vh;
     width: 80vw;
+    padding: 3em;
     position: absolute;
     backdrop-filter: blur(2px);
-    background-color: rgba(255, 255, 255, .8);
+    background-color: rgba(255, 255, 255, .9);
     border-radius: 2em;
     opacity: 0;
     display: none;
-    transition: .5s;
+    transition: all .5s ease-in-out;
 }
 
-#icon_close {
-    height: 5em;
-    width: 5em;
-    background-image: url('../image/icon/close.png');
-    background-color: #30a9de;
+#close {
+    height: 3em;
+    width: 3em;
+    top: -1.5em;
+    right: -1.5em;
     position: absolute;
-    top: -2.5em;
-    right: -2.5em;
+    background-image: url('../image/icon/close.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 1.5em;
+    cursor: pointer;
+}
 
-    opacity: 1;
-    border-radius: 2.5em;
-    border-width: 1em;
-    border-color:rgba(0, 0, 0, 1);
+#about_side img{
+    height: 10em;
+    width: 10em;
+    border-radius: 5em;
+    position: relative;
+    display: block;
 }
 
 #box{
