@@ -32,6 +32,7 @@ body {
     transition: color 0.5s;
 }
 
+/* Scroll Bar */
 body::-webkit-scrollbar {height: .8em; width: .8em;}
 body::-webkit-scrollbar-thumb {
     border: .2em solid transparent;
@@ -51,6 +52,7 @@ body:hover {color: #000;}
 #about_outer::-webkit-scrollbar-button {width: .8em; height: .8em;}
 #about_outer:hover {color: rgba(0, 0, 0, 1);}
 
+/* Title Block */
 #title_block {
     /* height: 50vh; */
     width: 100%;
@@ -66,6 +68,7 @@ body:hover {color: #000;}
     /* display: none; */
 }
 
+/* Button Block */
 #btn_block {
     width: 100%;
     display: flex;
@@ -179,6 +182,7 @@ body:hover {color: #000;}
     to{transform: rotate(360deg)}
 }
 
+/* Icon Block */
 #icon_block {
     height: 20vh;
     width: 100%;
@@ -189,13 +193,13 @@ body:hover {color: #000;}
 }
 
 .icon_outer {
-    height: 5em;
-    width: 5em;
+    height: 10vh;
+    width: 10vh;
 }
 
 .icon_outer div {
-    height: 4em;
-    width: 4em;
+    height: 8vh;
+    width: 8vh;
     border-radius: 50%;
     background-repeat: no-repeat;
     background-size: contain;
@@ -223,14 +227,14 @@ body:hover {color: #000;}
 }
 
 .icon_inner {
-    margin: .5em .5em 1em .5em;
+    margin: 1vh;
     background-color: rgba(0, 0, 0, .3);
     box-shadow: 0 0 15px #000;
     transition: all .6s ease-in-out;
 }
 
 .icon_inner:hover {
-    margin-top: -.5em;
+    margin-top: -.5vh;
     filter: brightness(200%)
 }
 
@@ -260,16 +264,46 @@ body:hover {color: #000;}
 #lk_outer:hover::after {content: 'LinkedIn';}
 #ml_outer:hover::after {content: 'E-mail'}
 
+/* About Block */
+#about_bg {
+    height: 80vh;
+    width: 80vw;
+    padding: 10vh 10vw;
+    position: absolute;
+    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, .5);
+    opacity: 0;
+    display: none;
+}
+
 #about_block {
     height: 80vh;
     width: 80vw;
     position: absolute;
     backdrop-filter: blur(2px);
-    background-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, .7);
     border-radius: 2em;
-    opacity: 0;
-    display: none;
-    transition: all .5s ease-in-out;
+}
+
+#about_block h3 {
+    width: 100%;
+    color: #000;
+    font-weight: lighter;
+}
+
+#about_block p {
+    width: 100%;
+    color: #000;
+    font-weight: bold;
+}
+
+#about_block a {
+    color: #30a9de;
+}
+
+#about_block a:hover {
+    color: #fff;
+    /* text-decoration: underline; */
 }
 
 #close {
@@ -303,7 +337,7 @@ body:hover {color: #000;}
     width: 80vw;
     display: flex;
     justify-content: space-evenly;
-    align-items: stretch;
+    align-items: center;
     flex-wrap: wrap;
     flex: auto;
     overflow: auto;
@@ -316,40 +350,41 @@ body:hover {color: #000;}
 }
 
 #about_side {
-    height: 100%;
+    /* height: 100%; */
     width: 18em;
-    padding: 3em;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    margin: 3em;
+}
+
+#about_side div{
+    width: 100%;
+    /* display: block; */
 }
 
 #about_side_avatar {
-    height: 15em;
-    width: 20em;
+    height: 13em;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-}
-
-#about_side_avatar div {
-    height: 28px;
-    width: 12em;
-    font-size: 20px;
-    font-weight: bold;
 }
 
 #about_side_avatar img{
     height: 10em;
     width: 10em;
     border-radius: 5em;
-    position: relative;
-    display: block;
+    box-shadow: 0 0 1em #000;
+}
+
+#about_side_avatar div {
+    height: 1.5em;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 #about_content {
-    height: 100%;
-    width: 10em;
+    /* height: 100%; */
+    width: 45em;
+    margin: 3em 0;
 }
 
 #about_content div{

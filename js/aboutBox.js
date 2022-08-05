@@ -1,35 +1,21 @@
-function fadeIn(body , block , div , img , opacity , blur , r , g , b , o_dev) {
+function fadeIn(block , opacity) {
     if (opacity < 1) {
         setTimeout(function() {
             opacity += 0.1;
-            blur += 0.2;
-            body.style.backgroundColor = "rgba(0, 0, 0," + (opacity - o_dev) + ")";
             block.style.opacity = opacity;
-            block.style.backgroundColor = "rgba(" + r + "," + g + "," + b + "," + (opacity - o_dev) + ")";
-            block.style.backdropFilter = "blur(" + blur + "px)"
-            for(var i=0; i<div.length; i++){
-                div[i].style.opacity = opacity;
-            }
-            img.style.opacity = opacity;
-            fadeIn(body , block , div , img , opacity , blur , r , g , b , o_dev)
+            block.style.backgroundColor = "rgba(0, 0, 0," + (opacity / 2) + ")";
+            fadeIn(block , opacity)
         } , 50)
     }
 }
 
-function fadeOut(body , block , div , img , opacity , blur , r , g , b , o_dev) {
-    if (opacity > 0.0001) {
+function fadeOut(block , opacity) {
+    if (opacity > 0) {
         setTimeout(function() {
-        opacity *= 0.8;
-        blur -= 0.2;
-        body.style.backgroundColor = "rgba(0, 0, 0," + (opacity - o_dev) + ")";
+        opacity -= 0.1;
         block.style.opacity = opacity;
-        block.style.backgroundColor = "rgba(" + r + "," + g + "," + b + "," + (opacity - o_dev) + ")";
-        block.style.backdropFilter = "blur(" + blur + "px)"
-        for(var i=0; i<div.length; i++){
-            div[i].style.opacity = opacity;
-        }
-        img.style.opacity = opacity;
-        fadeOut(body , block , div , img , opacity , blur , r , g , b , o_dev)
+        block.style.backgroundColor = "rgba(0, 0, 0," + (opacity / 2) + ")";
+        fadeOut(block , opacity)
         } , 50)
     }
     else {
@@ -38,27 +24,21 @@ function fadeOut(body , block , div , img , opacity , blur , r , g , b , o_dev) 
 }
 
 window.addEventListener("DOMContentLoaded" , function(){
-    var body = document.querySelector("body");
-    var block = document.querySelector("#about_block");
+    var block = document.querySelector("#about_bg");
     var btn = document.querySelector("#about_btn");
     var close = document.querySelector("#close");
-    var div = document.querySelectorAll("#about_block div");
-    var img = document.querySelector("#about_side img");
     btn.addEventListener('click' , function(){
         block.style.display = "block";
-        close.style.display = "block";
-        img.style.display = "block";
+        // close.style.display = "block";
         var opacity = 0;
-        var opacity_dev = 0.2;
-        var blur = 0;
-        var r = g = b = 255;
-        fadeIn(body , block , div , img , opacity , blur , r , g , b , opacity_dev)
+        fadeIn(block , opacity)
     })
     close.addEventListener('click' , function(){
         var opacity = 1;
-        var opacity_dev = 0.1;
-        var blur = 2;
-        var r = g = b = 255;
-        fadeOut(body , block , div , img , opacity , blur , r , g , b , opacity_dev)
+        fadeOut(block , opacity)
     })
+    // block.addEventListener('click' , function(){
+    //     var opacity = 1;
+    //     fadeOut(block , opacity)
+    // })
 })
