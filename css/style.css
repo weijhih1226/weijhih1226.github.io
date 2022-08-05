@@ -6,6 +6,7 @@
     text-align: center;
     text-decoration: none;
     color: #D0D0D0;
+    font-family: 'Noto Sans TC';
 }
 
 html {
@@ -15,7 +16,7 @@ html {
     background-size: cover;
     background-attachment: fixed;
     background-position: top center;
-    overflow: auto;
+    overflow-y: auto;
     font-size: 16px;
 }
 
@@ -31,14 +32,24 @@ body {
     transition: color 0.5s;
 }
 
-body::-webkit-scrollbar {width: .8em;}
+body::-webkit-scrollbar {height: .8em; width: .8em;}
 body::-webkit-scrollbar-thumb {
     border: .2em solid transparent;
     border-radius: .4em;
     box-shadow: inset 0 0 0 .3em;
 }
 body::-webkit-scrollbar-button {width: 0; height: 0; display: none;}
-body:hover {color: #D0D0D0;}
+body:hover {color: #000;}
+#about_outer::-webkit-scrollbar {height: .8em; width: .8em;}
+#about_outer::-webkit-scrollbar-thumb {
+    /* margin-top: 100px;
+    margin-bottom: 100px; */
+    border: .2em solid transparent;
+    border-radius: .4em;
+    box-shadow: inset 0 0 0 .3em;
+}
+#about_outer::-webkit-scrollbar-button {width: .8em; height: .8em;}
+#about_outer:hover {color: rgba(0, 0, 0, 1);}
 
 #title_block {
     /* height: 50vh; */
@@ -178,13 +189,13 @@ body:hover {color: #D0D0D0;}
 }
 
 .icon_outer {
-    height: 10vh;
-    width: 10vh;
+    height: 5em;
+    width: 5em;
 }
 
 .icon_outer div {
-    height: 8vh;
-    width: 8vh;
+    height: 4em;
+    width: 4em;
     border-radius: 50%;
     background-repeat: no-repeat;
     background-size: contain;
@@ -212,15 +223,14 @@ body:hover {color: #D0D0D0;}
 }
 
 .icon_inner {
-    margin: 1vh;
-    margin-top: 0vh;
+    margin: .5em .5em 1em .5em;
     background-color: rgba(0, 0, 0, .3);
     box-shadow: 0 0 15px #000;
     transition: all .6s ease-in-out;
 }
 
 .icon_inner:hover {
-    margin-top: -2vh;
+    margin-top: -.5em;
     filter: brightness(200%)
 }
 
@@ -263,38 +273,73 @@ body:hover {color: #D0D0D0;}
 }
 
 #close {
+    height: 3.5em;
+    width: 3.5em;
+    top: -1em;
+    right: -1em;
+    position: absolute;
+    border-radius: 2em;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#close div {
     height: 3em;
     width: 3em;
-    top: -1.5em;
-    right: -1.5em;
-    position: absolute;
+    margin: .25em;
     background-image: url('../image/icon/close.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: transparent;
     border-radius: 1.5em;
-    cursor: pointer;
 }
 
 #about_outer {
     height: 80vh;
     width: 80vw;
     display: flex;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: stretch;
     flex-wrap: wrap;
+    flex: auto;
+    overflow: auto;
+    color: rgba(255, 255, 255, 0);
+    transition: color 0.5s;
+}
+
+#about_outer div {
+    color: #000;
 }
 
 #about_side {
     height: 100%;
-    width: 30%;
-}
-
-#about_side_inner {
+    width: 18em;
     padding: 3em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-#about_side img{
+#about_side_avatar {
+    height: 15em;
+    width: 20em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#about_side_avatar div {
+    height: 28px;
+    width: 12em;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#about_side_avatar img{
     height: 10em;
     width: 10em;
     border-radius: 5em;
@@ -304,9 +349,14 @@ body:hover {color: #D0D0D0;}
 
 #about_content {
     height: 100%;
-    width: 70%;
+    width: 10em;
 }
 
+#about_content div{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 #box{
     width: 100px;
