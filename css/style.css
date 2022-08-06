@@ -281,28 +281,38 @@ body:hover {color: #000;}
     width: 80vw;
     position: absolute;
     backdrop-filter: blur(2px);
-    background-color: rgba(255, 255, 255, .7);
+    background-color: rgba(255, 255, 255, .8);
     border-radius: 2em;
+    transition: .5s;
 }
 
+#about_block:hover {
+    /* transform: translateX(0em) translateY(-1em); */
+    background-color: rgba(255, 255, 255, .9);
+    box-shadow: 0 0 1em #000;
+}
+
+/* 3c4858 */
+/* 718096 */
 #about_block h3 {
     width: 100%;
-    color: #000;
+    color: #3c4858;
     font-weight: lighter;
 }
 
 #about_block p {
     width: 100%;
-    color: #000;
+    color: #3c4858;
     font-weight: bold;
 }
 
 #about_block a {
-    color: #30a9de;
+    color: #718096;
+    transition: .5s;
 }
 
 #about_block a:hover {
-    color: #fff;
+    color: #30a9de;
     /* text-decoration: underline; */
 }
 
@@ -313,11 +323,19 @@ body:hover {color: #000;}
     right: -1em;
     position: absolute;
     border-radius: 2em;
-    background-color: #000;
+    background-color: #3c4858;
+    box-shadow: 0 0 .5em #000;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: all .6s ease-in-out;
+}
+
+#close:hover {
+    background-color: red;
+    transform: translateX(0em) translateY(-.5em);
+    filter: brightness(120%);
 }
 
 #close div {
@@ -330,6 +348,40 @@ body:hover {color: #000;}
     background-position: center center;
     background-color: transparent;
     border-radius: 1.5em;
+}
+
+#go {
+    height: 1.5em;
+    width: 5em;
+    bottom: -1em;
+    right: -1em;
+    padding: 6px;
+    position: absolute;
+    border: 4px solid #3c4858;
+    border-radius: 1em;
+    background-color: #D0D0D0;
+    box-shadow: 0 0 .5em #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #3c4858;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all .6s ease-in-out;
+    animation: jump 1s linear infinite;
+}
+
+#go:hover {
+    color: #30a9de;
+    border-color: #30a9de;
+    background-color: #fff;
+    transform: translateX(.5em);
+}
+
+@keyframes jump {
+    0%{transform: translateX(0em)}
+    50%{transform: translateX(.5em)}
 }
 
 #about_outer {
@@ -346,7 +398,7 @@ body:hover {color: #000;}
 }
 
 #about_outer div {
-    color: #000;
+    color: #718096;
 }
 
 #about_side {
@@ -377,6 +429,7 @@ body:hover {color: #000;}
 
 #about_side_avatar div {
     height: 1.5em;
+    color: #3c4858;
     font-size: 28px;
     font-weight: bold;
 }
