@@ -78,27 +78,27 @@ body:hover {color: #3c4858;}
 }
 
 .btn_outer {
-    height: 10em;
+    height: 8em;
     display: flex;
     align-items: center;
 }
 
 .btn_inner {
     /* Box */
-    height: 3em;
-    width: 7em;
+    height: 2.5em;
+    width: 6.5em;
     background-color: rgba(0, 0, 0, .3);
     border: 2px solid #D0D0D0;
     border-radius: .5em;
     backdrop-filter: blur(2px);
-    transition: 0.5s;
+    transition: .5s;
     cursor: pointer;
     overflow: hidden;
 
     /* Font */
-    line-height: 3em;
+    line-height: 2.5em;
     font-family: 'Noto Sans TC';
-    font-size: 3em;
+    font-size: 2.5em;
     letter-spacing: .05em;
 }
 
@@ -116,7 +116,7 @@ body:hover {color: #3c4858;}
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.5s;
+    transition: .5s;
     z-index: -1;
 }
 
@@ -127,14 +127,14 @@ body:hover {color: #3c4858;}
 .btn_bg a {
     display: block;
     text-shadow: 0 0 .2em #333;
-    transition: 0.5s;
+    transition: .5s;
 }
 
 .btn_bg a:hover {
-    margin-top: -3em;
+    margin-top: -2.5em;
 }
 
-.btn_bg a div:nth-child(2) {
+.btn_bg i , .btn_bg a div:nth-child(2) {
     color: #fff;
 }
 
@@ -142,29 +142,29 @@ body:hover {color: #3c4858;}
     height: 13em;
     width: 13em;
     border-radius: 43%;
-    margin-left: -3em;
+    margin-left: -3.25em;
     position: absolute;
     margin-top: 3em;
     left: 0;
     background-color: #30a9de;
     opacity: 0.3;
     animation: drift 7s infinite linear;
-    transition: 0.5s;
+    transition: .5s;
 }
 
 .wave1 {
     height: 13em;
     width: 13em;
     border-radius: 43%;
-    margin-left: -3em;
+    margin-left: -3.25em;
     position: absolute;
-    margin-top: 3em;
+    margin-top: 2.5em;
     left: 0;
     /* background-color: #30a9de; */
     background-color: #fff;
     opacity: 0.3;
     animation: drift 7s infinite linear;
-    transition: 0.5s;
+    transition: .5s;
 }
 
 .wave1:nth-child(2) {
@@ -253,15 +253,15 @@ body:hover {color: #3c4858;}
     transition: all .5s ease-in-out;
 }
 
-#fb {background-image: url('../image/icon/facebook.png');}
-#ig {background-image: url('../image/icon/instagram.png');}
-#yt {background-image: url('../image/icon/youtube.png');}
-#lk {background-image: url('../image/icon/linkedin.png');}
-#ml {background-image: url('../image/icon/email.png');}
-#fb_outer:hover::after {content: 'Facebook';}
-#ig_outer:hover::after {content: 'Instagram';}
-#yt_outer:hover::after {content: 'YouTube';}
-#lk_outer:hover::after {content: 'LinkedIn';}
+#fb {background-image: url('../image/icon/facebook.png')}
+#ig {background-image: url('../image/icon/instagram.png')}
+#yt {background-image: url('../image/icon/youtube.png')}
+#lk {background-image: url('../image/icon/linkedin.png')}
+#ml {background-image: url('../image/icon/email.png')}
+#fb_outer:hover::after {content: 'Facebook'}
+#ig_outer:hover::after {content: 'Instagram'}
+#yt_outer:hover::after {content: 'YouTube'}
+#lk_outer:hover::after {content: 'LinkedIn'}
 #ml_outer:hover::after {content: 'E-mail'}
 
 /* About Block */
