@@ -40,7 +40,7 @@ body::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 0 .3em;
 }
 body::-webkit-scrollbar-button {width: 0; height: 0; display: none;}
-body:hover {color: #000;}
+body:hover {color: #3c4858;}
 #about_outer::-webkit-scrollbar {height: .8em; width: .8em;}
 #about_outer::-webkit-scrollbar-thumb {
     /* margin-top: 100px;
@@ -50,7 +50,7 @@ body:hover {color: #000;}
     box-shadow: inset 0 0 0 .3em;
 }
 #about_outer::-webkit-scrollbar-button {width: .8em; height: .8em;}
-#about_outer:hover {color: rgba(0, 0, 0, 1);}
+#about_outer:hover {color: #3c4858;}
 
 /* Title Block */
 #title_block {
