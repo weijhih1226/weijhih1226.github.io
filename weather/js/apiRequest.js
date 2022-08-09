@@ -93,8 +93,8 @@ function initMap() {
 		.then(position => successCallback(position))
 	    .catch(error => errorCallback(error))
     )
-    // var marker = new google.maps.Marker({
-    //   position: center,
-    //   map: map
-    // });
+    var marker = new google.maps.Marker({
+      position: center,
+      map: map
+    });
 }
