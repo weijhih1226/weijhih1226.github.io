@@ -8,14 +8,6 @@ var timeL = timeLST - 300000;   /* 5 mins delay */
 var timeT = timeLST - 1200000;   /* 20 mins delay */
 var timeSKT = timeUTC - 10800000;   /* 3 hrs delay */
 
-var datetime = new Date(timeLST).toISOString();
-var yyyy = datetime.substring(0, 4);
-var mm = datetime.substring(5, 7);
-var dd = datetime.substring(8, 10);
-var HH = datetime.substring(11, 13);
-var MM = datetime.substring(14, 16);
-var SS = datetime.substring(17, 19);
-
 var datetimeG = new Date(timeG).toISOString();
 var datetimeR = new Date(timeR).toISOString();
 var datetimeS = new Date(timeS).toISOString();
@@ -27,7 +19,7 @@ var filenameR = datetimeR.substring(0, 4) + datetimeR.substring(5, 7) + datetime
 var filenameS = datetimeS.substring(0, 4) + "-" + datetimeS.substring(5, 7) + "-" + datetimeS.substring(8, 10) + "-" + datetimeS.substring(11, 13) + "-" + datetimeS.substring(14, 15) + "0";
 var filenameL = datetimeL.substring(0, 4) + datetimeL.substring(5, 7) + datetimeL.substring(8, 10) + datetimeL.substring(11, 13) + datetimeL.substring(14, 15) + "0";
 var filenameT = datetimeT.substring(0, 4) + "-" + datetimeT.substring(5, 7) + "-" + datetimeT.substring(8, 10) + "_" + datetimeT.substring(11, 13) + "00";
-var filenameSKT = datetimeSKT.substring(2, 4) + datetimeT.substring(5, 7) + datetimeT.substring(8, 10) + "00";
+var filenameSKT = datetimeSKT.substring(2, 4) + datetimeSKT.substring(5, 7) + datetimeSKT.substring(8, 10) + "00";
 
 var homeURL = "https://www.cwb.gov.tw/Data/";
 var homeURL2 = "https://npd.cwb.gov.tw/NPD/";
