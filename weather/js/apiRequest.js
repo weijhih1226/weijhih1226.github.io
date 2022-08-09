@@ -105,7 +105,7 @@ function initMap() {
     });
     kmlLayer.addListener('click', function(event) {
         var content = event.featureData.infoWindowHtml;
-        var testimonial = document.getElementById('capture');
+        var testimonial = document.getElementById('map');
         testimonial.innerHTML = content;
     });
     mapCenterControl(map,
