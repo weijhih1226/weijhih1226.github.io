@@ -80,7 +80,8 @@ function mapCenterControl(map, clickButton) {
 
     // Setup the click event listeners.
     controlUI.addEventListener('mouseover', function(){
-        controlUI.style.marginTop = '-20px';
+        // controlUI.style.marginTop = '-20px';
+        controlUI.style.borderRadius = '20px';
     });
     controlUI.addEventListener('click', () => clickButton());
 }
