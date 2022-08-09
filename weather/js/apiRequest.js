@@ -87,7 +87,7 @@ function mapCenterControl(map, clickButton) {
 }
 
 function initMap() {
-    var src = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0058-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&format=XML';
+    var src = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0059-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&format=XML';
     // https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0058-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML
     var center = {lat: 23.8, lng: 121};
     var map = new google.maps.Map(document.getElementById('map'), {
