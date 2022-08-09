@@ -26,15 +26,16 @@ windyInit(options, windyAPI => {
 
 function gettingPosition(){
     if(navigator.geolocation){
-        return new Promise((resolve, reject) => {
+        let position = new Promise((resolve, reject) => {
             let option = {
                 enableAcuracy:false, // 提高精確度
                 maximumAge:0, // 設定上一次位置資訊的有效期限(毫秒)
                 timeout:10000 // 逾時計時器(毫秒)
             };
             navigator.geolocation.getCurrentPosition(resolve, reject, option);
-            alert(navigator.geolocation.getCurrentPosition(resolve, reject, option))
         })
+        alert(position);
+        return position
     }else{
         alert("Does not support positioning!");
     }
@@ -89,12 +90,12 @@ function mapCenterControl(map, clickButton) {
 function initMap() {
     var center = {lat: 23.8, lng: 121};
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 8,
-      center: center
+        zoom: 8,
+        center: center
     });
     var marker = new google.maps.Marker({
-      position: center,
-      map: map
+        position: center,
+        map: map
     });
     mapCenterControl(map,
 		() => gettingPosition()
