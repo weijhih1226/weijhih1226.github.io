@@ -88,13 +88,13 @@ function initMap() {
       zoom: 8,
       center: center
     });
-    var marker = new google.maps.Marker({
-      position: center,
-      map: map
-    });
     mapCenterControl(map,
 		() => gettingPosition()
 		.then(position => successCallback(position))
 	    .catch(error => errorCallback(error))
     )
+    // var marker = new google.maps.Marker({
+    //   position: center,
+    //   map: map
+    // });
 }
