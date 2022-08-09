@@ -25,8 +25,8 @@ windyInit(options, windyAPI => {
 });
 
 function gettingPosition(){
-    if(navigator.geolocation){
-        let position = new Promise((resolve, reject) => {
+    if ("geolocation" in navigator){
+        return new Promise((resolve, reject) => {
             let option = {
                 enableAcuracy:false, // 提高精確度
                 maximumAge:0, // 設定上一次位置資訊的有效期限(毫秒)
@@ -34,10 +34,8 @@ function gettingPosition(){
             };
             navigator.geolocation.getCurrentPosition(resolve, reject, option);
         })
-        alert(position);
-        return position
-    }else{
-        alert("Does not support positioning!");
+    } else {
+        alert("Location IS NOT available!");
     }
 }
 function successCallback(position){
@@ -102,4 +100,6 @@ function initMap() {
 		.then(position => successCallback(position))
 	    .catch(error => errorCallback(error))
     )
+    alert(map.position);
+    alert(marker.position);
 }
