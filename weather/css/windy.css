@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    color: #D0D0D0;
+    font-family: 'Noto Sans TC';
+}
+
+body {
+    height: 100%;
+    color: #fff;
+    background-color: #181c27;
+    transition: .5s;
+}
+*::-webkit-scrollbar {height: .4em; width: .4em;}
+*::-webkit-scrollbar-thumb {
+    background-color: #687582;
+    border-radius: .2em;
+}
+*::-webkit-scrollbar-thumb:hover {background-color: #9da8b3;}
+*::-webkit-scrollbar-track-piece {background: transparent;}
+*::-webkit-scrollbar-button {width: 0; height: 0; display: none;}
+
+a {transition: color .5s ease-in-out;}
+a:hover {color: #30a9de;}
+
+ul li {
+    width: 5em;
+    display: inline-block;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 3em;
+    padding: 0 1em;
+    background-color: #2f4154;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+nav ul {
+    position: absolute;
+    right: 1em;
+}
+
+main {
+    position: absolute;
+    top: 3em;
+    bottom: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.header-inner {
+    height: 3em;
+}
+
+.logo {
+    position: absolute;
+    left: 1em;
+    font-size: 20px;
+}
+.logo *{
+    transition: color .5s ease-in-out;
+}
+.logo *:hover {
+    color: #fff;
+}
+
+#windy {
+    position: fixed;
+    height: 100%;
+    width: 100vw;
+    background-color: #181c27;
+}
