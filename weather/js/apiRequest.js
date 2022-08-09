@@ -61,6 +61,7 @@ function mapCenterControl(map, clickButton) {
     controlUI.style.cursor = 'pointer';
     controlUI.style.marginRight = '10px';
     controlUI.style.padding = '0';
+    controlUI.style.transition = 'all .5s';
     controlUI.title = 'Your Location';
     centerControlDiv.appendChild(controlUI);
 
