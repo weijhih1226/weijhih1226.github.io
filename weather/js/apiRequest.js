@@ -27,7 +27,7 @@ windyInit(options, windyAPI => {
 function initMap() {
     var center = {lat: 23.8, lng: 121};
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 6,
+      zoom: 10,
       center: center
     });
     var marker = new google.maps.Marker({
