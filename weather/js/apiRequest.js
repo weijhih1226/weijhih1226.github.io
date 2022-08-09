@@ -25,13 +25,13 @@ windyInit(options, windyAPI => {
 });
 
 function initMap() {
-    var uluru = {lat: -25.363, lng: 131.044};
+    var center = {lat: 23.8, lng: 121};
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: uluru
+      zoom: 6,
+      center: center
     });
     var marker = new google.maps.Marker({
-      position: uluru,
+      position: center,
       map: map
     });
 }
