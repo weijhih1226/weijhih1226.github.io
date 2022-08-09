@@ -3,7 +3,7 @@ var timeLST = timeUTC + 28800000;
 
 var timeG = timeLST - 600000;   /* 10 mins delay */
 var timeR = timeLST - 780000;   /* 13 mins delay */
-var timeS = timeLST - 1260000;  /* 21 mins delay */
+var timeS = timeLST - 1380000;  /* 23 mins delay */
 var timeL = timeLST - 300000;   /* 5 mins delay */
 var timeT = timeLST - 1200000;   /* 20 mins delay */
 var timeSKT = timeUTC - 10800000;   /* 3 hrs delay */
