@@ -81,13 +81,13 @@ function mapCenterControl(map, clickButton) {
     // Setup the click event listeners.
     controlUI.addEventListener('mouseover', function(){
         // controlUI.style.marginTop = '-20px';
-        controlUI.style.borderRadius = '20px';
+        // controlUI.style.borderRadius = '20px';
     });
     controlUI.addEventListener('click', () => clickButton());
 }
 
 function initMap() {
-    var src = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0059-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&format=XML';
+    // var src = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0059-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&format=XML';
     // https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0058-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML
     var center = {lat: 23.8, lng: 121};
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -98,19 +98,21 @@ function initMap() {
         position: center,
         map: map
     });
-    var kmlLayer = new google.maps.KmlLayer(src, {
-        suppressInfoWindows: false,
-        preserveViewport: false,
-        map: map
-    });
-    kmlLayer.addListener('click', function(event) {
-        var content = event.featureData.infoWindowHtml;
-        var testimonial = document.getElementById('kmlmap');
-        testimonial.innerHTML = content;
-    });
-    mapCenterControl(map,
-		() => gettingPosition()
-		.then(position => successCallback(position))
-	    .catch(error => errorCallback(error))
-    )
+
+
+    // var kmlLayer = new google.maps.KmlLayer(src, {
+    //     suppressInfoWindows: false,
+    //     preserveViewport: false,
+    //     map: map
+    // });
+    // kmlLayer.addListener('click', function(event) {
+    //     var content = event.featureData.infoWindowHtml;
+    //     var testimonial = document.getElementById('kmlmap');
+    //     testimonial.innerHTML = content;
+    // });
+    // mapCenterControl(map,
+	// 	() => gettingPosition()
+	// 	.then(position => successCallback(position))
+	//     .catch(error => errorCallback(error))
+    // )
 }
