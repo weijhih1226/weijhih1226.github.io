@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
     <head>
-        <meta charset="UTF-8"/>
-        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-        <meta name="google-site-verification" content="3_tLbpMalpboQd6M2CIgfnBUIvA0lKi8eianyoQZiTw"/>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="google-site-verification" content="3_tLbpMalpboQd6M2CIgfnBUIvA0lKi8eianyoQZiTw" />
         <title>氣象圖資｜小威的漂流手札</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/map.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
-        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-        <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
     </head>
     <body>
         <header>
@@ -30,8 +27,12 @@
             </div>
         </header>
         <main>
-            <div id="windy"></div>
+            <div id="map"></div>
             <script src="js/apiRequest.js"></script>
+            <!-- API Key="AIzaSyAxfK5uv5MVnV51Y7THaBzNclplGe_PabA" -->
+            <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxfK5uv5MVnV51Y7THaBzNclplGe_PabA&callback=initMap">
+            </script>
         </main>
         <footer>
         </footer>

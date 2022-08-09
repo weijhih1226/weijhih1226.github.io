@@ -49,7 +49,12 @@ nav ul {
 }
 
 main {
+    position: absolute;
+    width: 100%;
+    top: 3em;
+    bottom: 0;
     overflow: hidden;
+    z-index: -1;
 }
 
 .header-inner {
@@ -69,21 +74,20 @@ main {
 }
 
 .menu {
-    position: fixed;
-    height: 100%;
+    position: absolute;
     width: 300px;
+    top: 0;
+    bottom: 0;
     background-color: rgba(37, 45, 56, 1);
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
 .content {
     position: absolute;
-    /* height: 90%; */
     left: 300px;
     right: 0;
-    top: 3em;
+    top: 0;
     bottom: 5em;
-    /* margin-left: 300px; */
     background-color: #181c27;
     display: flex;
     justify-content: space-evenly;
