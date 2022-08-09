@@ -33,6 +33,7 @@ function gettingPosition(){
                 timeout:10000 // 逾時計時器(毫秒)
             };
             navigator.geolocation.getCurrentPosition(resolve, reject, option);
+            alert(navigator.geolocation.getCurrentPosition(resolve, reject, option))
         })
     }else{
         alert("Does not support positioning!");
@@ -80,6 +81,9 @@ function mapCenterControl(map, clickButton) {
 
     // Setup the click event listeners.
     controlUI.addEventListener('click', () => clickButton());
+    controlUI.addEventListener('mouseover', function(){
+        controlUI.style.marginTop = '-10px';
+    });
 }
 
 function initMap() {
@@ -88,13 +92,13 @@ function initMap() {
       zoom: 8,
       center: center
     });
+    var marker = new google.maps.Marker({
+      position: center,
+      map: map
+    });
     mapCenterControl(map,
 		() => gettingPosition()
 		.then(position => successCallback(position))
 	    .catch(error => errorCallback(error))
     )
-    var marker = new google.maps.Marker({
-      position: center,
-      map: map
-    });
 }
