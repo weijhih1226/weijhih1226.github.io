@@ -19,7 +19,7 @@ windyInit(options, windyAPI => {
     // .map is instance of Leaflet map
 
     L.popup()
-        .setLatLng([50.4, 14.3])
-        .setContent('Hello World')
+        .setLatLng([23.8, 121])
+        .setContent('Taiwan')
         .openOn(map);
 });
