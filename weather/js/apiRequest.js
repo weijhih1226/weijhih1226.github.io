@@ -79,10 +79,10 @@ function mapCenterControl(map, clickButton) {
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv); // 設定按鈕加入地圖的位置
 
     // Setup the click event listeners.
+    controlUI.addEventListener('mouseover', function(){
+        controlUI.style.marginTop = '-20px';
+    });
     controlUI.addEventListener('click', () => clickButton());
-    // controlUI.addEventListener('mouseover', function(){
-    //     controlUI.style.marginTop = '-10px';
-    // });
 }
 
 function initMap() {
@@ -100,6 +100,4 @@ function initMap() {
 		.then(position => successCallback(position))
 	    .catch(error => errorCallback(error))
     )
-    alert(map.position);
-    alert(marker.position);
 }
