@@ -81,9 +81,9 @@ function mapCenterControl(map, clickButton) {
 
     // Setup the click event listeners.
     controlUI.addEventListener('click', () => clickButton());
-    controlUI.addEventListener('mouseover', function(){
-        controlUI.style.marginTop = '-10px';
-    });
+    // controlUI.addEventListener('mouseover', function(){
+    //     controlUI.style.marginTop = '-10px';
+    // });
 }
 
 function initMap() {
@@ -96,9 +96,9 @@ function initMap() {
       position: center,
       map: map
     });
-    // mapCenterControl(map,
-	// 	() => gettingPosition()
-	// 	.then(position => successCallback(position))
-	//     .catch(error => errorCallback(error))
-    // )
+    mapCenterControl(map,
+		() => gettingPosition()
+		.then(position => successCallback(position))
+	    .catch(error => errorCallback(error))
+    )
 }
