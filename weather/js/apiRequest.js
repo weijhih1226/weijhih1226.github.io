@@ -99,13 +99,13 @@ function initMap() {
         map: map
     });
     var kmlLayer = new google.maps.KmlLayer(src, {
-        suppressInfoWindows: true,
+        suppressInfoWindows: false,
         preserveViewport: false,
         map: map
     });
     kmlLayer.addListener('click', function(event) {
         var content = event.featureData.infoWindowHtml;
-        var testimonial = document.getElementById('map');
+        var testimonial = document.getElementById('kmlmap');
         testimonial.innerHTML = content;
     });
     mapCenterControl(map,
