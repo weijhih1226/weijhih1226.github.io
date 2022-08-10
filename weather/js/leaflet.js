@@ -1,9 +1,13 @@
+// import 'KMZImageOverlay.js';
+
 window.addEventListener("DOMContentLoaded" , function(){
     // 放置地圖
     let map = L.map('map' , {
         zoom: 7, // 0 - 18
         center: [23.8, 121], // 中心點座標
-        preferCanvas: true // recommended when loading large layers.
+        preferCanvas: true, // recommended when loading large layers.
+        attributionControl: true,
+        attribution: 'Licensed by'
     })
     
     // 設定圖層來源
@@ -30,8 +34,8 @@ window.addEventListener("DOMContentLoaded" , function(){
     // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
     const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
     const radar = L.imageOverlay(imgRadarUrl, imgRadarBounds, {
-        opacity:0.5
-    })
+        opacity: 0.5
+    });
 
     let baseLayers = {
         '地圖': googleStreets,
@@ -42,19 +46,17 @@ window.addEventListener("DOMContentLoaded" , function(){
     let overlays = {'雷達': radar};
 
     // Instantiate KMZ layer (async)
-    var kmz = L.kmzLayer().addTo(map);
-
+    var kmz = L.kmzLayer();
     kmz.on('load', function(e) {
         e.name = '雨量';
         control.addOverlay(e.layer, e.name);
-        e.layer.addTo(map);
     });
-
     // Add remote KMZ files as layers (NB if they are 3rd-party servers, they MUST have CORS enabled)
     kmz.load(kmlRainUrl)
 
     baseLayers['衛星'].addTo(map); // 使用中文地圖作為預設
     radar.addTo(map);
+    kmz.addTo(map)
     
     var control = L.control.layers(baseLayers , overlays , { collapsed:false }).addTo(map); // 加入地圖切換控制項
 })
