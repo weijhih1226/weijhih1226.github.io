@@ -244,4 +244,3 @@ function initMap() {
 	//     .catch(error => errorCallback(error))
     // )
 }
-
