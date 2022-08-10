@@ -95,7 +95,6 @@ function initMap() {
         center: center,
         mapTypeId: google.maps.MapTypeId.HYBRID
     });
-    map.setTilt(0);
     var marker = new google.maps.Marker({
         position: center,
         map: map
