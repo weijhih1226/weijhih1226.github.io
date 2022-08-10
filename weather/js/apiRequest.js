@@ -174,7 +174,7 @@ function initMap() {
         { name: "夜間模式" }
     );
 
-    var url = '../geojson/QPESUMS_Mosaic_grid_921_881.geojson';
+    var url = '../geojson/QPESUMS_Mosaic_grid_921_881_2.geojson';
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
