@@ -213,24 +213,29 @@ function initMap() {
         { lat: 26, lng: 124 },
     ];
 
-    var myTrip = [{ lat: 26, lng: 126 },{ lat: 22, lng: 126 },{ lat: 22, lng: 128 },{ lat: 26, lng: 128 }];
-    var flightPath = new google.maps.Polygon({
-        path:myTrip,
+    // var myTrip = [{ lat: 26, lng: 126 },{ lat: 22, lng: 126 },{ lat: 22, lng: 128 },{ lat: 26, lng: 128 }];
+    // var flightPath = new google.maps.Polygon({
+    //     path:myTrip,
+    //     strokeColor:"#0000FF",
+    //     strokeOpacity:0.8,
+    //     strokeWeight:2,
+    //     fillColor:"#0000FF",
+    //     fillOpacity:0.4
+    // });
+
+
+    map.data.add({
+        geometry: new google.maps.Data.Polygon([
+        outerCoords,
+        innerCoords1,
+        innerCoords2,
+        ]),
         strokeColor:"#0000FF",
         strokeOpacity:0.8,
         strokeWeight:2,
         fillColor:"#0000FF",
         fillOpacity:0.4
     });
-
-
-    // map.data.add({
-    //     geometry: new google.maps.Data.Polygon([
-    //     outerCoords,
-    //     innerCoords1,
-    //     innerCoords2,
-    //     ]),
-    // });
     
     var marker = new google.maps.Marker({
         position: center,
