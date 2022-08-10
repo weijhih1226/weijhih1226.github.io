@@ -185,6 +185,8 @@ function initMap() {
         },
     });
 
+
+    
     map.mapTypes.set("nightmode", nightmode);
     map.setMapTypeId("nightmode");
     map.data.loadGeoJson(url);
