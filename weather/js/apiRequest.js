@@ -224,13 +224,13 @@ function initMap() {
     });
 
 
-    map.data.add({
-        geometry: new google.maps.Data.Polygon([
-        outerCoords,
-        innerCoords1,
-        innerCoords2,
-        ]),
-    });
+    // map.data.add({
+    //     geometry: new google.maps.Data.Polygon([
+    //     outerCoords,
+    //     innerCoords1,
+    //     innerCoords2,
+    //     ]),
+    // });
     
     var marker = new google.maps.Marker({
         position: center,
