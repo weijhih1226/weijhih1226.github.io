@@ -1,4 +1,4 @@
 version https://git-lfs.github.com/spec/v1
-oid sha256:a2295eb0eabfc17b0f422e68c8a486f1f87c8c916df4bef02c789200b0f33d3f
-size 129
+oid sha256:da82a15e13b7163aef0def74f6e4e6fc5d1531269562e557084403ff032e62fb
+size 39
 *.geojson filter=lfs diff=lfs merge=lfs -text
