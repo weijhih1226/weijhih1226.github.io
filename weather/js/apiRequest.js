@@ -175,6 +175,7 @@ function initMap() {
     );
 
     var url = '../geojson/QPESUMS_Mosaic_grid_921_881_2.geojson';
+    // map.setMapTypeId("hybrid");
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
@@ -186,39 +187,40 @@ function initMap() {
     });
 
     map.mapTypes.set("nightmode", nightmode);
+
     map.data.loadGeoJson(url);
 
-    // Define the LatLng coordinates for the outer path.
-    const outerCoords = [
-        { lat: 26, lng: 120 }, // north west
-        { lat: 22, lng: 120 }, // south west
-        { lat: 22, lng: 124 }, // south east
-        { lat: 26, lng: 124 }, // north east
-    ];
+    // // Define the LatLng coordinates for the outer path.
+    // const outerCoords = [
+    //     { lat: 26, lng: 120 }, // north west
+    //     { lat: 22, lng: 120 }, // south west
+    //     { lat: 22, lng: 124 }, // south east
+    //     { lat: 26, lng: 124 }, // north east
+    // ];
 
-    // Define the LatLng coordinates for an inner path.
-    const innerCoords1 = [
-        { lat: 26, lng: 120 },
-        { lat: 22, lng: 120 },
-        { lat: 22, lng: 122 },
-        { lat: 26, lng: 122 },
-    ];
+    // // Define the LatLng coordinates for an inner path.
+    // const innerCoords1 = [
+    //     { lat: 26, lng: 120 },
+    //     { lat: 22, lng: 120 },
+    //     { lat: 22, lng: 122 },
+    //     { lat: 26, lng: 122 },
+    // ];
 
-    // Define the LatLng coordinates for another inner path.
-    const innerCoords2 = [
-        { lat: 26, lng: 122 },
-        { lat: 22, lng: 122 },
-        { lat: 22, lng: 124 },
-        { lat: 26, lng: 124 },
-    ];
+    // // Define the LatLng coordinates for another inner path.
+    // const innerCoords2 = [
+    //     { lat: 26, lng: 122 },
+    //     { lat: 22, lng: 122 },
+    //     { lat: 22, lng: 124 },
+    //     { lat: 26, lng: 124 },
+    // ];
 
-    map.data.add({
-        geometry: new google.maps.Data.Polygon([
-        outerCoords,
-        innerCoords1,
-        innerCoords2,
-        ]),
-    });
+    // map.data.add({
+    //     geometry: new google.maps.Data.Polygon([
+    //     outerCoords,
+    //     innerCoords1,
+    //     innerCoords2,
+    //     ]),
+    // });
     
     var marker = new google.maps.Marker({
         position: center,
