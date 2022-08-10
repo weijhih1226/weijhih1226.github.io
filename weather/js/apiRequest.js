@@ -92,8 +92,10 @@ function initMap() {
     var center = {lat: 23.8, lng: 121};
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
-        center: center
+        center: center,
+        mapTypeId: google.maps.MapTypeId.SATELLITE
     });
+    map.setTilt(0);
     var marker = new google.maps.Marker({
         position: center,
         map: map
