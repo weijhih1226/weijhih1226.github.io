@@ -185,10 +185,8 @@ function initMap() {
         },
     });
 
-
-    
     map.mapTypes.set("nightmode", nightmode);
-    map.setMapTypeId("nightmode");
+    map.setMapTypeId("hybrid");
     map.data.loadGeoJson(url);
 
     var marker = new google.maps.Marker({
