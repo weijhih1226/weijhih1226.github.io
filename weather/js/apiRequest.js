@@ -213,7 +213,7 @@ function initMap() {
         { lat: 26, lng: 124 },
     ];
 
-    const myTrip = [{ lat: 26, lng: 126 },{ lat: 22, lng: 126 },{ lat: 22, lng: 128 },{ lat: 26, lng: 128 }];
+    var myTrip = [{ lat: 26, lng: 126 },{ lat: 22, lng: 126 },{ lat: 22, lng: 128 },{ lat: 26, lng: 128 }];
     var flightPath = new google.maps.Polygon({
         path:myTrip,
         strokeColor:"#0000FF",
