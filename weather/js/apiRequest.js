@@ -189,6 +189,10 @@ function initMap() {
     map.setMapTypeId("hybrid");
     map.data.loadGeoJson(url);
 
+    $.getJSON("../geojson/QPESUMS_Mosaic_grid_921_881_2.geojson", function(json) {
+        alert(json); 
+    });
+
     var marker = new google.maps.Marker({
         position: center,
         map: map
