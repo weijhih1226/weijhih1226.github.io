@@ -47,7 +47,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         printControl: false,
         resizerControl: false,
         apiKeys: {thunderforest: '5ecc17cc36d44ed1ac63d35df0fd56e7' , google: 'AIzaSyAxfK5uv5MVnV51Y7THaBzNclplGe_PabA'},
-        apiKeys: {thunderforest: '5ecc17cc36d44ed1ac63d35df0fd56e7'},
+        // apiKeys: {thunderforest: '5ecc17cc36d44ed1ac63d35df0fd56e7'},
         plugins: [
             "geojson-vt@3.2.1/geojson-vt.js",
             "leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.js"
