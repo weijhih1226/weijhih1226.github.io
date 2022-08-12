@@ -13,25 +13,41 @@ window.addEventListener("DOMContentLoaded" , function(){
         gestureHandling: false,
         zoomControl: false,
         scaleControl: true,
-        pegmanControl: true,
-        locateControl: true,
-        fullscreenControl: true,
-        layersControl: true,
+        pegmanControl: {
+            mutant: {
+                attribution: '街景資料: &copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
+                pane: "overlayPane",
+                type: null, // Non-image map type (used to force a transparent background)
+            },
+            pano: {
+                enableCloseButton: true,
+                fullscreenControl: true,
+                imageDateControl: true
+            },
+        },
+        locateControl: {strings: {title: "定位"}},
+        fullscreenControl: {title: '全螢幕'},
+        layersControl: {inline: true},
         minimapControl: {
             toggleDisplay: true,
             toggleMapTypes: true, // Automatically switch between "satellite" and "roads" layers.
             mapOptions: {
                 mapTypeId: 'streets',
+            },
+            strings: {
+                hideText:"隱藏縮圖",
+                showText:"顯示縮圖"
             }
         },
         editInOSMControl: false,
         loadingControl: false,
-        searchControl: true,
+        searchControl: {textPlaceholder: "搜尋"},
         disableDefaultUI: false,
         rotateControl: false,
         printControl: false,
         resizerControl: false,
         apiKeys: {thunderforest: '5ecc17cc36d44ed1ac63d35df0fd56e7' , google: 'AIzaSyAxfK5uv5MVnV51Y7THaBzNclplGe_PabA'},
+        apiKeys: {thunderforest: '5ecc17cc36d44ed1ac63d35df0fd56e7'},
         plugins: [
             "geojson-vt@3.2.1/geojson-vt.js",
             "leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.js"
@@ -46,7 +62,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; 2022 Google',  // 商用時必須要有版權出處
+                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',  // 商用時必須要有版權出處
                 },
             },
             satellite: {
@@ -56,7 +72,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; 2022 Google',
+                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
                 },
             },
             hybrid: {
@@ -66,7 +82,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; 2022 Google',
+                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
                 },
             },
             terrain: {
@@ -76,7 +92,17 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; 2022 Google',
+                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
+                }
+            },
+            road: {
+                name: '路況',
+                url: 'http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
+                options: {
+                    maxZoom: 20,
+                    // maxNativeZoom: 7,
+                    subdomains:['mt0','mt1','mt2','mt3'],
+                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
                 }
             },
             openStreets: {
@@ -85,10 +111,10 @@ window.addEventListener("DOMContentLoaded" , function(){
                 options: {
                     maxZoom: 24,
                     maxNativeZoom: 19,
-                    attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 },
             },
-        }
+        },
     });
 
     map.on('plugins_loaded', function() {
@@ -159,10 +185,6 @@ window.addEventListener("DOMContentLoaded" , function(){
             control.addOverlay(e.layer, e.name);
         });
 
-        new L.Control.Zoom({position: 'bottomright'}).addTo(map);
-        new L.Control.Loading({position: 'bottomright'}).addTo(map);
-        var control = L.control.layers(null , overlays , { collapsed:false }).addTo(map); // 加入地圖切換控制項
-
         // Add remote KMZ files as layers (NB if they are 3rd-party servers, they MUST have CORS enabled)
         rain.add(kmzRainUrl);
         ltng.add(kmzLtngUrl);
@@ -170,5 +192,52 @@ window.addEventListener("DOMContentLoaded" , function(){
         
         radar.addTo(map);
         ltng.addTo(map)
+
+        new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
+        new L.Control.Loading({position: 'bottomright'}).addTo(map);
+        var control = L.control.layers(null , overlays , { collapsed:false }).addTo(map); // 加入地圖切換控制項
     });
 })
+
+L.Control.Pegman = L.Control.Pegman.extend(
+    {
+        onAdd: function(map) {
+            this._map = map;
+  
+            this._container = L.DomUtil.create('div', 'leaflet-pegman pegman-control leaflet-bar');
+            this._pegman = L.DomUtil.create('div', 'pegman draggable drag-drop', this._container);
+            this._pegmanButton = L.DomUtil.create('div', 'pegman-button', this._container);
+            this._pegmanMarker = L.marker([0, 0], this.options.marker);
+            this._panoDiv = this.options.panoDiv ? document.querySelector(this.options.panoDiv) : L.DomUtil.create('div', '', this._map._container);
+  
+            L.DomUtil.addClass(this._panoDiv, 'pano-canvas');
+            L.DomUtil.addClass(this._map._container, this.options.theme);
+  
+            L.DomEvent.disableClickPropagation(this._panoDiv);
+            // L.DomEvent.on(this._container, 'click mousedown touchstart dblclick', this._disableClickPropagation, this);
+            L.DomEvent.on(this._container, 'click mousedown dblclick', this._disableClickPropagation, this);
+  
+            this._container.addEventListener('touchstart', this._loadScripts.bind(this, !L.Browser.touch), { once: true });
+            this._container.addEventListener('mousedown', this._loadScripts.bind(this, true), { once: true });
+            this._container.addEventListener('mouseover', this._loadScripts.bind(this, false), { once: true });
+  
+            this._loadInteractHandlers();
+            this._loadGoogleHandlers();
+  
+            L.DomEvent.on(document, 'mousemove', this.mouseMoveTracking, this);
+            L.DomEvent.on(document, 'keyup', this.keyUpTracking, this);
+  
+            this._pegmanMarker.on("dragend", this.onPegmanMarkerDragged, this);
+            this._map.on("click", this.onMapClick, this);
+            this._map.on("layeradd", this.onMapLayerAdd, this);
+  
+            return this._container;
+        },
+        pegmanAdd: function() {
+            this._pegmanMarker.addTo(this._map);
+            this._pegmanMarker.setLatLng(this._pegmanMarkerCoords);
+            this.findStreetViewData(this._pegmanMarkerCoords.lat, this._pegmanMarkerCoords.lng);
+            this._updateClasses("pegman-added");
+        },
+    }
+);
