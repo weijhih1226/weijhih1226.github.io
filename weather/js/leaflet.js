@@ -1,5 +1,24 @@
 // import 'KMZImageOverlay.js';
 
+var opts = {
+    opacityBaseControl: {
+      options: {
+        sliderImageUrl: "https://unpkg.com/leaflet-transparency@0.0.6/images/opacity-slider2.png",
+        backgroundColor: "rgba(0, 0, 0, 0.9)",
+        opacity: 1,
+        position: 'topright',
+      }
+    },
+    opacityOverlayControl: {
+      options: {
+        sliderImageUrl: "https://unpkg.com/leaflet-transparency@0.0.6/images/opacity-slider2.png",
+        backgroundColor: "rgba(229, 227, 223, 0.9)",
+        opacity: 0.75,
+        position: 'topright',
+      }
+    },
+  };
+
 window.addEventListener("DOMContentLoaded" , function(){
     // 放置地圖
     var map = L.map('map' , {
@@ -118,6 +137,7 @@ window.addEventListener("DOMContentLoaded" , function(){
     });
 
     map.on('plugins_loaded', function() {
+        const attribution = '中央氣象局'
         const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
         const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
         const kmzTempUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0038-002.kmz';
@@ -140,104 +160,122 @@ window.addEventListener("DOMContentLoaded" , function(){
         // const imgWtrMapBounds = [[-1, 80], [48, 175]];
         const radar = L.imageOverlay(imgRadarUrl, imgRadarBounds, {
             opacity: 0.5,
-            zindex: 1000
+            attribution: attribution,
         });
         const conv = L.imageOverlay(imgConvUrl, imgRadarBounds, {
-            opacity: 0.5
+            opacity: 0.5,
+            attribution: attribution,
         });
         const qpf12 = L.imageOverlay(imgQPF12Url, imgQPFBounds, {
             opacity: 0.7,
-            zindex: 1
+            attribution: attribution,
         });
         const qpf24 = L.imageOverlay(imgQPF12Url, imgQPFBounds, {
             opacity: 0.7,
-            zindex: 2
+            attribution: attribution,
         });
         const satvistw = L.imageOverlay(imgSatVISUrl, imgSatBounds, {
-            opacity: 0.5
+            opacity: 0.5,
+            attribution: attribution,
         });
         const satirctw = L.imageOverlay(imgSatIRcUrl, imgSatBounds, {
-            opacity: 0.5
+            opacity: 0.5,
+            attribution: attribution,
         });
         const satirgtw = L.imageOverlay(imgSatIRgUrl, imgSatBounds, {
-            opacity: 0.5
+            opacity: 0.5,
+            attribution: attribution,
         });
         const satiretw = L.imageOverlay(imgSatIReUrl, imgSatBounds, {
-            opacity: 0.5
+            opacity: 0.5,
+            attribution: attribution,
         });
-
-        var overlays = {'雷達': radar , '對流胞': conv , 'QPF 0-12hr': qpf12 , 'QPF 12-24hr': qpf24 , '可見光': satvistw , 'IR彩色': satirctw , 'IR黑白': satirgtw , 'IR色調強化': satiretw};
     
         // Instantiate KMZ layer (async)
-        var rain = L.kmzLayer();
-        var ltng = L.kmzLayer();
-        var temp = L.kmzLayer();
-        rain.on('load', function(e) {
-            e.name = '雨量';
-            control.addOverlay(e.layer, e.name);
-        });
-        ltng.on('load', function(e) {
-            e.name = '閃電';
-            control.addOverlay(e.layer, e.name);
-        });
-        temp.on('load', function(e) {
-            e.name = '氣溫';
-            control.addOverlay(e.layer, e.name);
-        });
+        // L.kmzImageOverlay = function(url , bounds) {
+        //     return new L.KMZImageOverlay(url , bounds)
+        // }
+        // const rain = L.kmzImageOverlay(kmzRainUrl , imgQPFBounds , {
+        //     opacity: 0.5,
+        //     attribution: attribution,
+        // });
+        var rain = L.kmzLayer(kmzRainUrl);
+        var ltng = L.kmzLayer(kmzLtngUrl);
+        var temp = L.kmzLayer(kmzTempUrl);
+        // const temp = L.kmzImageOverlay(kmzTempUrl , imgQPFBounds , {
+        //     opacity: 0.5,
+        //     attribution: attribution,
+        // });
 
-        // Add remote KMZ files as layers (NB if they are 3rd-party servers, they MUST have CORS enabled)
-        rain.add(kmzRainUrl);
-        ltng.add(kmzLtngUrl);
-        temp.add(kmzTempUrl); 
-        
         radar.addTo(map);
-        ltng.addTo(map)
+        ltng.addTo(map);
 
         new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
         new L.Control.Loading({position: 'bottomright'}).addTo(map);
-        var control = L.control.layers(null , overlays , { collapsed:false }).addTo(map); // 加入地圖切換控制項
+        
+        var overlays = {
+            '雷達': radar , 
+            '對流胞': conv , 
+            '閃電': ltng , 
+            '氣溫': temp , 
+            '雨量': rain , 
+            'QPF 0-12h': qpf12 , 
+            'QPF 12-24h': qpf24 , 
+            '可見光': satvistw , 
+            'IR彩色': satirctw , 
+            'IR黑白': satirgtw , 
+            'IR色調強化': satiretw
+        };
+
+        // var controlBaseOpacity = new L.Control.OpacitySlider(radar, opts.opacityBaseControl.options);
+        // var controlOverlayOpacity = new L.Control.OpacitySlider(conv, opts.opacityOverlayControl.options);      
+
+        // controlBaseOpacity.addTo(map);
+        // controlOverlayOpacity.addTo(map);
+
+        L.control.layers(null , overlays , { collapsed:false }).addTo(map); // 加入地圖切換控制項
     });
 })
 
-L.Control.Pegman = L.Control.Pegman.extend(
-    {
-        onAdd: function(map) {
-            this._map = map;
+// L.Control.Pegman = L.Control.Pegman.extend(
+//     {
+//         onAdd: function(map) {
+//             this._map = map;
   
-            this._container = L.DomUtil.create('div', 'leaflet-pegman pegman-control leaflet-bar');
-            this._pegman = L.DomUtil.create('div', 'pegman draggable drag-drop', this._container);
-            this._pegmanButton = L.DomUtil.create('div', 'pegman-button', this._container);
-            this._pegmanMarker = L.marker([0, 0], this.options.marker);
-            this._panoDiv = this.options.panoDiv ? document.querySelector(this.options.panoDiv) : L.DomUtil.create('div', '', this._map._container);
+//             this._container = L.DomUtil.create('div', 'leaflet-pegman pegman-control leaflet-bar');
+//             this._pegman = L.DomUtil.create('div', 'pegman draggable drag-drop', this._container);
+//             this._pegmanButton = L.DomUtil.create('div', 'pegman-button', this._container);
+//             this._pegmanMarker = L.marker([0, 0], this.options.marker);
+//             this._panoDiv = this.options.panoDiv ? document.querySelector(this.options.panoDiv) : L.DomUtil.create('div', '', this._map._container);
   
-            L.DomUtil.addClass(this._panoDiv, 'pano-canvas');
-            L.DomUtil.addClass(this._map._container, this.options.theme);
+//             L.DomUtil.addClass(this._panoDiv, 'pano-canvas');
+//             L.DomUtil.addClass(this._map._container, this.options.theme);
   
-            L.DomEvent.disableClickPropagation(this._panoDiv);
-            // L.DomEvent.on(this._container, 'click mousedown touchstart dblclick', this._disableClickPropagation, this);
-            L.DomEvent.on(this._container, 'click mousedown dblclick', this._disableClickPropagation, this);
+//             L.DomEvent.disableClickPropagation(this._panoDiv);
+//             // L.DomEvent.on(this._container, 'click mousedown touchstart dblclick', this._disableClickPropagation, this);
+//             L.DomEvent.on(this._container, 'click mousedown dblclick', this._disableClickPropagation, this);
   
-            this._container.addEventListener('touchstart', this._loadScripts.bind(this, !L.Browser.touch), { once: true });
-            this._container.addEventListener('mousedown', this._loadScripts.bind(this, true), { once: true });
-            this._container.addEventListener('mouseover', this._loadScripts.bind(this, false), { once: true });
+//             this._container.addEventListener('touchstart', this._loadScripts.bind(this, !L.Browser.touch), { once: true });
+//             this._container.addEventListener('mousedown', this._loadScripts.bind(this, true), { once: true });
+//             this._container.addEventListener('mouseover', this._loadScripts.bind(this, false), { once: true });
   
-            this._loadInteractHandlers();
-            this._loadGoogleHandlers();
+//             this._loadInteractHandlers();
+//             this._loadGoogleHandlers();
   
-            L.DomEvent.on(document, 'mousemove', this.mouseMoveTracking, this);
-            L.DomEvent.on(document, 'keyup', this.keyUpTracking, this);
+//             L.DomEvent.on(document, 'mousemove', this.mouseMoveTracking, this);
+//             L.DomEvent.on(document, 'keyup', this.keyUpTracking, this);
   
-            this._pegmanMarker.on("dragend", this.onPegmanMarkerDragged, this);
-            this._map.on("click", this.onMapClick, this);
-            this._map.on("layeradd", this.onMapLayerAdd, this);
+//             this._pegmanMarker.on("dragend", this.onPegmanMarkerDragged, this);
+//             this._map.on("click", this.onMapClick, this);
+//             this._map.on("layeradd", this.onMapLayerAdd, this);
   
-            return this._container;
-        },
-        pegmanAdd: function() {
-            this._pegmanMarker.addTo(this._map);
-            this._pegmanMarker.setLatLng(this._pegmanMarkerCoords);
-            this.findStreetViewData(this._pegmanMarkerCoords.lat, this._pegmanMarkerCoords.lng);
-            this._updateClasses("pegman-added");
-        },
-    }
-);
+//             return this._container;
+//         },
+//         pegmanAdd: function() {
+//             this._pegmanMarker.addTo(this._map);
+//             this._pegmanMarker.setLatLng(this._pegmanMarkerCoords);
+//             this.findStreetViewData(this._pegmanMarkerCoords.lat, this._pegmanMarkerCoords.lng);
+//             this._updateClasses("pegman-added");
+//         },
+//     }
+// );
