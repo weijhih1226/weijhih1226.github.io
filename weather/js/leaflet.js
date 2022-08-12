@@ -170,7 +170,7 @@ window.addEventListener("DOMContentLoaded" , function(){
             opacity: 0.7,
             attribution: attribution,
         });
-        const qpf24 = L.imageOverlay(imgQPF12Url, imgQPFBounds, {
+        const qpf24 = L.imageOverlay(imgQPF24Url, imgQPFBounds, {
             opacity: 0.7,
             attribution: attribution,
         });
