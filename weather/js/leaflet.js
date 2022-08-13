@@ -1,23 +1,33 @@
 // import 'KMZImageOverlay.js';
 
+const ukrainianFlag = '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path fill="#4C7BE1" d="M0 0h12v4H0z"/><path fill="#FFD500" d="M0 4h12v3H0z"/><path fill="#E0BC00" d="M0 7h12v1H0z"/></svg>';
+const leafletAttribution = '<a href="https://leafletjs.com" title="一個互動式地圖的JavaScript函式庫">' + (ukrainianFlag + ' ') + 'Leaflet</a>';
+const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html" target="_blank" title="地圖來源：Google">Google</a>';
+const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">中央氣象局</a>';
+const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
+
 var opts = {
     opacityBaseControl: {
-      options: {
-        sliderImageUrl: "https://unpkg.com/leaflet-transparency@0.0.6/images/opacity-slider2.png",
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        opacity: 1,
-        position: 'topright',
-      }
+        options: {
+            sliderImageUrl: "https://unpkg.com/leaflet-transparency@0.0.6/images/opacity-slider2.png",
+            backgroundColor: "rgba(0, 0, 0, 0.9)",
+            opacity: 1,
+            position: 'topright',
+        }
     },
     opacityOverlayControl: {
-      options: {
-        sliderImageUrl: "https://unpkg.com/leaflet-transparency@0.0.6/images/opacity-slider2.png",
-        backgroundColor: "rgba(229, 227, 223, 0.9)",
-        opacity: 0.75,
-        position: 'topright',
-      }
+        options: {
+            sliderImageUrl: "https://unpkg.com/leaflet-transparency@0.0.6/images/opacity-slider2.png",
+            backgroundColor: "rgba(229, 227, 223, 0.9)",
+            opacity: 0.75,
+            position: 'topright',
+        }
     },
-  };
+};
+
+function LatLng(e) {
+    console.log('(' + e.latlng.lat.toFixed(2) + ',' + e.latlng.lng.toFixed(2) + ')');
+}
 
 window.addEventListener("DOMContentLoaded" , function(){
     // 放置地圖
@@ -27,14 +37,15 @@ window.addEventListener("DOMContentLoaded" , function(){
         mapTypeId: 'hybrid',
         mapTypeIds: ['streets', 'satellite', 'hybrid', 'terrain', 'openStreets'],
         preferCanvas: true, // recommended when loading large layers.
-        attributionControl: true,
+        attributionControl: false,
         // markerZoomAnimation: false,
         gestureHandling: false,
         zoomControl: false,
-        scaleControl: true,
+        scaleControl: false,
         pegmanControl: {
+            position: 'topleft',
             mutant: {
-                attribution: '街景資料: &copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
+                attribution: '街景資料: ' + googleAttribution,
                 pane: "overlayPane",
                 type: null, // Non-image map type (used to force a transparent background)
             },
@@ -44,8 +55,8 @@ window.addEventListener("DOMContentLoaded" , function(){
                 imageDateControl: true
             },
         },
-        locateControl: {strings: {title: "定位"}},
-        fullscreenControl: {title: '全螢幕'},
+        locateControl: false,
+        fullscreenControl: false,
         layersControl: {inline: true},
         minimapControl: {
             toggleDisplay: true,
@@ -60,7 +71,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         },
         editInOSMControl: false,
         loadingControl: false,
-        searchControl: {textPlaceholder: "搜尋"},
+        searchControl: false,
         disableDefaultUI: false,
         rotateControl: false,
         printControl: false,
@@ -81,7 +92,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',  // 商用時必須要有版權出處
+                    attribution: googleAttribution,
                 },
             },
             satellite: {
@@ -91,7 +102,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
+                    attribution: googleAttribution,
                 },
             },
             hybrid: {
@@ -101,7 +112,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
+                    attribution: googleAttribution,
                 },
             },
             terrain: {
@@ -111,17 +122,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                     maxZoom: 20,
                     // maxNativeZoom: 7,
                     subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
-                }
-            },
-            road: {
-                name: '路況',
-                url: 'http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
-                options: {
-                    maxZoom: 20,
-                    // maxNativeZoom: 7,
-                    subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html">Google</a>',
+                    attribution: googleAttribution,
                 }
             },
             openStreets: {
@@ -130,14 +131,13 @@ window.addEventListener("DOMContentLoaded" , function(){
                 options: {
                     maxZoom: 24,
                     maxNativeZoom: 19,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    attribution: osmAttribution,
                 },
             },
         },
     });
 
     map.on('plugins_loaded', function() {
-        const attribution = '中央氣象局'
         const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
         const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
         const kmzTempUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0038-002.kmz';
@@ -160,35 +160,35 @@ window.addEventListener("DOMContentLoaded" , function(){
         // const imgWtrMapBounds = [[-1, 80], [48, 175]];
         const radar = L.imageOverlay(imgRadarUrl, imgRadarBounds, {
             opacity: 0.5,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
         const conv = L.imageOverlay(imgConvUrl, imgRadarBounds, {
             opacity: 0.5,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
         const qpf12 = L.imageOverlay(imgQPF12Url, imgQPFBounds, {
             opacity: 0.7,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
         const qpf24 = L.imageOverlay(imgQPF24Url, imgQPFBounds, {
             opacity: 0.7,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
         const satvistw = L.imageOverlay(imgSatVISUrl, imgSatBounds, {
             opacity: 0.5,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
         const satirctw = L.imageOverlay(imgSatIRcUrl, imgSatBounds, {
             opacity: 0.5,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
         const satirgtw = L.imageOverlay(imgSatIRgUrl, imgSatBounds, {
             opacity: 0.5,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
         const satiretw = L.imageOverlay(imgSatIReUrl, imgSatBounds, {
             opacity: 0.5,
-            attribution: attribution,
+            attribution: cwbAttribution,
         });
     
         // Instantiate KMZ layer (async)
@@ -199,9 +199,9 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     opacity: 0.5,
         //     attribution: attribution,
         // });
-        var rain = L.kmzLayer(kmzRainUrl);
-        var ltng = L.kmzLayer(kmzLtngUrl);
-        var temp = L.kmzLayer(kmzTempUrl);
+        var rain = L.kmzLayer(kmzRainUrl , {attribution: cwbAttribution});
+        var ltng = L.kmzLayer(kmzLtngUrl , {attribution: cwbAttribution});
+        var temp = L.kmzLayer(kmzTempUrl , {attribution: cwbAttribution});
         // const temp = L.kmzImageOverlay(kmzTempUrl , imgQPFBounds , {
         //     opacity: 0.5,
         //     attribution: attribution,
@@ -209,32 +209,51 @@ window.addEventListener("DOMContentLoaded" , function(){
 
         radar.addTo(map);
         ltng.addTo(map);
-
-        new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
-        new L.Control.Loading({position: 'bottomright'}).addTo(map);
         
         var overlays = {
-            '雷達': radar , 
-            '對流胞': conv , 
-            '閃電': ltng , 
-            '氣溫': temp , 
-            '雨量': rain , 
-            'QPF 0-12h': qpf12 , 
-            'QPF 12-24h': qpf24 , 
-            '可見光': satvistw , 
-            'IR彩色': satirctw , 
-            'IR黑白': satirgtw , 
-            'IR色調強化': satiretw
+            '雷達': {
+                '回波': radar , 
+                '對流胞': conv , 
+            },
+            '觀測': {
+                '閃電': ltng , 
+                '氣溫': temp , 
+                '雨量': rain , 
+            },
+            'QPF': {
+                '0-12h': qpf12 , 
+                '12-24h': qpf24 , 
+            },
+            '衛星': {
+                '可見光': satvistw , 
+                'IR彩色': satirctw , 
+                'IR黑白': satirgtw , 
+                'IR色調強化': satiretw , 
+            }
         };
 
         // var controlBaseOpacity = new L.Control.OpacitySlider(radar, opts.opacityBaseControl.options);
-        // var controlOverlayOpacity = new L.Control.OpacitySlider(conv, opts.opacityOverlayControl.options);      
-
+        // var controlOverlayOpacity = new L.Control.OpacitySlider(rain, opts.opacityOverlayControl.options);
         // controlBaseOpacity.addTo(map);
         // controlOverlayOpacity.addTo(map);
 
-        L.control.layers(null , overlays , { collapsed:false }).addTo(map); // 加入地圖切換控制項
+        new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , textAlign: 'left' , }).addTo(map);
+        new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
+        new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
+        new L.Control.Locate({position: 'bottomright' , strings: {title: "定位"}}).addTo(map)
+        new L.Control.FullScreen({position: 'bottomright' , title: '全螢幕'}).addTo(map)
+        new L.Control.Search({position: 'topleft' , textPlaceholder: "搜尋"}).addTo(map)
+        new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
+        new L.Control.Loading({position: 'bottomright'}).addTo(map);
     });
+    // console.log(new L.Control({position: 'topright'}).getContainer("test"));
+
+    // map.on('click' , LatLng)
+    // map.on('click' , function(e) {
+    //     var test = new L.Control.Attribution({position: 'bottomright' , prefix: '(' + e.latlng.lat.toFixed(2) + ',' + e.latlng.lng.toFixed(2) + ')|' + leafletAttribution});
+    //     test.addTo(map);
+    //     test.remove()
+    // })
 })
 
 // L.Control.Pegman = L.Control.Pegman.extend(
