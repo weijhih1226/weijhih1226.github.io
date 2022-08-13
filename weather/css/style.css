@@ -96,6 +96,7 @@ main {
     align-items: center;
     flex-wrap: wrap;
     overflow: auto;
+    text-align: center;
 }
 
 .timeline {
