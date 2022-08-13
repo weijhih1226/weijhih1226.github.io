@@ -241,7 +241,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
         new L.Control.Locate({position: 'bottomright' , strings: {title: "定位"}}).addTo(map)
-        new L.Control.FullScreen({position: 'bottomright' , title: '全螢幕'}).addTo(map)
+        new L.Control.FullScreen({position: 'bottomright' , title: '全螢幕' , titleCancel: '關閉全螢幕'}).addTo(map)
         new L.Control.Search({position: 'topleft' , textPlaceholder: "搜尋"}).addTo(map)
         new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
         new L.Control.Loading({position: 'bottomright'}).addTo(map);
