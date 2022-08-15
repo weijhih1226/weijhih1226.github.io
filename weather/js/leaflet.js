@@ -1,10 +1,36 @@
 // import 'KMZImageOverlay.js';
 
 const ukrainianFlag = '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path fill="#4C7BE1" d="M0 0h12v4H0z"/><path fill="#FFD500" d="M0 4h12v3H0z"/><path fill="#E0BC00" d="M0 7h12v1H0z"/></svg>';
-const leafletAttribution = '<a href="https://leafletjs.com" title="一個互動式地圖的JavaScript函式庫">' + (ukrainianFlag + ' ') + 'Leaflet</a>';
+const leafletAttribution = '<a href="https://leafletjs.com" title="Leaflet - 一個互動式地圖的JavaScript函式庫">' + (ukrainianFlag + ' ') + 'Leaflet</a>';
 const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html" target="_blank" title="地圖來源：Google">Google</a>';
 const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">中央氣象局</a>';
 const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
+
+// const xmlWeatherUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlAutoStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlGaugeUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const kmlTestUrl = 'kml/test.kml';
+const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
+const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
+const kmzTempUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0038-002.kmz';
+const kmzSatVISUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0033-004.kmz';
+const kmzSatIRUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0033-003.kmz';
+const imgRadarUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-A0058-005.png';
+const imgConvUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0054-001.png';
+const imgQPF12Url = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-015.png';
+const imgQPF24Url = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-017.png';
+const imgSatVISUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-008.jpg';
+const imgSatIRcUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-002.jpg';
+const imgSatIRgUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-004.jpg';
+const imgSatIReUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-006.jpg';
+// const imgWtrMapUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-001.jpg';
+// const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
+// const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
+const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
+const imgQPFBounds = [[21.8, 118.95], [25.8, 122.45]];
+const imgSatBounds = [[19.100625745, 115.976888855], [28.29937425, 126.02300114]];
+// const imgWtrMapBounds = [[-1, 80], [48, 175]];
 
 var opts = {
     opacityBaseControl: {
@@ -138,26 +164,7 @@ window.addEventListener("DOMContentLoaded" , function(){
     });
 
     map.on('plugins_loaded', function() {
-        const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
-        const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
-        const kmzTempUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0038-002.kmz';
-        const kmzSatVISUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0033-004.kmz';
-        const kmzSatIRUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0033-003.kmz';
-        const imgRadarUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-A0058-005.png';
-        const imgConvUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0054-001.png';
-        const imgQPF12Url = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-015.png';
-        const imgQPF24Url = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-017.png';
-        const imgSatVISUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-008.jpg';
-        const imgSatIRcUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-002.jpg';
-        const imgSatIRgUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-004.jpg';
-        const imgSatIReUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-006.jpg';
-        // const imgWtrMapUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-001.jpg';
-        // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
-        // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
-        const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
-        const imgQPFBounds = [[21.8, 118.95], [25.8, 122.45]];
-        const imgSatBounds = [[19.100625745, 115.976888855], [28.29937425, 126.02300114]];
-        // const imgWtrMapBounds = [[-1, 80], [48, 175]];
+        
         const radar = L.imageOverlay(imgRadarUrl, imgRadarBounds, {
             opacity: 0.5,
             attribution: cwbAttribution,
@@ -237,6 +244,56 @@ window.addEventListener("DOMContentLoaded" , function(){
         // controlBaseOpacity.addTo(map);
         // controlOverlayOpacity.addTo(map);
 
+        // fetch(kmlTestUrl)
+        // .then(res => res.text())
+        // .then(kmltext => {
+        //     // Create new kml overlay
+        //     const parser = new DOMParser();
+        //     const kml = parser.parseFromString(kmltext, 'text/xml');
+
+            
+        //     const track = new L.KML(kml);
+        //     // console.log(track)
+        //     map.addLayer(track);
+
+        //     // Adjust map to show the kml
+        //     const bounds = track.getBounds();
+        //     map.fitBounds(bounds);
+        // });
+
+        fetch(xmlStationUrl)
+        .then(res => res.text())
+        .then(xmltext => {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmltext, 'text/xml');
+            const XML = new L.XML(xml);
+            for (var i = 0; i < XML.latLngs.length; i++) {
+                L.circleMarker(XML.latLngs[i] , {radius: 2.5 , color: '#ff6363' , fillOpacity: 1}).addTo(map);
+            }
+        });
+
+        fetch(xmlAutoStationUrl)
+        .then(res => res.text())
+        .then(xmltext => {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmltext, 'text/xml');
+            const XML = new L.XML(xml);
+            for (var i = 0; i < XML.latLngs.length; i++) {
+                L.circleMarker(XML.latLngs[i] , {radius: 2.5 , color: '#ff6363' , fillOpacity: 1}).addTo(map);
+            }
+        });
+
+        fetch(xmlGaugeUrl)
+        .then(res => res.text())
+        .then(xmltext => {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmltext, 'text/xml');
+            const XML = new L.XML(xml);
+            for (var i = 0; i < XML.latLngs.length; i++) {
+                L.circleMarker(XML.latLngs[i] , {radius: 2 , color: 'blue' , fillOpacity: 1}).addTo(map);
+            }
+        });
+        
         new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , textAlign: 'left' , }).addTo(map);
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
@@ -245,7 +302,10 @@ window.addEventListener("DOMContentLoaded" , function(){
         new L.Control.Search({position: 'topleft' , textPlaceholder: "搜尋"}).addTo(map)
         new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
         new L.Control.Loading({position: 'bottomright'}).addTo(map);
+        
     });
+
+
     // console.log(new L.Control({position: 'topright'}).getContainer("test"));
 
     // map.on('click' , LatLng)
