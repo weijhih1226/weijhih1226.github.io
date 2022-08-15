@@ -11,13 +11,13 @@ L.XML = L.FeatureGroup.extend({
 
 	addXML: function (xml, xmlOptions) {
 		var layers = L.XML.parseXML(xml, xmlOptions);
-		// if (!layers || !layers.length) return;
-		// for (var i = 0; i < layers.length; i++) {
-		// 	this.fire('addlayer', {
-		// 		layer: layers[i]
-		// 	});
-		// 	this.addLayer(layers[i]);
-		// }
+		if (!layers || !layers.length) return;
+		for (var i = 0; i < layers.length; i++) {
+			this.fire('addlayer', {
+				layer: layers[i]
+			});
+			this.addLayer(layers[i]);
+		}
 		this.latLngs = L.XML.getLatLngs(xml);
 		this.fire('loaded');
 	},
@@ -28,34 +28,57 @@ L.XML = L.FeatureGroup.extend({
 L.Util.extend(L.XML, {
 
     parseXML: function (xml, xmlOptions) {
-		var style = this.parseStyles(xml, xmlOptions);
-		this.parseStyleMap(xml, style);
-		var el = xml.getElementsByTagName('Folder');
+		var coords = [];
 		var layers = [], l;
-		for (var i = 0; i < el.length; i++) {
-			if (!this._check_folder(el[i])) { continue; }
-			l = this.parseFolder(el[i], style);
+		locs = xml.getElementsByTagName('location');
+		for (var i = 0; i < locs.length; i++) {
+			var locName = locs[i].getElementsByTagName('locationName')[0].innerHTML;
+			var locLat = locs[i].getElementsByTagName('lat_wgs84')[0].innerHTML;
+			var locLon = locs[i].getElementsByTagName('lon_wgs84')[0].innerHTML;
+
+			var stID = locs[i].getElementsByTagName('stationId')[0].innerHTML;
+			var obsTime = locs[i].getElementsByTagName('time')[0].innerHTML;
+			var element = locs[i].getElementsByTagName('weatherElement');
+
+			l = new L.CircleMarker(new L.LatLng(locLat, locLon) , {radius: 2.5 , color: xmlOptions.color , fillOpacity: 1})
 			if (l) { layers.push(l); }
-		}
-		el = xml.getElementsByTagName('Placemark');
-		for (var j = 0; j < el.length; j++) {
-			if (!this._check_folder(el[j])) { continue; }
-			l = this.parsePlacemark(el[j], xml, style);
-			if (l) { layers.push(l); }
-		}
-		el = xml.getElementsByTagName('GroundOverlay');
-		for (var k = 0; k < el.length; k++) {
-			l = this.parseGroundOverlay(el[k]);
-			if (l) { layers.push(l); }
+
+			var k, j, descr = '';
+			for (k = 0; k < element.length; k++) {
+				descr = descr + '<h4>' + element[k].childNodes[1].innerHTML + ': ' + element[k].childNodes[3].innerHTML + '</h4>';
+			}
+
+			if (locName) {
+				l.bindPopup('<h3>' + locName + ' (' + stID + ')</h3>' + 
+				'<h4>ObsTime: ' + obsTime + '</h4>' + 
+				'<h4>Observation: </h4>' + descr + '', { className: 'xml-popup'});
+			}
 		}
 		return layers;
 	},
 
-    parseStyles: function (xml, kmlOptions) {
+	addLocationPopup: function(location, layer) {
+		var el, i, j, name, descr = '';
+		el = location.getElementsByTagName('locationName');
+		if (el.length && el[0].childNodes.length) {
+		  	name = el[0].childNodes[0].nodeValue;
+		}
+		el = location.getElementsByTagName('weatherElement');
+		for (i = 0; i < el.length; i++) {
+		  	for (j = 0; j < el[i].childNodes.length; j++) {
+				descr = descr + el[i].childNodes[j].nodeValue;
+		  	}
+		}
+		if (name) {
+		  	layer.bindPopup('<h2>' + name + '</h2>' + descr, { className: 'xml-popup'});
+		}
+	  },
+
+    parseStyles: function (xml, xmlOptions) {
 		var styles = {};
 		var sl = xml.getElementsByTagName('Style');
-		for (var i=0, len=sl.length; i<len; i++) {
-			var style = this.parseStyle(sl[i], kmlOptions);
+		for (var i = 0; i < sl.length; i++) {
+			var style = this.parseStyle(sl[i], xmlOptions);
 			if (style) {
 				var styleName = '#' + style.id;
 				styles[styleName] = style;
@@ -82,7 +105,6 @@ L.Util.extend(L.XML, {
 					}
 				} else {
 					var value = (e.childNodes && e.childNodes.length) ? e.childNodes[0].nodeValue : null;
-                    // console.log(value)
 					if(!value) {
 						continue;
 					}
@@ -167,6 +189,100 @@ L.Util.extend(L.XML, {
 		}
 		return coords;
 	},
+
+	parseFolder: function (xml, style) {
+		var el, layers = [], l;
+		el = xml.getElementsByTagName('location');
+		for (var i = 0; i < el.length; i++) {
+			l = this.parseLocation(el[i], xml, style);
+			if (l) { layers.push(l); }
+		}
+		if (!layers.length) { return; }
+		if (layers.length === 1) {
+			l = layers[0];
+		} else {
+			l = new L.FeatureGroup(layers);
+		}
+		el = xml.getElementsByTagName('name');
+		if (el.length && el[0].childNodes.length) {
+			l.options.name = el[0].childNodes[0].nodeValue;
+		}
+		return l;
+	},
+
+	parseLocation: function (location, xml, style, options) {
+		var h, i, j, k, el, il, opts = options || {};
+
+		el = location.getElementsByTagName('styleUrl');
+		for (i = 0; i < el.length; i++) {
+			var url = el[i].childNodes[0].nodeValue;
+			for (var a in style[url]) {
+				opts[a] = style[url][a];
+			}
+		}
+
+		il = location.getElementsByTagName('Style')[0];
+		if (il) {
+			var inlineStyle = this.parseStyle(location);
+			if (inlineStyle) {
+				for (k in inlineStyle) {
+					opts[k] = inlineStyle[k];
+				}
+			}
+		}
+
+		var multi = ['MultiGeometry', 'MultiTrack', 'gx:MultiTrack'];
+		for (h in multi) {
+			el = location.getElementsByTagName(multi[h]);
+			for (i = 0; i < el.length; i++) {
+				var layer = this.parsePlacemark(el[i], xml, style, opts);
+				if (layer === undefined)
+					continue;
+				this.addLocationPopup(location, layer);
+				return layer;
+			}
+		}
+
+		var layers = [];
+
+		var parse = ['LineString', 'Polygon', 'Point', 'Track', 'gx:Track'];
+		for (j in parse) {
+			var tag = parse[j];
+			el = location.getElementsByTagName(tag);
+			for (i = 0; i < el.length; i++) {
+				var l = this['parse' + tag.replace(/gx:/, '')](el[i], xml, opts);
+				if (l) { layers.push(l); }
+			}
+		}
+
+		if (!layers.length) {
+			return;
+		}
+		var layer = layers[0];
+		if (layers.length > 1) {
+			layer = new L.FeatureGroup(layers);
+		}
+
+		this.addLocationPopup(location, layer);
+		return layer;
+	},
+
+	// addLocationPopup: function(location, layer) {
+	// 	var el, i, j, name, descr = '';
+	// 	el = location.getElementsByTagName('locationName');
+	// 	if (el.length && el[0].childNodes.length) {
+	// 	  	name = el[0].childNodes[0].nodeValue;
+	// 	}
+	// 	el = location.getElementsByTagName('weatherElement');
+	// 	for (i = 0; i < el.length; i++) {
+	// 	  	for (j = 0; j < el[i].childNodes.length; j++) {
+	// 			descr = descr + el[i].childNodes[j].nodeValue;
+	// 	  	}
+	// 	}
+	// 	if (name) {
+	// 	  	layer.bindPopup('<h2>' + name + '</h2>' + descr, { className: 'xml-popup'});
+	// 	}
+	//   },
 })
 
 L.XMLCircle = L.Circle.extend({

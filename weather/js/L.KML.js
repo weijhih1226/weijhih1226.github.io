@@ -22,7 +22,6 @@ L.KML = L.FeatureGroup.extend({
 				layer: layers[i]
 			});
 			this.addLayer(layers[i]);
-            console.log(layers[i])
 		}
 		this.latLngs = L.KML.getLatLngs(xml);
 		this.fire('loaded');
@@ -99,7 +98,6 @@ L.Util.extend(L.KML, {
 					}
 				} else {
 					var value = (e.childNodes && e.childNodes.length) ? e.childNodes[0].nodeValue : null;
-                    // console.log(value)
 					if(!value) {
 						continue;
 					}
@@ -344,7 +342,6 @@ L.Util.extend(L.KML, {
 		for (var j = 0; j < el.length; j++) {
 			// text might span many childNodes
 			coords = coords.concat(this._read_coords(el[j]));
-            // console.log(el[j])
 		}
 		return coords;
 	},

@@ -9,7 +9,7 @@ const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" 
 // const xmlWeatherUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlAutoStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlGaugeUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlGaugeUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0002-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const kmlTestUrl = 'kml/test.kml';
 const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
 const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
@@ -215,7 +215,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         // });
 
         radar.addTo(map);
-        ltng.addTo(map);
+        ltng.addTo(map); 
         
         var overlays = {
             '雷達': {
@@ -223,6 +223,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                 '對流胞': conv , 
             },
             '觀測': {
+                // '局屬': XML,
                 '閃電': ltng , 
                 '氣溫': temp , 
                 '雨量': rain , 
@@ -250,8 +251,6 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     // Create new kml overlay
         //     const parser = new DOMParser();
         //     const kml = parser.parseFromString(kmltext, 'text/xml');
-
-            
         //     const track = new L.KML(kml);
         //     // console.log(track)
         //     map.addLayer(track);
@@ -266,10 +265,8 @@ window.addEventListener("DOMContentLoaded" , function(){
         .then(xmltext => {
             const parser = new DOMParser();
             const xml = parser.parseFromString(xmltext, 'text/xml');
-            const XML = new L.XML(xml);
-            for (var i = 0; i < XML.latLngs.length; i++) {
-                L.circleMarker(XML.latLngs[i] , {radius: 2.5 , color: '#ff6363' , fillOpacity: 1}).addTo(map);
-            }
+            const XML = new L.XML(xml , {color: '#ff6363'});
+            XML.addTo(map)
         });
 
         fetch(xmlAutoStationUrl)
@@ -277,24 +274,20 @@ window.addEventListener("DOMContentLoaded" , function(){
         .then(xmltext => {
             const parser = new DOMParser();
             const xml = parser.parseFromString(xmltext, 'text/xml');
-            const XML = new L.XML(xml);
-            for (var i = 0; i < XML.latLngs.length; i++) {
-                L.circleMarker(XML.latLngs[i] , {radius: 2.5 , color: '#ff6363' , fillOpacity: 1}).addTo(map);
-            }
+            const XML = new L.XML(xml , {color: '#ff6363'});
+            XML.addTo(map)
         });
 
-        fetch(xmlGaugeUrl)
-        .then(res => res.text())
-        .then(xmltext => {
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(xmltext, 'text/xml');
-            const XML = new L.XML(xml);
-            for (var i = 0; i < XML.latLngs.length; i++) {
-                L.circleMarker(XML.latLngs[i] , {radius: 2 , color: 'blue' , fillOpacity: 1}).addTo(map);
-            }
-        });
+        // fetch(xmlGaugeUrl)
+        // .then(res => res.text())
+        // .then(xmltext => {
+        //     const parser = new DOMParser();
+        //     const xml = parser.parseFromString(xmltext, 'text/xml');
+        //     const XML = new L.XML(xml , {color: 'blue'});
+        //     XML.addTo(map)
+        // });
         
-        new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , textAlign: 'left' , }).addTo(map);
+        var gl = new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , }).addTo(map);
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
         new L.Control.Locate({position: 'bottomright' , strings: {title: "定位"}}).addTo(map)
@@ -302,7 +295,6 @@ window.addEventListener("DOMContentLoaded" , function(){
         new L.Control.Search({position: 'topleft' , textPlaceholder: "搜尋"}).addTo(map)
         new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
         new L.Control.Loading({position: 'bottomright'}).addTo(map);
-        
     });
 
 
