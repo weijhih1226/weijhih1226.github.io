@@ -33,8 +33,13 @@ L.Util.extend(L.XML, {
 		locs = xml.getElementsByTagName('location');
 		for (var i = 0; i < locs.length; i++) {
 			var locName = locs[i].getElementsByTagName('locationName')[0].innerHTML;
-			var locLat = locs[i].getElementsByTagName('lat_wgs84')[0].innerHTML;
-			var locLon = locs[i].getElementsByTagName('lon_wgs84')[0].innerHTML;
+			if (locs[i].getElementsByTagName('lat_wgs84')[0] !== undefined) {
+				var locLat = locs[i].getElementsByTagName('lat_wgs84')[0].innerHTML;
+				var locLon = locs[i].getElementsByTagName('lon_wgs84')[0].innerHTML;
+			} else {
+				var locLat = locs[i].getElementsByTagName('lat')[0].innerHTML;
+				var locLon = locs[i].getElementsByTagName('lon')[0].innerHTML;
+			}
 
 			var stID = locs[i].getElementsByTagName('stationId')[0].innerHTML;
 			var obsTime = locs[i].getElementsByTagName('time')[0].innerHTML;
@@ -50,6 +55,7 @@ L.Util.extend(L.XML, {
 
 			if (locName) {
 				l.bindPopup('<h3>' + locName + ' (' + stID + ')</h3>' + 
+				'<h4>(' + parseFloat(locLat).toFixed(3) + ' , ' + parseFloat(locLon).toFixed(3) + ')</h4>' + 
 				'<h4>ObsTime: ' + obsTime + '</h4>' + 
 				'<h4>Observation: </h4>' + descr + '', { className: 'xml-popup'});
 			}

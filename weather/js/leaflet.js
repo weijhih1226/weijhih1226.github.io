@@ -278,14 +278,14 @@ window.addEventListener("DOMContentLoaded" , function(){
             XML.addTo(map)
         });
 
-        // fetch(xmlGaugeUrl)
-        // .then(res => res.text())
-        // .then(xmltext => {
-        //     const parser = new DOMParser();
-        //     const xml = parser.parseFromString(xmltext, 'text/xml');
-        //     const XML = new L.XML(xml , {color: 'blue'});
-        //     XML.addTo(map)
-        // });
+        fetch(xmlGaugeUrl)
+        .then(res => res.text())
+        .then(xmltext => {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmltext, 'text/xml');
+            const XML = new L.XML(xml , {color: 'blue'});
+            XML.addTo(map)
+        });
         
         var gl = new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , }).addTo(map);
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
