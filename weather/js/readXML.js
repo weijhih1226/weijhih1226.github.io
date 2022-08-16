@@ -18,7 +18,6 @@ L.XML = L.FeatureGroup.extend({
 			});
 			this.addLayer(layers[i]);
 		}
-		this.latLngs = L.XML.getLatLngs(xml);
 		this.fire('loaded');
 	},
 
@@ -28,7 +27,6 @@ L.XML = L.FeatureGroup.extend({
 L.Util.extend(L.XML, {
 
     parseXML: function (xml, xmlOptions) {
-		var coords = [];
 		var layers = [], l;
 		locs = xml.getElementsByTagName('location');
 		for (var i = 0; i < locs.length; i++) {
@@ -37,8 +35,12 @@ L.Util.extend(L.XML, {
 				var locLat = locs[i].getElementsByTagName('lat_wgs84')[0].innerHTML;
 				var locLon = locs[i].getElementsByTagName('lon_wgs84')[0].innerHTML;
 			} else {
-				var locLat = locs[i].getElementsByTagName('lat')[0].innerHTML;
-				var locLon = locs[i].getElementsByTagName('lon')[0].innerHTML;
+				var locLonLat , locLon , locLat;
+				var locLat67 = locs[i].getElementsByTagName('lat')[0].innerHTML;
+				var locLon67 = locs[i].getElementsByTagName('lon')[0].innerHTML;
+				locLonLat = this.TWD67toTWD97(locLon67 , locLat67);
+				locLon = locLonLat.lon97;
+				locLat = locLonLat.lat97;
 			}
 
 			var stID = locs[i].getElementsByTagName('stationId')[0].innerHTML;
@@ -50,14 +52,18 @@ L.Util.extend(L.XML, {
 
 			var k, j, descr = '';
 			for (k = 0; k < element.length; k++) {
-				descr = descr + '<h4>' + element[k].childNodes[1].innerHTML + ': ' + element[k].childNodes[3].innerHTML + '</h4>';
+				var obsData = this.processObsData(element[k].childNodes[1].innerHTML , element[k].childNodes[3].innerHTML);
+				var obsName = obsData.obsName;
+				var obsValue = obsData.obsValue;
+				var obsUnit = obsData.obsUnit;
+				descr = descr + '<h4>' + obsName + '：' + obsValue + obsUnit + '</h4>';
 			}
 
 			if (locName) {
 				l.bindPopup('<h3>' + locName + ' (' + stID + ')</h3>' + 
-				'<h4>(' + parseFloat(locLat).toFixed(3) + ' , ' + parseFloat(locLon).toFixed(3) + ')</h4>' + 
-				'<h4>ObsTime: ' + obsTime + '</h4>' + 
-				'<h4>Observation: </h4>' + descr + '', { className: 'xml-popup'});
+				// '<h4>(' + parseFloat(locLat).toFixed(3) + ' , ' + parseFloat(locLon).toFixed(3) + ')</h4>' + 
+				'<h4>觀測資料時間：' + obsTime + '</h4>' + 
+				descr + '', { className: 'xml-popup'});
 			}
 		}
 		return layers;
@@ -78,217 +84,163 @@ L.Util.extend(L.XML, {
 		if (name) {
 		  	layer.bindPopup('<h2>' + name + '</h2>' + descr, { className: 'xml-popup'});
 		}
-	  },
-
-    parseStyles: function (xml, xmlOptions) {
-		var styles = {};
-		var sl = xml.getElementsByTagName('Style');
-		for (var i = 0; i < sl.length; i++) {
-			var style = this.parseStyle(sl[i], xmlOptions);
-			if (style) {
-				var styleName = '#' + style.id;
-				styles[styleName] = style;
-			}
-		}
-		return styles;
 	},
 
-    parseStyle: function (xml, kmlOptions) {
-		var style = {}, poptions = {}, ioptions = {}, el, id;
+	TWD67toTWD97: function(lon67 , lat67) {
+		const x0 = 247342;
+		const y0 = 2652336;
+		const lon0 = 120.9738819;
+		const lat0 = 23.9756500;
+		const dx = 250000;
+		const dy = 0;
+		const lon00 = 121;
+		const lat00 = 0;
+		var x67 = (dx - x0) / (lon00 - lon0) * (lon67 - lon00) + dx;
+		var y67 = (dy - y0) / (lat00 - lat0) * (lat67 - lat00) + dy;
 
-		var attributes = {color: true, width: true, Icon: true, href: true, hotSpot: true};
+		const A = 0.00001549;
+		const B = 0.000006521;
+		// var x67 = x97 - 807.8 - A * x97 - B * y97;
+		// var y67 = y97 + 248.6 - A * y97 - B * x97;
+		var x97 = x67 + 807.8 + A * x67 + B * y67;
+		var y97 = y67 - 248.6 + A * y67 + B * x67;
 
-		function _parse (xml) {
-			var options = {};
-			for (var i = 0; i < xml.childNodes.length; i++) {
-				var e = xml.childNodes[i];
-				var key = e.tagName;
-				if (!attributes[key]) { continue; }
-				if (key === 'hotSpot')
-				{
-					for (var j = 0; j < e.attributes.length; j++) {
-						options[e.attributes[j].name] = e.attributes[j].nodeValue;
-					}
-				} else {
-					var value = (e.childNodes && e.childNodes.length) ? e.childNodes[0].nodeValue : null;
-					if(!value) {
-						continue;
-					}
-					if (key === 'color') {
-						options.opacity = parseInt(value.substring(0, 2), 16) / 255.0;
-						options.color = '#' + value.substring(6, 8) + value.substring(4, 6) + value.substring(2, 4);
-                    } else if (key === 'width') {
-						options.weight = parseInt(value);
-					} else if (key === 'Icon') {
-						ioptions = _parse(e);
-						if (ioptions.href) { options.href = ioptions.href; }
-					} else if (key === 'href') {
-						options.href = value;
-					}
-				}
-			}
-			return options;
-		}
+		// var Longlat97 = this.TWD97_TM2toLonglat(x97 , y97)
+		// var lon97 = Longlat97.lon97;
+		// var lat97 = Longlat97.lat97;
 
-		el = xml.getElementsByTagName('LineStyle');
-		if (el && el[0]) { style = _parse(el[0]); }
-		el = xml.getElementsByTagName('PolyStyle');
-		if (el && el[0]) { poptions = _parse(el[0]); }
-		if (poptions.color) { style.fillColor = poptions.color; }
-		if (poptions.opacity) { style.fillOpacity = poptions.opacity; }
-		el = xml.getElementsByTagName('IconStyle');
-		if (el && el[0]) { ioptions = _parse(el[0]); }
-		if (ioptions.href) {
-			var iconOptions = {
-				iconUrl: ioptions.href,
-				shadowUrl: null,
-				anchorRef: {x: ioptions.x, y: ioptions.y},
-				anchorType:	{x: ioptions.xunits, y: ioptions.yunits}
-			};
-
-			if (typeof kmlOptions === "object" && typeof kmlOptions.iconOptions === "object") {
-				L.Util.extend(iconOptions, kmlOptions.iconOptions);
-			}
-			style.icon = new L.KMLIcon(iconOptions);
-            style.opacity = ioptions.opacity;
-		}
-
-		id = xml.getAttribute('id');
-		if (id && style) {
-			style.id = id;
-		}
-
-		return style;
+		var lon97 = (x97 - dx) / (dx - x0) * (lon00 - lon0) + lon00;
+		var lat97 = (y97 - dy) / (dy - y0) * (lat00 - lat0) + lat00;
+		return {lon97, lat97};
 	},
 
-    parseStyleMap: function (xml, existingStyles) {
-		var sl = xml.getElementsByTagName('StyleMap');
+	TWD97_TM2toLonglat: function(x97 , y97) {
+		const pow = Math.pow, M_PI = Math.PI;
+		const sin = Math.sin, cos = Math.cos, tan = Math.tan;
+		const $a = 6378137.0, $b = 6356752.314245;
+		const $lng0 = 121 * M_PI / 180, $k0 = 0.9999, $dx = 250000, $dy = 0;
+		const $e = pow((1 - pow($b, 2) / pow($a, 2)), 0.5);
 
-		for (var i = 0; i < sl.length; i++) {
-			var e = sl[i], el;
-			var smKey, smStyleUrl;
+		x97 -= $dx;
+  		y97 -= $dy;
 
-			el = e.getElementsByTagName('key');
-			if (el && el[0]) { smKey = el[0].textContent; }
-			el = e.getElementsByTagName('styleUrl');
-			if (el && el[0]) { smStyleUrl = el[0].textContent; }
+		var $M = y97 / $k0;
 
-			if (smKey === 'normal')
-			{
-				existingStyles['#' + e.getAttribute('id')] = existingStyles[smStyleUrl];
-			}
-		}
+		var $mu = $M / ($a * (1.0 - pow($e, 2) / 4.0 - 3 * pow($e, 4) / 64.0 - 5 * pow($e, 6) / 256.0));
+		var $e1 = (1.0 - pow((1.0 - pow($e, 2)), 0.5)) / (1.0 + pow((1.0 - pow($e, 2)), 0.5));
+	
+		var $J1 = (3 * $e1 / 2 - 27 * pow($e1, 3) / 32.0);
+		var $J2 = (21 * pow($e1, 2) / 16 - 55 * pow($e1, 4) / 32.0);
+		var $J3 = (151 * pow($e1, 3) / 96.0);
+		var $J4 = (1097 * pow($e1, 4) / 512.0);
+	
+		var $fp = $mu + $J1 * sin(2 * $mu) + $J2 * sin(4 * $mu) + $J3 * sin(6 * $mu) + $J4 * sin(8 * $mu);
+	
+		var $e2 = pow(($e * $a / $b), 2);
+		var $C1 = pow($e2 * cos($fp), 2);
+		var $T1 = pow(tan($fp), 2);
+		var $R1 = $a * (1 - pow($e, 2)) / pow((1 - pow($e, 2) * pow(sin($fp), 2)), (3.0 / 2.0));
+		var $N1 = $a / pow((1 - pow($e, 2) * pow(sin($fp), 2)), 0.5);
+	
+		var $D = x97 / ($N1 * $k0);
+	
+		var $Q1 = $N1 * tan($fp) / $R1;
+		var $Q2 = (pow($D, 2) / 2.0);
+		var $Q3 = (5 + 3 * $T1 + 10 * $C1 - 4 * pow($C1, 2) - 9 * $e2) * pow($D, 4) / 24.0;
+		var $Q4 = (61 + 90 * $T1 + 298 * $C1 + 45 * pow($T1, 2) - 3 * pow($C1, 2) - 252 * $e2) * pow($D, 6) / 720.0;
+		var lat97 = $fp - $Q1 * ($Q2 - $Q3 + $Q4);
+	
+		var $Q5 = $D;
+		var $Q6 = (1 + 2 * $T1 + $C1) * pow($D, 3) / 6;
+		var $Q7 = (5 - 2 * $C1 + 28 * $T1 - 3 * pow($C1, 2) + 8 * $e2 + 24 * pow($T1, 2)) * pow($D, 5) / 120.0;
+		var lon97 = $lng0 + ($Q5 - $Q6 + $Q7) / cos($fp);
 
-		return;
+		lat97 = (lat97 * 180) / M_PI;
+		lon97 = (lon97 * 180) / M_PI;
+		
+		return {lon97, lat97};
 	},
 
-    getLatLngs: function (xml) {
-        var locTag = xml.getElementsByTagName('location');
-		var latTag = xml.getElementsByTagName('lat_wgs84');
-        var lonTag = xml.getElementsByTagName('lon_wgs84');
-
-		var coords = [];
-		for (var i = 0; i < lonTag.length; i++) {
-            var lat = latTag[i].childNodes[0].nodeValue;
-            var lon = lonTag[i].childNodes[0].nodeValue;
-			coords.push(new L.LatLng(lat, lon));
+	processObsData: function(name , value) {
+		if (name === 'ELEV') {
+			return {obsName: '測站高度' , obsValue: value , obsUnit: 'm'};
+		} else if (name === 'WDIR') {
+			return {obsName: '風向' , obsValue: value , obsUnit: '\xB0'};
+		} else if (name === 'WDSD') {
+			return {obsName: '風速' , obsValue: value , obsUnit: 'm/s'};
+		} else if (name === 'TEMP') {
+			return {obsName: '氣溫' , obsValue: value , obsUnit: '\xB0C'};
+		} else if (name === 'HUMD') {
+			// value = toString((value / 100).toFixed(3));
+			console.log(value);
+			return {obsName: '相對濕度' , obsValue: value , obsUnit: ''};
+		} else if (name === 'PRES') {
+			return {obsName: '測站氣壓' , obsValue: value , obsUnit: 'hPa'};
+		} else if (name === 'H_24R' | name === '24R') {
+			return {obsName: '日累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'H_FX') {
+			return {obsName: '小時最大陣風風速' , obsValue: value , obsUnit: 'm/s'};
+		} else if (name === 'H_XD') {
+			return {obsName: '小時最大陣風風向' , obsValue: value , obsUnit: '\xB0'};
+		} else if (name === 'H_FXT') {
+			return {obsName: '小時最大陣風時間' , obsValue: value , obsUnit: ''};
+		} else if (name === 'H_F10') {
+			return {obsName: '本時最大10分鐘平均風速' , obsValue: value , obsUnit: 'm/s'};
+		} else if (name === 'H_10D') {
+			return {obsName: '本時最大10分鐘平均風向' , obsValue: value , obsUnit: '\xB0'};
+		} else if (name === 'H_F10T') {
+			return {obsName: '本時最大10分鐘平均風速發生時間' , obsValue: value , obsUnit: ''};
+		} else if (name === 'H_UVI') {
+			return {obsName: '小時紫外線指數' , obsValue: value , obsUnit: ''};
+		} else if (name === 'D_TX') {
+			return {obsName: '本日最高溫' , obsValue: value , obsUnit: '\xB0C'};
+		} else if (name === 'D_TXT') {
+			return {obsName: '本日最高溫發生時間' , obsValue: value , obsUnit: ''};
+		} else if (name === 'D_TN') {
+			return {obsName: '本日最低溫' , obsValue: value , obsUnit: '\xB0C'};
+		} else if (name === 'D_TNT') {
+			return {obsName: '本日最低溫發生時間' , obsValue: value , obsUnit: ''};
+		} else if (name === 'D_TS') {
+			return {obsName: '本日總日照時數' , obsValue: value , obsUnit: 'hr'};
+		} else if (name === 'VIS') {
+			return {obsName: '十分鐘盛行能見度' , obsValue: value , obsUnit: 'km'};
+		} else if (name === 'Weather') {
+			return {obsName: '十分鐘天氣現象描述' , obsValue: value , obsUnit: ''};
+		} else if (name === 'RAIN') {
+			return {obsName: '60分鐘累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'MIN_10') {
+			return {obsName: '10分鐘累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'HOUR_3') {
+			return {obsName: '3小時累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'HOUR_6') {
+			return {obsName: '6小時累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'HOUR_12') {
+			return {obsName: '12小時累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'HOUR_24') {
+			return {obsName: '24小時累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'NOW') {
+			return {obsName: '本日累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'latest_2days') {
+			return {obsName: '前1日0時到現在之累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'latest_3days') {
+			return {obsName: '前2日0時到現在之累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'ATTRIBUTE') {
+			return {obsName: '自動站屬性' , obsValue: value , obsUnit: ''};
+		} else if (name === 'HOUR_24') {
+			return {obsName: '24小時累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'HOUR_24') {
+			return {obsName: '24小時累積雨量' , obsValue: value , obsUnit: 'mm'};
+		} else if (name === 'CITY') {
+			return {obsName: '縣市' , obsValue: value , obsUnit: ''};
+		} else if (name === 'CITY_SN') {
+			return {obsName: '縣市編號' , obsValue: value , obsUnit: ''};
+		} else if (name === 'TOWN') {
+			return {obsName: '鄉鎮' , obsValue: value , obsUnit: ''};
+		} else if (name === 'TOWN_SN') {
+			return {obsName: '鄉鎮編號' , obsValue: value , obsUnit: ''};
 		}
-		return coords;
-	},
-
-	parseFolder: function (xml, style) {
-		var el, layers = [], l;
-		el = xml.getElementsByTagName('location');
-		for (var i = 0; i < el.length; i++) {
-			l = this.parseLocation(el[i], xml, style);
-			if (l) { layers.push(l); }
-		}
-		if (!layers.length) { return; }
-		if (layers.length === 1) {
-			l = layers[0];
-		} else {
-			l = new L.FeatureGroup(layers);
-		}
-		el = xml.getElementsByTagName('name');
-		if (el.length && el[0].childNodes.length) {
-			l.options.name = el[0].childNodes[0].nodeValue;
-		}
-		return l;
-	},
-
-	parseLocation: function (location, xml, style, options) {
-		var h, i, j, k, el, il, opts = options || {};
-
-		el = location.getElementsByTagName('styleUrl');
-		for (i = 0; i < el.length; i++) {
-			var url = el[i].childNodes[0].nodeValue;
-			for (var a in style[url]) {
-				opts[a] = style[url][a];
-			}
-		}
-
-		il = location.getElementsByTagName('Style')[0];
-		if (il) {
-			var inlineStyle = this.parseStyle(location);
-			if (inlineStyle) {
-				for (k in inlineStyle) {
-					opts[k] = inlineStyle[k];
-				}
-			}
-		}
-
-		var multi = ['MultiGeometry', 'MultiTrack', 'gx:MultiTrack'];
-		for (h in multi) {
-			el = location.getElementsByTagName(multi[h]);
-			for (i = 0; i < el.length; i++) {
-				var layer = this.parsePlacemark(el[i], xml, style, opts);
-				if (layer === undefined)
-					continue;
-				this.addLocationPopup(location, layer);
-				return layer;
-			}
-		}
-
-		var layers = [];
-
-		var parse = ['LineString', 'Polygon', 'Point', 'Track', 'gx:Track'];
-		for (j in parse) {
-			var tag = parse[j];
-			el = location.getElementsByTagName(tag);
-			for (i = 0; i < el.length; i++) {
-				var l = this['parse' + tag.replace(/gx:/, '')](el[i], xml, opts);
-				if (l) { layers.push(l); }
-			}
-		}
-
-		if (!layers.length) {
-			return;
-		}
-		var layer = layers[0];
-		if (layers.length > 1) {
-			layer = new L.FeatureGroup(layers);
-		}
-
-		this.addLocationPopup(location, layer);
-		return layer;
-	},
-
-	// addLocationPopup: function(location, layer) {
-	// 	var el, i, j, name, descr = '';
-	// 	el = location.getElementsByTagName('locationName');
-	// 	if (el.length && el[0].childNodes.length) {
-	// 	  	name = el[0].childNodes[0].nodeValue;
-	// 	}
-	// 	el = location.getElementsByTagName('weatherElement');
-	// 	for (i = 0; i < el.length; i++) {
-	// 	  	for (j = 0; j < el[i].childNodes.length; j++) {
-	// 			descr = descr + el[i].childNodes[j].nodeValue;
-	// 	  	}
-	// 	}
-	// 	if (name) {
-	// 	  	layer.bindPopup('<h2>' + name + '</h2>' + descr, { className: 'xml-popup'});
-	// 	}
-	//   },
+		return {obsName: name , obsValue: value , obsUnit: ''}
+	}
 })
 
 L.XMLCircle = L.Circle.extend({
