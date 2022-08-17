@@ -232,7 +232,7 @@ window.addEventListener("DOMContentLoaded" , function(){
                 '雨量': rain , 
                 '日累積雨量': xmlrain , 
             },
-            '氣象站': {
+            '測站': {
                 '局屬': station , 
                 '自動': autoStation , 
                 '雨量': gauge , 
@@ -269,15 +269,6 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     map.fitBounds(bounds);
         // });
 
-        // fetch(xmlGaugeUrl)
-        // .then(res => res.text())
-        // .then(xmltext => {
-        //     const parser = new DOMParser();
-        //     const xml = parser.parseFromString(xmltext, 'text/xml');
-        //     const XML = new L.XML(xml , {color: 'blue'});
-        //     XML.addTo(map)
-        // });
-        
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
         new L.Control.Locate({position: 'bottomright' , strings: {title: "定位"}}).addTo(map)
