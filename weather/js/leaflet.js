@@ -10,7 +10,7 @@ const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" 
 const xmlStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlAutoStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlGaugeUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0002-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const kmlTestUrl = 'kml/test.kml';
+const xmlRainUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0040-004?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
 const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
 const kmzTempUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0038-002.kmz';
@@ -206,6 +206,10 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     opacity: 0.5,
         //     attribution: attribution,
         // });
+        var station = L.xmlLayer(xmlStationUrl , {color: '#ff6363'});
+        var autoStation = L.xmlLayer(xmlAutoStationUrl , {color: '#ff6363'});
+        var gauge = L.xmlLayer(xmlGaugeUrl , {color: 'blue'});
+        var xmlrain = L.xmlPicture(xmlRainUrl , {color: 'blue'});
         var rain = L.kmzLayer(kmzRainUrl , {attribution: cwbAttribution});
         var ltng = L.kmzLayer(kmzLtngUrl , {attribution: cwbAttribution});
         var temp = L.kmzLayer(kmzTempUrl , {attribution: cwbAttribution});
@@ -223,10 +227,15 @@ window.addEventListener("DOMContentLoaded" , function(){
                 '對流胞': conv , 
             },
             '觀測': {
-                // '局屬': XML,
                 '閃電': ltng , 
                 '氣溫': temp , 
                 '雨量': rain , 
+                '日累積雨量': xmlrain , 
+            },
+            '氣象站': {
+                '局屬': station , 
+                '自動': autoStation , 
+                '雨量': gauge , 
             },
             'QPF': {
                 '0-12h': qpf12 , 
@@ -260,34 +269,15 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     map.fitBounds(bounds);
         // });
 
-        fetch(xmlStationUrl)
-        .then(res => res.text())
-        .then(xmltext => {
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(xmltext, 'text/xml');
-            const XML = new L.XML(xml , {color: '#ff6363'});
-            XML.addTo(map)
-        });
-
-        fetch(xmlAutoStationUrl)
-        .then(res => res.text())
-        .then(xmltext => {
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(xmltext, 'text/xml');
-            const XML = new L.XML(xml , {color: '#ff6363'});
-            XML.addTo(map)
-        });
-
-        fetch(xmlGaugeUrl)
-        .then(res => res.text())
-        .then(xmltext => {
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(xmltext, 'text/xml');
-            const XML = new L.XML(xml , {color: 'blue'});
-            XML.addTo(map)
-        });
+        // fetch(xmlGaugeUrl)
+        // .then(res => res.text())
+        // .then(xmltext => {
+        //     const parser = new DOMParser();
+        //     const xml = parser.parseFromString(xmltext, 'text/xml');
+        //     const XML = new L.XML(xml , {color: 'blue'});
+        //     XML.addTo(map)
+        // });
         
-        var gl = new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , }).addTo(map);
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
         new L.Control.Locate({position: 'bottomright' , strings: {title: "定位"}}).addTo(map)
@@ -295,6 +285,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         new L.Control.Search({position: 'topleft' , textPlaceholder: "搜尋"}).addTo(map)
         new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
         new L.Control.Loading({position: 'bottomright'}).addTo(map);
+        new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , }).addTo(map);
     });
 
 
