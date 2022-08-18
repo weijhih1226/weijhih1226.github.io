@@ -6,11 +6,14 @@ const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/hel
 const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">中央氣象局</a>';
 const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
 
-// const xmlWeatherUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlAutoStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlGaugeUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0002-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlQPEUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-B0045-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlQPFUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-B0046-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlRadarUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0059-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlRainUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0040-004?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlTempUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0038-003?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
 const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
 const kmzTempUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0038-002.kmz';
@@ -27,7 +30,8 @@ const imgSatIReUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-
 // const imgWtrMapUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-001.jpg';
 // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
 // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
-const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
+// const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
+const imgRadarBounds = [[17.72, 114.95], [29.0125, 126.5125]];
 const imgQPFBounds = [[21.8, 118.95], [25.8, 122.45]];
 const imgSatBounds = [[19.100625745, 115.976888855], [28.29937425, 126.02300114]];
 // const imgWtrMapBounds = [[-1, 80], [48, 175]];
@@ -165,55 +169,86 @@ window.addEventListener("DOMContentLoaded" , function(){
 
     map.on('plugins_loaded', function() {
         
-        const radar = L.imageOverlay(imgRadarUrl, imgRadarBounds, {
+        // var radar2 = L.imageOverlay(imgRadarUrl, imgRadarBounds, {
+        //     opacity: 0.5,
+        //     attribution: cwbAttribution,
+        // });
+        var conv = L.imageOverlay(imgConvUrl, imgRadarBounds, {
             opacity: 0.5,
             attribution: cwbAttribution,
         });
-        const conv = L.imageOverlay(imgConvUrl, imgRadarBounds, {
-            opacity: 0.5,
-            attribution: cwbAttribution,
-        });
-        const qpf12 = L.imageOverlay(imgQPF12Url, imgQPFBounds, {
+        var qpf12 = L.imageOverlay(imgQPF12Url, imgQPFBounds, {
             opacity: 0.7,
             attribution: cwbAttribution,
         });
-        const qpf24 = L.imageOverlay(imgQPF24Url, imgQPFBounds, {
+        var qpf24 = L.imageOverlay(imgQPF24Url, imgQPFBounds, {
             opacity: 0.7,
             attribution: cwbAttribution,
         });
-        const satvistw = L.imageOverlay(imgSatVISUrl, imgSatBounds, {
+        var satvistw = L.imageOverlay(imgSatVISUrl, imgSatBounds, {
             opacity: 0.5,
             attribution: cwbAttribution,
         });
-        const satirctw = L.imageOverlay(imgSatIRcUrl, imgSatBounds, {
+        var satirctw = L.imageOverlay(imgSatIRcUrl, imgSatBounds, {
             opacity: 0.5,
             attribution: cwbAttribution,
         });
-        const satirgtw = L.imageOverlay(imgSatIRgUrl, imgSatBounds, {
+        var satirgtw = L.imageOverlay(imgSatIRgUrl, imgSatBounds, {
             opacity: 0.5,
             attribution: cwbAttribution,
         });
-        const satiretw = L.imageOverlay(imgSatIReUrl, imgSatBounds, {
+        var satiretw = L.imageOverlay(imgSatIReUrl, imgSatBounds, {
             opacity: 0.5,
             attribution: cwbAttribution,
         });
-    
+
+        var station = L.xmlLayer(xmlStationUrl , {
+            color: '#ff6363' , 
+            fillOpacity: 1 , 
+            radius: 2.5 , 
+            attribution: cwbAttribution
+        });
+        var autoStation = L.xmlLayer(xmlAutoStationUrl , {
+            color: '#ff6363' , 
+            fillOpacity: 1 , 
+            radius: 2.5 , 
+            attribution: cwbAttribution
+        });
+        var gauge = L.xmlLayer(xmlGaugeUrl , {
+            color: 'blue' , 
+            fillOpacity: 1 , 
+            radius: 2.5 , 
+            attribution: cwbAttribution
+        });
+        var radar = L.xmlPicture(xmlRadarUrl , 'radar' , {
+            fillOpacity: 0.5 , 
+            attribution: cwbAttribution
+        });
+        var qpe = L.xmlPicture(xmlQPEUrl , 'qpe' , {
+            fillOpacity: 0.5 , 
+            attribution: cwbAttribution
+        });
+        var qpf = L.xmlPicture(xmlQPFUrl , 'qpf' , {
+            fillOpacity: 0.5 , 
+            attribution: cwbAttribution
+        });
+        var rain = L.xmlPicture(xmlRainUrl , 'rain' , {
+            fillOpacity: 0.5 , 
+            attribution: cwbAttribution
+        });
+        var temp = L.xmlPicture(xmlTempUrl , 'temp' , {
+            fillOpacity: 0.5 , 
+            attribution: cwbAttribution
+        });
+        var ltng = L.kmzLayer(kmzLtngUrl , {
+            attribution: cwbAttribution
+        });
+
         // Instantiate KMZ layer (async)
         // L.kmzImageOverlay = function(url , bounds) {
         //     return new L.KMZImageOverlay(url , bounds)
         // }
         // const rain = L.kmzImageOverlay(kmzRainUrl , imgQPFBounds , {
-        //     opacity: 0.5,
-        //     attribution: attribution,
-        // });
-        var station = L.xmlLayer(xmlStationUrl , {color: '#ff6363'});
-        var autoStation = L.xmlLayer(xmlAutoStationUrl , {color: '#ff6363'});
-        var gauge = L.xmlLayer(xmlGaugeUrl , {color: 'blue'});
-        var xmlrain = L.xmlPicture(xmlRainUrl , {color: 'blue'});
-        var rain = L.kmzLayer(kmzRainUrl , {attribution: cwbAttribution});
-        var ltng = L.kmzLayer(kmzLtngUrl , {attribution: cwbAttribution});
-        var temp = L.kmzLayer(kmzTempUrl , {attribution: cwbAttribution});
-        // const temp = L.kmzImageOverlay(kmzTempUrl , imgQPFBounds , {
         //     opacity: 0.5,
         //     attribution: attribution,
         // });
@@ -224,18 +259,20 @@ window.addEventListener("DOMContentLoaded" , function(){
         var overlays = {
             '雷達': {
                 '回波': radar , 
+                // '回波2': radar2 , 
                 '對流胞': conv , 
+                '1h QPE': qpe , 
+                '1h QPF': qpf , 
             },
-            '觀測': {
-                '閃電': ltng , 
+            '閃電': {
+                '即時': ltng , 
+            }, 
+            '地面': {
+                '局屬站': station , 
+                '自動站': autoStation , 
+                '雨量站': gauge , 
+                '日累積雨量': rain , 
                 '氣溫': temp , 
-                '雨量': rain , 
-                '日累積雨量': xmlrain , 
-            },
-            '測站': {
-                '局屬': station , 
-                '自動': autoStation , 
-                '雨量': gauge , 
             },
             'QPF': {
                 '0-12h': qpf12 , 
@@ -276,7 +313,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         new L.Control.Search({position: 'topleft' , textPlaceholder: "搜尋"}).addTo(map)
         new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
         new L.Control.Loading({position: 'bottomright'}).addTo(map);
-        new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["觀測" , "QPF" , "衛星"] , }).addTo(map);
+        new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["閃電" , "QPF" , "衛星"] , }).addTo(map);
     });
 
 

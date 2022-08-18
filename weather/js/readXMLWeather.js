@@ -60,9 +60,10 @@ L.Util.extend(L.XMLLayer, {
 			var obsTime = obsYYYY + '/' + obsMM + '/' + obsDD + ' ' + obshh + ':' + obsmm + ':' + obsss + ' L';
 			var element = locs[i].getElementsByTagName('weatherElement');
 			l = new L.CircleMarker(new L.LatLng(locLat, locLon) , {
-				radius: 2.5 , 
+				radius: options.radius , 
 				color: options.color , 
-				fillOpacity: 1 , 
+				fillOpacity: options.fillOpacity , 
+				attribution: options.attribution , 
 			})
 			if (l) { layers.push(l); }
 
