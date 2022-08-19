@@ -6,6 +6,10 @@ const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/hel
 const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">中央氣象局</a>';
 const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
 
+const geojsonCountyUrl = '../weather/map/geojson/TWN_county.json';
+const geojsonTownUrl = '../weather/map/geojson/TWN_town.json';
+const geojsonVillageUrl = '../weather/map/geojson/TWN_village_20140501.json';
+
 const xmlStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlAutoStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const xmlGaugeUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0002-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
@@ -244,6 +248,41 @@ window.addEventListener("DOMContentLoaded" , function(){
             attribution: cwbAttribution
         });
 
+		var xhr = new XMLHttpRequest()
+        xhr.open('get' , geojsonCountyUrl , false)
+        xhr.send(null)
+        var geojsonCountyData = JSON.parse(xhr.responseText);
+        var geojsonCounty = L.geoJSON(geojsonCountyData , {
+            style: {
+                color: 'white',
+                weight: 1,
+                fillOpacity: 0,
+            }
+        });
+
+        xhr.open('get' , geojsonTownUrl , false)
+        xhr.send(null)
+        var geojsonTownData = JSON.parse(xhr.responseText);
+        var geojsonTown = L.geoJSON(geojsonTownData , {
+            style: {
+                color: 'white',
+                weight: 1,
+                fillOpacity: 0,
+            }
+        });
+
+        // xhr.open('get' , geojsonVillageUrl , false)
+        // xhr.send(null)
+        // var geojsonVillageData = JSON.parse(xhr.responseText);
+        // var geojsonVillage = L.geoJSON(geojsonVillageData , {
+        //     style: {
+        //         color: 'white',
+        //         weight: 1,
+        //         fillOpacity: 0,
+        //     }
+        // });
+        // geojsonVillage.addTo(map);
+
         // Instantiate KMZ layer (async)
         // L.kmzImageOverlay = function(url , bounds) {
         //     return new L.KMZImageOverlay(url , bounds)
@@ -253,8 +292,15 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     attribution: attribution,
         // });
 
+        geojsonCounty.addTo(map);
         radar.addTo(map);
-        ltng.addTo(map); 
+        ltng.addTo(map);
+
+        var baselayers = {
+            '縣市界': geojsonCounty , 
+            '鄉鎮區界': geojsonTown , 
+            // '村里界': geojsonVillage , 
+        };
         
         var overlays = {
             '雷達': {
@@ -313,7 +359,9 @@ window.addEventListener("DOMContentLoaded" , function(){
         new L.Control.Search({position: 'topleft' , textPlaceholder: "搜尋"}).addTo(map)
         new L.Control.Zoom({position: 'bottomright' , zoomInTitle: '放大' , zoomOutTitle: '縮小'}).addTo(map);
         new L.Control.Loading({position: 'bottomright'}).addTo(map);
-        new L.Control.GroupedLayers(null , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["閃電" , "QPF" , "衛星"] , }).addTo(map);
+        new L.Control.GroupedLayers(baselayers , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["閃電" , "QPF" , "衛星"] , }).addTo(map);
+
+        // map.removeControl(z)
     });
 
 

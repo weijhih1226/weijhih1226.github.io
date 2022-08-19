@@ -1,3 +1,12 @@
+const svgTag = 'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve"';
+const windSvgPath = '<path d="M510.5,749.6c-14.9-9.9-38.1-9.9-53.1,1.7l-262,207.3c-14.9,11.6-21.6,6.6-14.9-11.6L474,48.1c5-16.6,14.9-18.2,21.6,0l325,898.7c6.6,16.6-1.7,23.2-14.9,11.6L510.5,749.6z"/><path d="M817.2,990c-8.3,0-16.6-3.3-26.5-9.9L497.2,769.5c-5-3.3-18.2-3.3-23.2,0L210.3,976.7c-19.9,16.6-41.5,14.9-51.4,0c-6.6-9.9-8.3-21.6-3.3-38.1L449.1,39.8C459,13.3,477.3,10,483.9,10c6.6,0,24.9,3.3,34.8,29.8l325,898.7c5,14.9,5,28.2-1.7,38.1C837.1,985,827.2,990,817.2,990z M485.6,716.4c14.9,0,28.2,5,39.8,11.6l255.4,182.4L485.6,92.9l-267,814.2l223.9-177.4C454.1,721.4,469,716.4,485.6,716.4z"/>'
+const windSvgColor = ['#ebebeb' , '#a8c2de' , '#66a8ef' , '#66ef6b' , '#e6ef66' , '#efb866' , '#ef6668' , '#ef66e1' , '#994290' , '#994243' , '#261010'];
+const windSvgLevel = [0 , 3 , 5 , 10 , 15 , 20 , 25 , 30 , 35 , 40 , 50];
+const windSvgWidth = 25;
+const windSvgHeight = 25;
+const windSvgStroke = '#777';
+const windSvgStrokeWidth = '20px';
+
 L.XMLLayer = L.FeatureGroup.extend({
     initialize: function (url, options) {
 		var xhr = new XMLHttpRequest();
@@ -59,13 +68,52 @@ L.Util.extend(L.XMLLayer, {
 			var obsss = locs[i].getElementsByTagName('time')[0].childNodes[1].innerHTML.substring(17 , 19);
 			var obsTime = obsYYYY + '/' + obsMM + '/' + obsDD + ' ' + obshh + ':' + obsmm + ':' + obsss + ' L';
 			var element = locs[i].getElementsByTagName('weatherElement');
-			l = new L.CircleMarker(new L.LatLng(locLat, locLon) , {
-				radius: options.radius , 
-				color: options.color , 
-				fillOpacity: options.fillOpacity , 
-				attribution: options.attribution , 
-			})
-			if (l) { layers.push(l); }
+
+			if (element[1].childNodes[1].innerHTML === 'WDIR') {
+				const windSpeed = element[2].childNodes[3].childNodes[1].innerHTML;
+				if (windSpeed >= windSvgLevel[0] & windSpeed < windSvgLevel[1]) {
+					var windSvgStyle = `fill: ${windSvgColor[0]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[1] & windSpeed < windSvgLevel[2]) {
+					var windSvgStyle = `fill: ${windSvgColor[1]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[2] & windSpeed < windSvgLevel[3]) {
+					var windSvgStyle = `fill: ${windSvgColor[2]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[3] & windSpeed < windSvgLevel[4]) {
+					var windSvgStyle = `fill: ${windSvgColor[3]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[4] & windSpeed < windSvgLevel[5]) {
+					var windSvgStyle = `fill: ${windSvgColor[4]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[5] & windSpeed < windSvgLevel[6]) {
+					var windSvgStyle = `fill: ${windSvgColor[5]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[6] & windSpeed < windSvgLevel[7]) {
+					var windSvgStyle = `fill: ${windSvgColor[6]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[6] & windSpeed < windSvgLevel[8]) {
+					var windSvgStyle = `fill: ${windSvgColor[7]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[8] & windSpeed < windSvgLevel[9]) {
+					var windSvgStyle = `fill: ${windSvgColor[8]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[9] & windSpeed < windSvgLevel[10]) {
+					var windSvgStyle = `fill: ${windSvgColor[9]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				} else if (windSpeed >= windSvgLevel[10]) {
+					var windSvgStyle = `fill: ${windSvgColor[10]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
+				};
+
+				l = new L.Marker(new L.LatLng(locLat, locLon) , {
+					icon: L.divIcon({
+						className: "wind-pin",
+						iconAnchor: [12.5, 12.5],
+						html: `<svg ${svgTag} width="${windSvgWidth}" height="${windSvgHeight}" style="${windSvgStyle}">${windSvgPath}</svg>`,
+					}),
+					title: locName + '：' + windSpeed + ' m/s',
+					rotationAngle: parseFloat(element[1].childNodes[3].childNodes[1].innerHTML) + 180,
+				})
+				if (l) { layers.push(l); }
+			} else {
+				l = new L.CircleMarker(new L.LatLng(locLat, locLon) , {
+					radius: options.radius, 
+					color: options.color, 
+					fillOpacity: options.fillOpacity, 
+					attribution: options.attribution, 
+				})
+				if (l) { layers.push(l); }
+			}
 
 			var k, j, descr = '';
 			for (k = 0; k < element.length; k++) {
@@ -279,4 +327,39 @@ L.XMLCircle = L.Circle.extend({
         radius: 2,
 		color: 'red',
 	}
+});
+
+L.RotatedMarker = L.Marker.extend({    
+    _reset: function() {
+        var pos = this._map.latLngToLayerPoint(this._latlng).round();
+
+        L.DomUtil.setPosition(this._icon, pos);
+        if (this._shadow) {
+            L.DomUtil.setPosition(this._shadow, pos);
+        }
+
+        if (this.options.iconAngle) {
+            this._icon.style.WebkitTransform = this._icon.style.WebkitTransform + ' rotate(' + this.options.iconAngle + 'deg)';
+            this._icon.style.MozTransform = 'rotate(' + this.options.iconAngle + 'deg)';
+            this._icon.style.MsTransform = 'rotate(' + this.options.iconAngle + 'deg)';
+            this._icon.style.OTransform = 'rotate(' + this.options.iconAngle + 'deg)';
+        }
+
+        this._icon.style.zIndex = pos.y;
+    },
+
+    setIconAngle: function (iconAngle) {
+
+        if (this._map) {
+            this._removeIcon();
+        }
+
+        this.options.iconAngle = iconAngle;
+
+        if (this._map) {
+            this._initIcon();
+            this._reset();
+        }
+    }
+
 });
