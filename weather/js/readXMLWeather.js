@@ -103,6 +103,7 @@ L.Util.extend(L.XMLLayer, {
 					}),
 					title: locName + '：' + windSpeed + ' m/s',
 					rotationAngle: parseFloat(element[1].childNodes[3].childNodes[1].innerHTML) + 180,
+					attribution: options.attribution, 
 				})
 				if (l) { layers.push(l); }
 			} else {
