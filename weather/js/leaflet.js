@@ -187,18 +187,39 @@ window.addEventListener("DOMContentLoaded" , function(){
         });
         radar.addTo(map).setZIndex(2);
         ltng.addTo(map).setZIndex(1000);
-        const baselayers = {};
         const overlays = {
             '雷達-整合回波': radar , 
             '閃電-即時觀測': ltng , 
         };
-        const cl = new L.Control.Layers(baselayers , overlays , {collapsed: false}).addTo(map);
+        const cl = new L.Control.Layers(null , overlays , {collapsed: false}).addTo(map);
 
-		// var xhr = new XMLHttpRequest()
-        // xhr.open('get' , geojsonCountyUrl , false)
+		var xhr = new XMLHttpRequest()
+        xhr.open('get' , geojsonCountyUrl , false)
+        xhr.send(null)
+        var geojsonCountyData = JSON.parse(xhr.responseText);
+        var geojsonCounty = L.geoJSON(geojsonCountyData , {
+            style: {
+                color: 'white',
+                weight: 1,
+                fillOpacity: 0,
+            }
+        });
+
+        xhr.open('get' , geojsonTownUrl , false)
+        xhr.send(null)
+        var geojsonTownData = JSON.parse(xhr.responseText);
+        var geojsonTown = L.geoJSON(geojsonTownData , {
+            style: {
+                color: 'white',
+                weight: 1,
+                fillOpacity: 0,
+            }
+        });
+
+        // xhr.open('get' , geojsonVillageUrl , false)
         // xhr.send(null)
-        // var geojsonCountyData = JSON.parse(xhr.responseText);
-        // var geojsonCounty = L.geoJSON(geojsonCountyData , {
+        // var geojsonVillageData = JSON.parse(xhr.responseText);
+        // var geojsonVillage = L.geoJSON(geojsonVillageData , {
         //     style: {
         //         color: 'white',
         //         weight: 1,
@@ -206,16 +227,13 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     }
         // });
 
-        // xhr.open('get' , geojsonTownUrl , false)
-        // xhr.send(null)
-        // var geojsonTownData = JSON.parse(xhr.responseText);
-        // var geojsonTown = L.geoJSON(geojsonTownData , {
-        //     style: {
-        //         color: 'white',
-        //         weight: 1,
-        //         fillOpacity: 0,
-        //     }
-        // });
+        geojsonCounty.addTo(map);
+        const overlays_bnd = {
+            '縣市界': geojsonCounty , 
+            '鄉鎮區界': geojsonTown , 
+            // '村里界': geojsonVillage , 
+        };
+        const clb = new L.Control.Layers(null , overlays_bnd , {collapsed: false}).addTo(map);
 
         // Instantiate KMZ layer (async)
         // L.kmzImageOverlay = function(url , bounds) {
