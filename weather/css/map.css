@@ -1,3 +1,62 @@
+input[type=checkbox] {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    content: '\2714';
+}
+
+input[type=radio] {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+input[type=checkbox]:checked + span {
+    font-weight: normal;
+}
+
+/* .inmenu>li>input {
+    display: none; 
+}
+
+.inmenu>li>span {
+    position: relative;
+    height: 12px;
+    width: 12px;
+    margin-right: 5px;
+    border: 2px solid grey;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+} */
+
+/* input[type=checkbox] {
+    display: inline-block;
+    background-color: #aaa;
+    padding: 3px 6px;
+    border: 1px solid gray;
+    color: #444;
+    user-select: none; 
+}
+
+input[type=checkbox]:checked {
+    color: yellow;
+    background-color: #444;
+} */
+
+/* [type=checkbox]:checked + span:before {
+    content: '\2714';
+    position: absolute;
+    top: -5px;
+    left: 0;
+} */
+
 #windy {
     position: absolute;
     height: 100%;
@@ -7,7 +66,69 @@
 
 #map {
     position: absolute;
+    left: 0;
+    right: 300px;
     height: 100%;
+    background-color: #181c27;
+}
+
+.outmenu {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 300px;
+    background-color: rgba(37, 45, 56, 1);
+    display: flex;
+    overflow: hidden auto;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: top;
+}
+
+#menu , #menu>li {
     width: 100%;
+    background-color: rgba(37, 45, 56, 1);
+    display: block;
+}
+
+.inmenu , .inmenu>li {
+    width: 290px;
+    padding: 5px;
+    display: block;
+}
+
+.inmenu {
+    display: none;
+}
+.radar {
+    display: block;
+}
+.stn {
+    display: block;
+}
+
+.inmenu>li {
+    width: 280px;
+    padding: 5px;
+    background-color: rgba(37, 45, 56, 1);
+    transition: .5s;
+}
+.inmenu>li:hover {
+    background-color: rgba(74, 90, 112, 1);
+}
+
+#menu>li>a {
+    width: 280px;
+    padding: 10px;
+    color:#545454;
+    background-color: white;
+    border: 1px solid #181c27;
+    display: block;
+    font-size: 18px;
+    transition: .5s;
+}
+#menu>li>a:hover,
+#menu>li>a.active{
+    color: white;
     background-color: #181c27;
 }
