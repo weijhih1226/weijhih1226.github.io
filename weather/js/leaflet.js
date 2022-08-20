@@ -193,39 +193,17 @@ window.addEventListener("DOMContentLoaded" , function(){
         };
         const cl = new L.Control.Layers(null , overlays , {collapsed: false}).addTo(map);
 
-		var xhr = new XMLHttpRequest()
-        xhr.open('get' , geojsonCountyUrl , false)
-        xhr.send(null)
-        var geojsonCountyData = JSON.parse(xhr.responseText);
-        var geojsonCounty = L.geoJSON(geojsonCountyData , {
+        var optionsBnd = {
             style: {
+                interactive: false,
                 color: 'white',
                 weight: 1,
                 fillOpacity: 0,
             }
-        });
-
-        xhr.open('get' , geojsonTownUrl , false)
-        xhr.send(null)
-        var geojsonTownData = JSON.parse(xhr.responseText);
-        var geojsonTown = L.geoJSON(geojsonTownData , {
-            style: {
-                color: 'white',
-                weight: 1,
-                fillOpacity: 0,
-            }
-        });
-
-        // xhr.open('get' , geojsonVillageUrl , false)
-        // xhr.send(null)
-        // var geojsonVillageData = JSON.parse(xhr.responseText);
-        // var geojsonVillage = L.geoJSON(geojsonVillageData , {
-        //     style: {
-        //         color: 'white',
-        //         weight: 1,
-        //         fillOpacity: 0,
-        //     }
-        // });
+        }
+        var geojsonCounty = getGeojson(geojsonCountyUrl , optionsBnd)
+        var geojsonTown = getGeojson(geojsonTownUrl , optionsBnd)
+        // var geojsonVillage = getGeojson(geojsonVillageUrl)
 
         geojsonCounty.addTo(map);
         const overlays_bnd = {
@@ -243,16 +221,6 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     opacity: 0.5,
         //     attribution: attribution,
         // });
-
-        // geojsonCounty.addTo(map).setZIndex(-1);
-        // geojsonTown.setZIndex(1);
-
-        
-        // var baselayers = {
-        //     '縣市界': geojsonCounty , 
-        //     '鄉鎮區界': geojsonTown , 
-        //     // '村里界': geojsonVillage , 
-        // };
         
         // var overlays = {
         //     '雷達': {
@@ -283,10 +251,6 @@ window.addEventListener("DOMContentLoaded" , function(){
         //         'IR色調強化': satiretw , 
         //     }
         // };
-        // var radar = L.xmlPicture(xmlRadarUrl , 'radar' , {
-        //     fillOpacity: 0.5 , 
-        //     attribution: cwbAttribution
-        // });
 
         document.querySelector('#radar0').addEventListener('click' , function(){
             this.checked = this.checked;
@@ -554,13 +518,21 @@ window.addEventListener("DOMContentLoaded" , function(){
 
     // console.log(new L.Control({position: 'topright'}).getContainer("test"));
 
-    // map.on('click' , LatLng)
+    // map.on('mousemove' , LatLng)
     // map.on('click' , function(e) {
     //     var test = new L.Control.Attribution({position: 'bottomright' , prefix: '(' + e.latlng.lat.toFixed(2) + ',' + e.latlng.lng.toFixed(2) + ')|' + leafletAttribution});
     //     test.addTo(map);
     //     test.remove()
     // })
 })
+
+var getGeojson = function(url , options) {
+    var xhr = new XMLHttpRequest()
+    xhr.open('get' , url , false)
+    xhr.send(null)
+    var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
+    return data;
+}
 
 // L.Control.Pegman = L.Control.Pegman.extend(
 //     {
