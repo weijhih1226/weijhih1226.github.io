@@ -29,9 +29,9 @@
         crossorigin="anonymous"></script>
     </head>
     <script>
-        $(document).ready(function () {
+        document.addEventListener("DOMContentLoaded" , function(){
             $("#menu>li>a").click(function (e) {
-                e.preventDefault();
+                // e.preventDefault();
                 $(this).siblings(".inmenu").slideDown().parent().siblings().find(".inmenu").slideUp();  //點選到的.menu>li>a顯示裡面的.inmenu
                 $(this).addClass("active").parent().siblings().find("a").removeClass("active");         //點選到的.menu>li>a 顯示動態active
             });
@@ -39,7 +39,7 @@
 
         function check_all(obj, cName) {
             var checkboxs = document.getElementsByName(cName);
-            for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;}
+            for(var i = 0 ; i < checkboxs.length ; i++){checkboxs[i].checked = obj.checked;}
         }
     </script>
     <body>
@@ -100,6 +100,12 @@
                             <li><input type="checkbox" name="sat" value="2" id="sat2"><span>IR彩色雲圖</span></li>
                             <li><input type="checkbox" name="sat" value="3" id="sat3"><span>IR黑白雲圖</span></li>
                             <li><input type="checkbox" name="sat" value="4" id="sat4"><span>IR色調強化雲圖</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><input type="checkbox" name="ty" value="0" id="ty0" onclick="check_all(this, 'ty')"><span>颱風</span></a>
+                        <ul class="inmenu ty">
+                            <li><input type="checkbox" name="ty" value="1" id="ty1"><span>潛勢路徑</span></li>
                         </ul>
                     </li>
                   </ul>
