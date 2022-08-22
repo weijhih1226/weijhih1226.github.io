@@ -173,10 +173,6 @@ window.addEventListener("DOMContentLoaded" , function(){
 
     map.on('plugins_loaded', function() {
         
-        // var radar2 = L.imageOverlay(imgRadarUrl, imgRadarBounds, {
-        //     opacity: 0.5,
-        //     attribution: cwbAttribution,
-        // });
         document.querySelector('#radar1').checked = true;
         document.querySelector('#ltng1').checked = true;
         radar = L.xmlPicture(xmlRadarUrl , 'radar' , {
@@ -252,7 +248,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         //         'IR色調強化': satiretw , 
         //     }
         // };
-        
+
 
         const xmlOptions = {fillOpacity: 0.5 , attribution: cwbAttribution}
         const xmlStnOptions = {color: '#ff6363' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution}
@@ -283,68 +279,68 @@ window.addEventListener("DOMContentLoaded" , function(){
 
         function addXml(id , url , name , type , product , options) {
             document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
+            if (this.checked) {
                     product = L.xmlPicture(url , type , options);
                     product.addTo(map);
                     cl.addOverlay(product , name);
-                } else {
+            } else {
                     cl.removeLayer(product);
                     product.remove();
-                }
-            })
-        }
+            }
+        })
+            }
 
         function addXmlPnt(id , url , name , product , options) {
             document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
+            if (this.checked) {
                     product = L.xmlLayer(url , options);
                     product.addTo(map);
                     cl.addOverlay(product , name);
-                } else {
+            } else {
                     cl.removeLayer(product);
                     product.remove();
-                }
-            })
-        }
+            }
+        })
+            }
 
         function addXmlTy(id , url , name , product , options) {
             document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
+            if (this.checked) {
                     product = L.xmlTyphoon(url , options);
                     product.addTo(map);
                     cl.addOverlay(product , name);
-                } else {
+            } else {
                     cl.removeLayer(product);
                     product.remove();
-                }
-            })
-        }
+            }
+        })
+            }
 
         function addPic(id , url , name , bound , product , options) {
             document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
+            if (this.checked) {
                     product = L.imageOverlay(url , bound , options);
                     product.addTo(map);
                     cl.addOverlay(product , name);
-                } else {
+            } else {
                     cl.removeLayer(product);
                     product.remove();
-                }
-            })
-        }
+            }
+        })
+            }
 
         function addKmz(id , url , name , product , options) {
             document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
+            if (this.checked) {
                     product = L.kmzLayer(url , options);
                     product.addTo(map);
                     cl.addOverlay(product , name);
-                } else {
+            } else {
                     cl.removeLayer(product);
                     product.remove();
-                }
-            })
-        }
+            }
+        })
+            }
 
         // var controlBaseOpacity = new L.Control.OpacitySlider(radar, opts.opacityBaseControl.options);
         // var controlOverlayOpacity = new L.Control.OpacitySlider(rain, opts.opacityOverlayControl.options);
