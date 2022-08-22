@@ -31,6 +31,7 @@ const imgSatVISUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-
 const imgSatIRcUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-002.jpg';
 const imgSatIRgUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-004.jpg';
 const imgSatIReUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-006.jpg';
+const xmlTyTrackUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/W-C0034-005?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 // const imgWtrMapUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-001.jpg';
 // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
 // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
@@ -251,237 +252,99 @@ window.addEventListener("DOMContentLoaded" , function(){
         //         'IR色調強化': satiretw , 
         //     }
         // };
+        
 
-        document.querySelector('#radar0').addEventListener('click' , function(){
-            this.checked = this.checked;
-            // if (this.checked) {
-            //     console.log(this.checked)
-            // } else {
-            //     console.log(this.checked)
-            // }
-        })
+        const xmlOptions = {fillOpacity: 0.5 , attribution: cwbAttribution}
+        const xmlStnOptions = {color: '#ff6363' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution}
+        const xmlGaugeOptions = {color: 'blue' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution}
+        const kmzOptions = {opacity: 0.5 , attribution: cwbAttribution}
+        const kmzTyTrackOptions = {weight: 2 , color1: '#3388ff' , color2: '#3388ff' , color3: '#3388ff' , color4: '#3388ff' , 
+        fillOpacity1: 0.2 , fillOpacity2: 0.2 , fillOpacity3: 0.2 , fillOpacity4: 0.2 , attribution: cwbAttribution}
+        const picOptions = {opacity: 0.5 , attribution: cwbAttribution}
+        const picQPFOptions = {opacity: 0.7 , attribution: cwbAttribution}
 
+        addXml('#radar1' , xmlRadarUrl , '雷達-整合回波' , 'radar' , radar , xmlOptions)
+        addPic('#radar2' , imgConvUrl , '雷達-對流胞偵測' , imgRadarBounds , null , picOptions)
+        addXml('#radar3' , xmlQPEUrl , '雷達-1h QPE' , 'qpe' , null , xmlOptions)
+        addXml('#radar4' , xmlQPFUrl , '雷達-1h QPF' , 'qpf' , null , xmlOptions)
+        addKmz('#ltng1' , kmzLtngUrl , '閃電-即時觀測' , ltng , kmzOptions)
+        addXmlPnt('#stn1' , xmlStationUrl , '測站-局屬氣象站' , null , xmlStnOptions)
+        addXmlPnt('#stn2' , xmlAutoStationUrl , '測站-自動氣象站' , null , xmlStnOptions)
+        addXmlPnt('#stn3' , xmlGaugeUrl , '測站-局屬氣象站' , null , xmlGaugeOptions)
+        addXml('#stn4' , xmlRainUrl , '測站-日累積雨量圖' , 'rain' , null , xmlOptions)
+        addXml('#stn5' , xmlTempUrl , '測站-氣溫分布圖' , 'temp' , null , xmlOptions)
+        addPic('#qpf1' , imgQPF12Url , 'QPF-0-12h' , imgQPFBounds , null , picQPFOptions)
+        addPic('#qpf2' , imgQPF24Url , 'QPF-12-24h' , imgQPFBounds , null , picQPFOptions)
+        addPic('#sat1' , imgSatVISUrl , '衛星-可見光雲圖' , imgSatBounds , null , picOptions)
+        addPic('#sat2' , imgSatIRcUrl , '衛星-IR彩色雲圖' , imgSatBounds , null , picOptions)
+        addPic('#sat3' , imgSatIRgUrl , '衛星-IR黑白雲圖' , imgSatBounds , null , picOptions)
+        addPic('#sat4' , imgSatIReUrl , '衛星-IR色調強化雲圖' , imgSatBounds , null , picOptions)
+        addXmlTy('#ty1' , xmlTyTrackUrl , '颱風-路徑資訊' , null , kmzTyTrackOptions)
 
-        document.querySelector('#radar1').addEventListener('change' , function(){
-            if (this.checked) {
-                radar = L.xmlPicture(xmlRadarUrl , 'radar' , {
-                    fillOpacity: 0.5 , 
-                    attribution: cwbAttribution
-                });
-                radar.addTo(map);
-                cl.addOverlay(radar , '雷達-整合回波');
-            } else {
-                cl.removeLayer(radar);
-                radar.remove();
-            }
-        })
+        function addXml(id , url , name , type , product , options) {
+            document.querySelector(id).addEventListener('change' , function(){
+                if (this.checked) {
+                    product = L.xmlPicture(url , type , options);
+                    product.addTo(map);
+                    cl.addOverlay(product , name);
+                } else {
+                    cl.removeLayer(product);
+                    product.remove();
+                }
+            })
+        }
 
-        document.querySelector('#radar2').addEventListener('change' , function(){
-            if (this.checked) {
-                conv = L.imageOverlay(imgConvUrl, imgRadarBounds, {
-                    opacity: 0.5,
-                    attribution: cwbAttribution,
-                });
-                conv.addTo(map);
-                cl.addOverlay(conv , '雷達-對流胞偵測');
-            } else {
-                cl.removeLayer(conv);
-                conv.remove();
-            }
-        })
+        function addXmlPnt(id , url , name , product , options) {
+            document.querySelector(id).addEventListener('change' , function(){
+                if (this.checked) {
+                    product = L.xmlLayer(url , options);
+                    product.addTo(map);
+                    cl.addOverlay(product , name);
+                } else {
+                    cl.removeLayer(product);
+                    product.remove();
+                }
+            })
+        }
 
-        document.querySelector('#radar3').addEventListener('change' , function(){
-            if (this.checked) {
-                qpe = L.xmlPicture(xmlQPEUrl , 'qpe' , {
-                    fillOpacity: 0.5 , 
-                    attribution: cwbAttribution
-                });
-                qpe.addTo(map);
-                cl.addOverlay(qpe , '雷達-1h QPE');
-            } else {
-                cl.removeLayer(qpe);
-                qpe.remove();
-            }
-        })
+        function addXmlTy(id , url , name , product , options) {
+            document.querySelector(id).addEventListener('change' , function(){
+                if (this.checked) {
+                    product = L.xmlTyphoon(url , options);
+                    product.addTo(map);
+                    cl.addOverlay(product , name);
+                } else {
+                    cl.removeLayer(product);
+                    product.remove();
+                }
+            })
+        }
 
-        document.querySelector('#radar4').addEventListener('change' , function(){
-            if (this.checked) {
-                qpf = L.xmlPicture(xmlQPFUrl , 'qpf' , {
-                    fillOpacity: 0.5 , 
-                    attribution: cwbAttribution
-                });
-                qpf.addTo(map);
-                cl.addOverlay(qpf , '雷達-1h QPF');
-            } else {
-                cl.removeLayer(qpf);
-                qpf.remove();
-            }
-        })
+        function addPic(id , url , name , bound , product , options) {
+            document.querySelector(id).addEventListener('change' , function(){
+                if (this.checked) {
+                    product = L.imageOverlay(url , bound , options);
+                    product.addTo(map);
+                    cl.addOverlay(product , name);
+                } else {
+                    cl.removeLayer(product);
+                    product.remove();
+                }
+            })
+        }
 
-        document.querySelector('#ltng1').addEventListener('change' , function(){
-            if (this.checked) {
-                ltng = L.kmzLayer(kmzLtngUrl , {
-                    attribution: cwbAttribution
-                });
-                ltng.addTo(map);
-                cl.addOverlay(ltng , '閃電-即時觀測');
-            } else {
-                cl.removeLayer(ltng);
-                ltng.remove();
-            }
-        })
-
-        document.querySelector('#stn1').addEventListener('change' , function(){
-            if (this.checked) {
-                station = L.xmlLayer(xmlStationUrl , {
-                    color: '#ff6363' , 
-                    fillOpacity: 1 , 
-                    radius: 2.5 , 
-                    attribution: cwbAttribution
-                });
-                station.addTo(map);
-                cl.addOverlay(station , '測站-局屬氣象站');
-            } else {
-                cl.removeLayer(station);
-                station.remove();
-            }
-        })
-        document.querySelector('#stn2').addEventListener('change' , function(){
-            if (this.checked) {
-                autoStation = L.xmlLayer(xmlAutoStationUrl , {
-                    color: '#ff6363' , 
-                    fillOpacity: 1 , 
-                    radius: 2.5 , 
-                    attribution: cwbAttribution
-                });
-                autoStation.addTo(map);
-                cl.addOverlay(autoStation , '測站-自動氣象站');
-            } else {
-                cl.removeLayer(autoStation);
-                autoStation.remove();
-            }
-        })
-        document.querySelector('#stn3').addEventListener('change' , function(){
-            if (this.checked) {
-                gauge = L.xmlLayer(xmlGaugeUrl , {
-                    color: 'blue' , 
-                    fillOpacity: 1 , 
-                    radius: 2.5 , 
-                    attribution: cwbAttribution
-                });
-                gauge.addTo(map);
-                cl.addOverlay(gauge , '測站-自動雨量站');
-            } else {
-                cl.removeLayer(gauge);
-                gauge.remove();
-            }
-        })
-        document.querySelector('#stn4').addEventListener('change' , function(){
-            if (this.checked) {
-                rain = L.xmlPicture(xmlRainUrl , 'rain' , {
-                    fillOpacity: 0.5 , 
-                    attribution: cwbAttribution
-                });
-                rain.addTo(map);
-                cl.addOverlay(rain , '測站-日累積雨量圖');
-            } else {
-                cl.removeLayer(rain);
-                rain.remove();
-            }
-        })
-        document.querySelector('#stn5').addEventListener('change' , function(){
-            if (this.checked) {
-                temp = L.xmlPicture(xmlTempUrl , 'temp' , {
-                    fillOpacity: 0.5 , 
-                    attribution: cwbAttribution
-                });
-                temp.addTo(map);
-                cl.addOverlay(temp , '測站-氣溫分布圖');
-            } else {
-                cl.removeLayer(temp);
-                temp.remove();
-            }
-        })
-
-        document.querySelector('#qpf1').addEventListener('change' , function(){
-            if (this.checked) {
-                qpf12 = L.imageOverlay(imgQPF12Url, imgQPFBounds, {
-                    opacity: 0.7,
-                    attribution: cwbAttribution,
-                });
-                qpf12.addTo(map);
-                cl.addOverlay(qpf12 , 'QPF-0-12h');
-            } else {
-                cl.removeLayer(qpf12);
-                qpf12.remove();
-            }
-        })
-        document.querySelector('#qpf2').addEventListener('change' , function(){
-            if (this.checked) {
-                qpf24 = L.imageOverlay(imgQPF24Url, imgQPFBounds, {
-                    opacity: 0.7,
-                    attribution: cwbAttribution,
-                });
-                qpf24.addTo(map);
-                cl.addOverlay(qpf24 , 'QPF-12-24h');
-            } else {
-                cl.removeLayer(qpf24);
-                qpf24.remove();
-            }
-        })
-
-        document.querySelector('#sat1').addEventListener('change' , function(){
-            if (this.checked) {
-                satvistw = L.imageOverlay(imgSatVISUrl, imgSatBounds, {
-                    opacity: 0.5,
-                    attribution: cwbAttribution,
-                });
-                satvistw.addTo(map);
-                cl.addOverlay(satvistw , '衛星-可見光雲圖');
-            } else {
-                cl.removeLayer(satvistw);
-                satvistw.remove();
-            }
-        })
-        document.querySelector('#sat2').addEventListener('change' , function(){
-            if (this.checked) {
-                satirctw = L.imageOverlay(imgSatIRcUrl, imgSatBounds, {
-                    opacity: 0.5,
-                    attribution: cwbAttribution,
-                });
-                satirctw.addTo(map);
-                cl.addOverlay(satirctw , '衛星-IR彩色雲圖');
-            } else {
-                cl.removeLayer(satirctw);
-                satirctw.remove();
-            }
-        })
-        document.querySelector('#sat3').addEventListener('change' , function(){
-            if (this.checked) {
-                satirgtw = L.imageOverlay(imgSatIRgUrl, imgSatBounds, {
-                    opacity: 0.5,
-                    attribution: cwbAttribution,
-                });
-                satirgtw.addTo(map);
-                cl.addOverlay(satirgtw , '衛星-IR黑白雲圖');
-            } else {
-                cl.removeLayer(satirgtw);
-                satirgtw.remove();
-            }
-        })
-        document.querySelector('#sat4').addEventListener('change' , function(){
-            if (this.checked) {
-                satiretw = L.imageOverlay(imgSatIReUrl, imgSatBounds, {
-                    opacity: 0.5,
-                    attribution: cwbAttribution,
-                });
-                satiretw.addTo(map);
-                cl.addOverlay(satiretw , '衛星-IR色調強化雲圖');
-            } else {
-                cl.removeLayer(satiretw);
-                satiretw.remove();
-            }
-        })
+        function addKmz(id , url , name , product , options) {
+            document.querySelector(id).addEventListener('change' , function(){
+                if (this.checked) {
+                    product = L.kmzLayer(url , options);
+                    product.addTo(map);
+                    cl.addOverlay(product , name);
+                } else {
+                    cl.removeLayer(product);
+                    product.remove();
+                }
+            })
+        }
 
         // var controlBaseOpacity = new L.Control.OpacitySlider(radar, opts.opacityBaseControl.options);
         // var controlOverlayOpacity = new L.Control.OpacitySlider(rain, opts.opacityOverlayControl.options);
@@ -526,7 +389,7 @@ window.addEventListener("DOMContentLoaded" , function(){
     // })
 })
 
-var getGeojson = function(url , options) {
+function getGeojson(url , options) {
     var xhr = new XMLHttpRequest()
     xhr.open('get' , url , false)
     xhr.send(null)

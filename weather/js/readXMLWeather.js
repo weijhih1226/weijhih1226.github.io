@@ -40,6 +40,10 @@ L.XMLLayer = L.FeatureGroup.extend({
 	latLngs: []
 })
 
+L.xmlLayer = function(url, options) {
+	return new L.XMLLayer(url, options);
+};
+
 L.Util.extend(L.XMLLayer, {
 
     parseXML: function (xml, options) {
@@ -317,10 +321,6 @@ processRain = function(value) {
 	} else {
 		return parseFloat(value).toFixed(1);
 	}
-};
-
-L.xmlLayer = function(url, options) {
-	return new L.XMLLayer(url, options);
 };
 
 L.XMLCircle = L.Circle.extend({

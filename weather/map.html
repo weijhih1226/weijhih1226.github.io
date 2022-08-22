@@ -24,6 +24,7 @@
         <!-- <script src="js/L.KML.js"></script> -->
         <script src="js/readXMLWeather.js"></script>
         <script src="js/readXMLPicture.js"></script>
+        <script src="js/readXMLTyphoon.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
@@ -31,15 +32,14 @@
     <script>
         $(document).ready(function () {
             $("#menu>li>a").click(function (e) {
-                e.preventDefault();
+                // e.preventDefault();
                 $(this).siblings(".inmenu").slideDown().parent().siblings().find(".inmenu").slideUp();  //點選到的.menu>li>a顯示裡面的.inmenu
                 $(this).addClass("active").parent().siblings().find("a").removeClass("active");         //點選到的.menu>li>a 顯示動態active
             });
         });
-
-        function check_all(obj, cName) {
+        function check_all(obj , cName) {
             var checkboxs = document.getElementsByName(cName);
-            for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;}
+            for(var i = 0 ; i < checkboxs.length ; i++){checkboxs[i].checked = obj.checked;}
         }
     </script>
     <body>
@@ -71,7 +71,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><input type="checkbox" name="ltng" value="0" id="ltng0" checked="true" onclick="check_all(this, 'ltng')"><span>閃電</span></a>
+                        <a href="#"><input type="checkbox" name="ltng" value="0" id="ltng0" onclick="check_all(this, 'ltng')"><span>閃電</span></a>
                         <ul class="inmenu ltng">
                             <li><input type="checkbox" name="ltng" value="1" id="ltng1"><span>即時觀測</span></li>
                         </ul>
@@ -100,6 +100,12 @@
                             <li><input type="checkbox" name="sat" value="2" id="sat2"><span>IR彩色雲圖</span></li>
                             <li><input type="checkbox" name="sat" value="3" id="sat3"><span>IR黑白雲圖</span></li>
                             <li><input type="checkbox" name="sat" value="4" id="sat4"><span>IR色調強化雲圖</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><input type="checkbox" name="ty" value="0" id="ty0" onclick="check_all(this, 'ty')"><span>颱風</span></a>
+                        <ul class="inmenu ty">
+                            <li><input type="checkbox" name="ty" value="1" id="ty1"><span>路徑資訊</span></li>
                         </ul>
                     </li>
                   </ul>
