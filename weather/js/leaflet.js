@@ -9,9 +9,9 @@ const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/hel
 const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">中央氣象局</a>';
 const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
 
-const geojsonCountyUrl = `${homeGeojson}COUNTY_MOI_1090820.geojson`;
-// const geojsonTownUrl = `${homeGeojson}TOWN_MOI_1091016.geojson`;
-// const geojsonVillageUrl = `${homeGeojson}VILLAGE_MOI_1110426.geojson`;
+const geojsonCountyUrl = `${homeGeojson}COUNTY_MOI_1090820.json`;
+const geojsonTownUrl = `${homeGeojson}TOWN_MOI_1091016.json`;
+const geojsonVillageUrl = `${homeGeojson}VILLAGE_MOI_1110426.json`;
 
 const xmlStationUrl = `${homeCWBOpendata}O-A0003-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
 const xmlAutoStationUrl = `${homeCWBOpendata}O-A0001-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
@@ -197,14 +197,14 @@ window.addEventListener("DOMContentLoaded" , function(){
             }
         }
         var geojsonCounty = getGeojson(geojsonCountyUrl , optionsBnd)
-        // var geojsonTown = getGeojson(geojsonTownUrl , optionsBnd)
-        // var geojsonVillage = getGeojson(geojsonVillageUrl , optionsBnd)
+        var geojsonTown = getGeojson(geojsonTownUrl , optionsBnd)
+        var geojsonVillage = getGeojson(geojsonVillageUrl , optionsBnd)
 
         geojsonCounty.addTo(map);
         const overlays_bnd = {
             '縣市界': geojsonCounty , 
-            // '鄉鎮區界': geojsonTown , 
-            // '村里界': geojsonVillage , 
+            '鄉鎮區界': geojsonTown , 
+            '村里界': geojsonVillage , 
         };
         const clb = new L.Control.Layers(null , overlays_bnd , {collapsed: false}).addTo(map);
 
