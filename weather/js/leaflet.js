@@ -381,6 +381,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     const bounds = track.getBounds();
         //     map.fitBounds(bounds);
         // });
+        // var legend = new L.Control({position: 'bottomright'}).addTo(map);;
 
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
