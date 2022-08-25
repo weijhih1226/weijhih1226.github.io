@@ -251,6 +251,8 @@ window.addEventListener("DOMContentLoaded" , function(){
         const optionsXmlGauge = {color: 'blue' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution};
         const optionsPic = {opacity: 0.5 , attribution: cwbAttribution};
         const optionsPicQPF = {opacity: 0.7 , attribution: cwbAttribution};
+        const kmzTyTrackOptions = {weight: 2 , color1: '#3388ff' , color2: '#3388ff' , color3: '#3388ff' , color4: '#3388ff' , 
+        fillOpacity1: 0.2 , fillOpacity2: 0.2 , fillOpacity3: 0.2 , fillOpacity4: 0.2 , attribution: cwbAttribution}
         
 
         addXmlGrd('#radar1' , '雷達-整合回波' , xmlRadarUrl , 'radar' , radar , optionsXmlGrd)
