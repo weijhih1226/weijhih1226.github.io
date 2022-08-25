@@ -27,12 +27,55 @@ var filenameTY = datetimeTY.substring(0, 4) + datetimeTY.substring(5, 7) + datet
 var homeURL = "https://www.cwb.gov.tw/Data/";
 var homeURL2 = "https://npd.cwb.gov.tw/NPD/";
 window.addEventListener("DOMContentLoaded" , function(){
-    document.getElementById("rain").src = homeURL + "rainfall/" + filenameG + ".QZJ8.jpg";
-    document.getElementById("radar").src = homeURL + "radar/CV1_TW_3600_" + filenameR + ".png";
-    document.getElementById("sat").src = homeURL + "satellite/TWI_IR1_CR_800/TWI_IR1_CR_800-" + filenameS + ".jpg";
-    document.getElementById("lgtn").src = homeURL + "lightning/" + filenameL + "00_lgtl.jpg";
-    document.getElementById("temp").src = homeURL + "temperature/" + filenameT +".GTP8.jpg";
-    document.getElementById("uvi").src = homeURL + "UVI/UVI.png";
-    document.getElementById("skt").src = homeURL2 + "irisme_data/Weather/SKEWT/SKW___000_" + filenameSKT + "_46692.gif";
-    document.getElementById("ty").src = homeURL + "typhoon/TY_NEWS/PTA_" + filenameTY + "-72_zhtw.png";
+    document.querySelector("#rain>img").src = document.querySelector("#rain").href = homeURL + "rainfall/" + filenameG + ".QZJ8.jpg";
+    document.querySelector("#radar>img").src = document.querySelector("#radar").href = homeURL + "radar/CV1_TW_3600_" + filenameR + ".png";
+    document.querySelector("#sat>img").src = document.querySelector("#sat").href = homeURL + "satellite/TWI_IR1_CR_800/TWI_IR1_CR_800-" + filenameS + ".jpg";
+    document.querySelector("#lgtn>img").src = document.querySelector("#lgtn").href = homeURL + "lightning/" + filenameL + "00_lgtl.jpg";
+    document.querySelector("#temp>img").src = document.querySelector("#temp").href = homeURL + "temperature/" + filenameT +".GTP8.jpg";
+    document.querySelector("#uvi>img").src = document.querySelector("#uvi").href = homeURL + "UVI/UVI.png";
+    document.querySelector("#skt>img").src = document.querySelector("#skt").href = homeURL2 + "irisme_data/Weather/SKEWT/SKW___000_" + filenameSKT + "_46692.gif";
+    document.querySelector("#ty>img").src = document.querySelector("#ty").href = homeURL + "typhoon/TY_NEWS/PTA_" + filenameTY + "-72_zhtw.png";
+    // console.log(NetPing(document.querySelector("#rain>img").src))
+    // console.log(getHttpRequest(document.querySelector("#rain>img").src))
+
 })
+
+// function CheckStatus(url){
+//     xh = new ActiveXObject("Microsoft.XMLHTTP")
+//     xh.open("HEAD" , url , false)
+//     xh.send()
+//     return XMLHTTP.status==200
+// }
+
+// function NetPing(){
+//     return CheckStatus(url);
+// }
+
+function getHttpRequest(url) {
+    var xhr = new XMLHttpRequest()
+    xhr.open('GET' , url , true)
+    // xhr.onload = function() {
+    //     if (xhr.status >= 200 && xhr.status < 400) {
+    //       console.log(xhr.responseText);    // Success!
+    //     }
+    // };
+    xhr.send(null)
+    return xhr;
+}
+
+
+function NetPing(url) {
+    $.ajax({
+        type: "GET",
+        cache: false,
+        url: url,
+        data: "",
+        success: function() {
+            Done(1);
+        },
+        error: function() {
+            Done(0);
+        }
+    });
+
+}
