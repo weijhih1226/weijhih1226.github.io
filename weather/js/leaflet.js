@@ -32,6 +32,7 @@ const imgSatIRcUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-
 const imgSatIRgUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-004.jpg';
 const imgSatIReUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-006.jpg';
 const kmzTyNewsUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/W-C0034-002?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=KMZ';
+const xmlTyTrackUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/W-C0034-005?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
 const kmlJTWCUrl = 'https://www.metoc.navy.mil/jtwc/products/wp1122.kmz';
 // const imgWtrMapUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-001.jpg';
 // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
@@ -268,7 +269,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         addPic('#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
         addPic('#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
         addPic('#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
-        addKmzTy('#ty1' , '颱風-潛勢路徑' , kmzTyNewsUrl , null , optionsPic)
+        addXmlTy('#ty1' , xmlTyTrackUrl , '颱風-路徑資訊' , null , kmzTyTrackOptions)
         // loadFile(kmzTyNewsUrl)
         // var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
 
@@ -290,6 +291,19 @@ window.addEventListener("DOMContentLoaded" , function(){
                 } else {
                     cl.removeLayer(product);
                     product.remove();
+                }
+            })
+        }
+
+        function addXmlTy(id , url , name , product , options) {
+            document.querySelector(id).addEventListener('change' , function(){
+                if (this.checked) {
+                        product = L.xmlTyphoon(url , options);
+                        product.addTo(map);
+                        cl.addOverlay(product , name);
+                } else {
+                        cl.removeLayer(product);
+                        product.remove();
                 }
             })
         }
@@ -389,17 +403,12 @@ window.addEventListener("DOMContentLoaded" , function(){
     // })
 })
 
-var getGeojson = function(url , options) {
+function getGeojson(url , options) {
     var xhr = new XMLHttpRequest()
     xhr.open('get' , url , false)
     xhr.send(null)
     var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
     return data;
-}
-
-function check_all(obj, cName) {
-    var checkboxs = document.getElementsByName(cName);
-    for(var i = 0 ; i < checkboxs.length ; i++){checkboxs[i].checked = obj.checked;}
 }
 
 function LatLng(e) {
