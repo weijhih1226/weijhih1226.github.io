@@ -1,4 +1,7 @@
-// import 'KMZImageOverlay.js';
+const homeGeojson = '../weather/map/geojson/';
+const homeCWBOpendata = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/';
+const homeCWBOpendata2 = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/';
+const Authorization = 'CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF';
 
 const ukrainianFlag = '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path fill="#4C7BE1" d="M0 0h12v4H0z"/><path fill="#FFD500" d="M0 4h12v3H0z"/><path fill="#E0BC00" d="M0 7h12v1H0z"/></svg>';
 const leafletAttribution = '<a href="https://leafletjs.com" title="Leaflet - 一個互動式地圖的JavaScript函式庫">' + (ukrainianFlag + ' ') + 'Leaflet</a>';
@@ -6,35 +9,35 @@ const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/hel
 const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">中央氣象局</a>';
 const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
 
-const geojsonCountyUrl = '../weather/map/geojson/TWN_county.json';
-const geojsonTownUrl = '../weather/map/geojson/TWN_town.json';
-const geojsonVillageUrl = '../weather/map/geojson/TWN_village_20140501.json';
+const geojsonCountyUrl = `${homeGeojson}COUNTY_MOI_1090820.geojson`;
+const geojsonTownUrl = `${homeGeojson}TOWN_MOI_1091016.geojson`;
+const geojsonVillageUrl = `${homeGeojson}VILLAGE_MOI_1110426.geojson`;
 
-const xmlStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0003-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlAutoStationUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0001-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlGaugeUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0002-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlQPEUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-B0045-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlQPFUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-B0046-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlRadarUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0059-001?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlRainUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0040-004?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const xmlTempUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0038-003?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
-const kmzRainUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0040-003.kmz';
-const kmzLtngUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0039-001.kmz';
-const kmzTempUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/DIV2/O-A0038-002.kmz';
-const kmzSatVISUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0033-004.kmz';
-const kmzSatIRUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0033-003.kmz';
-const imgRadarUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-A0058-005.png';
-const imgConvUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-B0054-001.png';
-const imgQPF12Url = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-015.png';
-const imgQPF24Url = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-017.png';
-const imgSatVISUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-008.jpg';
-const imgSatIRcUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-002.jpg';
-const imgSatIRgUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-004.jpg';
-const imgSatIReUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MSC/O-C0042-006.jpg';
-const kmzTyNewsUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/W-C0034-002?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=KMZ';
-const xmlTyTrackUrl = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/W-C0034-005?Authorization=CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF&downloadType=WEB&format=XML';
+const xmlStationUrl = `${homeCWBOpendata}O-A0003-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlAutoStationUrl = `${homeCWBOpendata}O-A0001-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlGaugeUrl = `${homeCWBOpendata}O-A0002-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlQPEUrl = `${homeCWBOpendata}O-B0045-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlQPFUrl = `${homeCWBOpendata}F-B0046-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlRadarUrl = `${homeCWBOpendata}O-A0059-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlRainUrl = `${homeCWBOpendata}O-A0040-004?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlTempUrl = `${homeCWBOpendata}O-A0038-003?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const kmzRainUrl = `${homeCWBOpendata2}DIV2/O-A0040-003.kmz`;
+const kmzLtngUrl = `${homeCWBOpendata2}DIV2/O-A0039-001.kmz`;
+const kmzTempUrl = `${homeCWBOpendata2}DIV2/O-A0038-002.kmz`;
+const kmzSatVISUrl = `${homeCWBOpendata2}MSC/O-B0033-004.kmz`;
+const kmzSatIRUrl = `${homeCWBOpendata2}MSC/O-B0033-003.kmz`;
+const imgRadarUrl = `${homeCWBOpendata2}MSC/O-A0058-005.png`;
+const imgConvUrl = `${homeCWBOpendata2}MSC/O-B0054-001.png`;
+const imgQPF12Url = `${homeCWBOpendata2}MFC/F-C0035-015.png`;
+const imgQPF24Url = `${homeCWBOpendata2}MFC/F-C0035-017.png`;
+const imgSatVISUrl = `${homeCWBOpendata2}MSC/O-C0042-008.jpg`;
+const imgSatIRcUrl = `${homeCWBOpendata2}MSC/O-C0042-002.jpg`;
+const imgSatIRgUrl = `${homeCWBOpendata2}MSC/O-C0042-004.jpg`;
+const imgSatIReUrl = `${homeCWBOpendata2}MSC/O-C0042-006.jpg`;
+const kmzTyNewsUrl = `${homeCWBOpendata}W-C0034-002?Authorization=${Authorization}&downloadType=WEB&format=KMZ`;
+const xmlTyTrackUrl = `${homeCWBOpendata}W-C0034-005?Authorization=${Authorization}&downloadType=WEB&format=XML`;
 const kmlJTWCUrl = 'https://www.metoc.navy.mil/jtwc/products/wp1122.kmz';
-// const imgWtrMapUrl = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/MFC/F-C0035-001.jpg';
+// const imgWtrMapUrl = `${homeCWBOpendata2}MFC/F-C0035-001.jpg`;
 // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
 // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
 // const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
@@ -63,10 +66,9 @@ var opts = {
 };
 
 window.addEventListener("DOMContentLoaded" , function(){
-    // 放置地圖
-    var map = L.map('map' , {
-        center: [23.8, 121], // 中心點座標
-        zoom: 7, // 0 - 18
+    var map = L.map('map' , {   // 放置地圖
+        center: [23.8, 121],    // 中心點座標
+        zoom: 7,                // 0 - 18
         mapTypeId: 'hybrid',
         mapTypeIds: ['streets', 'satellite', 'hybrid', 'terrain', 'openStreets'],
         preferCanvas: true, // recommended when loading large layers.
@@ -115,8 +117,7 @@ window.addEventListener("DOMContentLoaded" , function(){
             "leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.js"
         ],
 
-        // 設定圖層來源
-        mapTypes: {
+        mapTypes: {         // 設定圖層來源
             streets: {
                 name: '地圖',
                 url: 'http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}',
@@ -170,7 +171,6 @@ window.addEventListener("DOMContentLoaded" , function(){
     });
 
     map.on('plugins_loaded', function() {
-        
         document.querySelector('#radar1').checked = true;
         document.querySelector('#ltng1').checked = true;
         radar = L.xmlPicture(xmlRadarUrl , 'radar' , {
@@ -198,13 +198,13 @@ window.addEventListener("DOMContentLoaded" , function(){
         }
         var geojsonCounty = getGeojson(geojsonCountyUrl , optionsBnd)
         var geojsonTown = getGeojson(geojsonTownUrl , optionsBnd)
-        // var geojsonVillage = getGeojson(geojsonVillageUrl)
+        var geojsonVillage = getGeojson(geojsonVillageUrl , optionsBnd)
 
         geojsonCounty.addTo(map);
         const overlays_bnd = {
             '縣市界': geojsonCounty , 
             '鄉鎮區界': geojsonTown , 
-            // '村里界': geojsonVillage , 
+            '村里界': geojsonVillage , 
         };
         const clb = new L.Control.Layers(null , overlays_bnd , {collapsed: false}).addTo(map);
 
@@ -251,7 +251,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         const optionsXmlGauge = {color: 'blue' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution};
         const optionsPic = {opacity: 0.5 , attribution: cwbAttribution};
         const optionsPicQPF = {opacity: 0.7 , attribution: cwbAttribution};
-        const kmzTyTrackOptions = {weight: 2 , color1: '#3388ff' , color2: '#3388ff' , color3: '#3388ff' , color4: '#3388ff' , 
+        const optionsTyTrack = {weight: 2 , color1: '#3388ff' , color2: '#3388ff' , color3: '#3388ff' , color4: '#3388ff' , 
         fillOpacity1: 0.2 , fillOpacity2: 0.2 , fillOpacity3: 0.2 , fillOpacity4: 0.2 , attribution: cwbAttribution}
         
 
@@ -271,7 +271,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         addPic('#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
         addPic('#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
         addPic('#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
-        addXmlTy('#ty1' , xmlTyTrackUrl , '颱風-路徑資訊' , null , kmzTyTrackOptions)
+        addXmlTy('#ty1' , xmlTyTrackUrl , '颱風-路徑資訊' , null , optionsTyTrack)
         // loadFile(kmzTyNewsUrl)
         // var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
 
