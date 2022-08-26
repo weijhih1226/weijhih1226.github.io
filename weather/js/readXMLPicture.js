@@ -73,9 +73,23 @@ L.Util.extend(L.XMLPicture, {
 							fillColor: fillColor, 
 							fillOpacity: options.fillOpacity, 
 							stroke: false, 
-							attribution: options.attribution
+							attribution: options.attribution,
+							value: pdata
 						});
 						l.bindTooltip('<h4>回波：' + pdata + ' dBZ</h4>');
+						l.addEventListener('mousemove' , function(){
+							var color = document.querySelector('#color' + readRadarColor(this.options.value));
+							color.style.marginLeft = '0';
+							color.style.marginRight = '6px';
+        					color.style.border = '2px solid #fff';
+						})
+						l.addEventListener('mouseout' , function(){
+							var color = document.querySelector('#color' + readRadarColor(this.options.value));
+							color.style.marginLeft = '2px';
+							color.style.marginRight = '8px';
+        					color.style.border = '0';
+						})
+
 						if (l) { layers.push(l); }
 					}
 				} else if (datatype === 'qpe'){
@@ -137,7 +151,26 @@ L.xmlPicture = function(url, datatype, options) {
 	return new L.XMLPicture(url, datatype, options);
 };
 
-var radarColormap = function(data) {
+function readRadarColor(d) {
+	const tk = [65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, "0"];
+	return d >= tk[0]  ? '0' :
+           d >= tk[1]  ? '1' :
+           d >= tk[2]  ? '2' :
+		   d >= tk[3]  ? '3' :
+		   d >= tk[4]  ? '4' :
+		   d >= tk[5]  ? '5' :
+		   d >= tk[6]  ? '6' :
+		   d >= tk[7]  ? '7' :
+		   d >= tk[8]  ? '8' :
+		   d >= tk[9]  ? '9' :
+		   d >= tk[10] ? '10' :
+		   d >= tk[11] ? '11' :
+		   d >= tk[12] ? '12' :
+		   d >= tk[13] ? '13' :
+		   			     '13';
+}
+
+function radarColormap(data) {
 	if (data < 1) {
 		return '#00ffff';
 	} else if (data >= 1 & data < 2) {

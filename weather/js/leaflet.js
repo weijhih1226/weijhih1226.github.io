@@ -381,23 +381,11 @@ window.addEventListener("DOMContentLoaded" , function(){
         //     const bounds = track.getBounds();
         //     map.fitBounds(bounds);
         // });
-          
-        var legend = new L.Control.Colorbar({position: 'bottomleft'}).addTo(map);
-        legend.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info map_legend'),
-                grades = [1, 0.8, 0.6, 0.4, 0.2, "0", -0.2, -0.4, -0.6, -0.8, -1],
-                labels = [];
-    
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    grades[i + 1] ? '<i style="background:' + getColor(grades[i] - 0.01) + '"></i> ' +
-                    grades[i] + ' ~ ' + grades[i + 1] + '<br>' : '';
-            }
-    
-            return div;
-        }.bind(this);
 
-        legend.addTo(map);
+        var grade = [1, 0.8, 0.6, 0.4, 0.2, 0, -0.2, -0.4, -0.6, -0.8, -1];  
+        var legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);
+        // console.log(legend.onAdd({grades: grades}));
+
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
         new L.Control.Locate({position: 'bottomright' , strings: {title: "定位"}}).addTo(map)
@@ -431,20 +419,6 @@ function getGeojson(url , options) {
 
 function LatLng(e) {
     console.log('(' + e.latlng.lat.toFixed(2) + ',' + e.latlng.lng.toFixed(2) + ')');
-}
-
-function getColor(d) {
-    return d < -0.8  ? '#0000CC' :
-         d < -0.6  ? '#0000FF' :
-         d < -0.4  ? '#5555FF' :
-         d < -0.2  ? '#9999FF' :
-         d < 0     ? '#CCCCFF' :
-         d < 0.2   ? '#FFC8B4' :
-         d < 0.4   ? '#FFA488' :
-         d < 0.6   ? '#FF7744' :
-         d < 0.8   ? '#FF5511' :
-         d < 1     ? '#FF0000' :
-                     'gray';
 }
 
 // L.Control.Pegman = L.Control.Pegman.extend(
