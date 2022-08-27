@@ -182,6 +182,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         });
         radar.addTo(map).setZIndex(2);
         ltng.addTo(map).setZIndex(1000);
+        document.querySelector('#cbr1').checked = true;
         const overlays = {
             '雷達-整合回波': radar , 
             '閃電-即時觀測': ltng , 
@@ -361,6 +362,21 @@ window.addEventListener("DOMContentLoaded" , function(){
                 }
             })
         }
+        
+        document.querySelector('#radar1').addEventListener('change' , function(){
+            document.querySelector('#cbr1').checked = this.checked ? true : false;})
+        document.querySelector('#cbr1').addEventListener('change' , function(){
+            if (this.checked) {legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);}
+            else {legend.remove();}})
+
+        // if (document.querySelector('#radar1').checked) document.querySelector('#cbr1').checked = true;
+        // document.querySelector('#cbr1').addEventListener('change' , function(){
+        //     if (this.checked) {
+        //         legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);
+        //     } else {
+        //         legend.remove();
+        //     }
+        // })
 
         // var controlBaseOpacity = new L.Control.OpacitySlider(radar, opts.opacityBaseControl.options);
         // var controlOverlayOpacity = new L.Control.OpacitySlider(rain, opts.opacityOverlayControl.options);
@@ -387,6 +403,7 @@ window.addEventListener("DOMContentLoaded" , function(){
         // console.log(legend.onAdd({grades: grades}));
 
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
+        latlng = new L.Control.LatLng({position: 'bottomright'}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
         new L.Control.Locate({position: 'bottomright' , strings: {title: "定位"}}).addTo(map)
         new L.Control.FullScreen({position: 'bottomright' , title: '全螢幕' , titleCancel: '關閉全螢幕'}).addTo(map)
@@ -396,6 +413,10 @@ window.addEventListener("DOMContentLoaded" , function(){
         // new L.Control.GroupedLayers(baselayers , overlays , {collapsed: false , groupCheckboxes: true , exclusiveGroups: ["閃電" , "QPF" , "衛星"] , }).addTo(map);
         
         // map.removeControl(z)
+    });
+
+    map.on('mousemove', function(e) {
+        latlng._container.innerHTML = '<div class="lnglat">' + e.latlng.lat.toFixed(2) + ', ' + e.latlng.lng.toFixed(2) + '</div>';
     });
 
 

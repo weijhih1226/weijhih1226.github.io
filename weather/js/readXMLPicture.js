@@ -73,10 +73,10 @@ L.Util.extend(L.XMLPicture, {
 							fillColor: fillColor, 
 							fillOpacity: options.fillOpacity, 
 							stroke: false, 
-							attribution: options.attribution,
+							attribution: options.attribution, 
 							value: pdata
 						});
-						l.bindTooltip('<h4>回波：' + pdata + ' dBZ</h4>');
+						// l.bindTooltip('<h4>回波：' + pdata + ' dBZ</h4>');
 						l.addEventListener('mousemove' , function(){
 							var color = document.querySelector('#color' + readRadarColor(this.options.value));
 							color.style.marginLeft = '0';

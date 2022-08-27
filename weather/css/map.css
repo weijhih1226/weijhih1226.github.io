@@ -21,6 +21,35 @@ input[type=checkbox]:checked + span {
     font-weight: normal;
 }
 
+.leaflet-control-layers-expanded {
+    opacity: .8;
+}
+
+#cbr1 {
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+    opacity: 0;
+	position: absolute;
+}
+#cbr1 + div {
+    width: 18px;
+    height: 18px;
+    margin-left: 8px;
+    border: 2px solid #888;
+    border-radius: 2px;
+    color: #888;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+}
+#cbr1:checked + div {
+    border: 2px solid #fff;
+    background-color: #fff;
+    color: #000;
+}
+
+
 /* .inmenu>li>input {
     display: none; 
 }
@@ -111,11 +140,30 @@ input[type=checkbox]:checked {
     width: 280px;
     padding: 5px;
     background-color: rgba(37, 45, 56, 1);
+    display: flex;
     transition: .5s;
 }
 .inmenu>li:hover {
     background-color: rgba(74, 90, 112, 1);
 }
+
+/* .inmenu>li>div {
+    width: 18px;
+    height: 18px;
+    margin-left: 8px;
+    border: 2px solid #888;
+    border-radius: 2px;
+    color: #888;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: .5s;
+}
+.inmenu>li>div:hover {
+    border: 2px solid #fff;
+    background-color: #fff;
+    color: #000;
+} */
 
 #menu>li>a {
     width: 280px;

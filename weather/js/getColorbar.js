@@ -4,16 +4,16 @@ L.Control.RadarDBZColorbar = L.Control.extend({
         const lineHeight = '16px';
         const units = '<strong>回波</strong>(dBZ)';
 
-        var cb = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        var cb = L.DomUtil.create('div', 'leaflet-control-colorbar leaflet-bar leaflet-control');
         cb.innerHTML = '<div class="units"></div><div class="colorbar"><div class="colors"></div><div class="ticks"></div></div>';
+        cb.style.backgroundColor = 'rgba(255, 255, 255, .7)';
+        cb.style.borderRadius = '5px';
+        cb.style.padding = '6px 8px';
+        cb.style.boxShadow = '0 0 15px rgba(0, 0, 0, .5)';
         var cbUnits = cb.querySelector('.units');
         var cbColorbar = cb.querySelector('.colorbar');
         var cbColors = cb.querySelector('.colors');
         var cbTicks = cb.querySelector('.ticks');
-        cb.style.backgroundColor = 'rgba(255, 255, 255, .5)';
-        cb.style.borderRadius = '5px';
-        cb.style.padding = '6px 8px';
-        cb.style.boxShadow = '0 0 15px rgba(0, 0, 0, .5)';
         cbUnits.style.lineHeight = lineHeight;
         cbUnits.innerHTML = units;
         cbUnits.style.color = textColor;
@@ -54,9 +54,33 @@ L.Control.RadarDBZColorbar = L.Control.extend({
       // Nothing to do here
     }
 });
+
+
+L.Control.LatLng = L.Control.extend({
+    onAdd: function(opts) {
+        var ll = L.DomUtil.create('div', 'leaflet-control-lnglat leaflet-control');
+        ll.style.width = '85px';
+        // ll.style.border = '2px solid #888';
+        ll.style.margin = '0';
+        ll.style.padding = '0 4px';
+        ll.style.backgroundColor = 'rgba(255, 255, 255, .5)';
+        ll.style.color = '#333';
+        ll.style.textAlign = 'center'
+        ll.innerHTML = '<div class="lnglat"> ---, --- </div>'; 
+        return ll;
+    },
   
+    onRemove: function(map) {
+      // Nothing to do here
+    }
+});
+
 L.control.radarDBZColorbar = function(opts) {
     return new L.Control.RadarDBZColorbar(opts);
+}
+
+L.control.latLng = function(opts) {
+    return new L.Control.LatLng(opts);
 }
 
 function getRadarDBZColor(d) {
