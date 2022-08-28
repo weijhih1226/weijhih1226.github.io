@@ -4,7 +4,7 @@ L.Control.RadarDBZColorbar = L.Control.extend({
         const lineHeight = '16px';
         const units = '<strong>回波</strong>(dBZ)';
 
-        var cb = L.DomUtil.create('div', 'leaflet-control-colorbar leaflet-bar leaflet-control');
+        var cb = L.DomUtil.create('div', 'leaflet-control-radardbzcolorbar leaflet-control-colorbar leaflet-bar leaflet-control');
         cb.innerHTML = '<div class="units"></div><div class="colorbar"><div class="colors"></div><div class="ticks"></div></div>';
         cb.style.backgroundColor = 'rgba(255, 255, 255, .7)';
         cb.style.borderRadius = '5px';

@@ -362,12 +362,16 @@ window.addEventListener("DOMContentLoaded" , function(){
                 }
             })
         }
+
+        
         
         document.querySelector('#radar1').addEventListener('change' , function(){
             document.querySelector('#cbr1').checked = this.checked ? true : false;})
         document.querySelector('#cbr1').addEventListener('change' , function(){
             if (this.checked) {legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);}
             else {legend.remove();}})
+
+        
 
         // if (document.querySelector('#radar1').checked) document.querySelector('#cbr1').checked = true;
         // document.querySelector('#cbr1').addEventListener('change' , function(){
@@ -400,6 +404,7 @@ window.addEventListener("DOMContentLoaded" , function(){
 
         var grade = [1, 0.8, 0.6, 0.4, 0.2, 0, -0.2, -0.4, -0.6, -0.8, -1];  
         var legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);
+        console.log(document.querySelector('.leaflet-control-radardbzcolorbar'))
         // console.log(legend.onAdd({grades: grades}));
 
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
