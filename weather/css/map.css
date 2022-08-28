@@ -48,6 +48,13 @@ input[type=checkbox]:checked + span {
     background-color: #fff;
     color: #000;
 }
+#cbr1:disabled {
+    cursor: default;
+}
+#cbr1:disabled + div {
+    opacity: 0;
+    cursor: default;
+}
 
 
 /* .inmenu>li>input {
