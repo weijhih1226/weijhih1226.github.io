@@ -35,12 +35,14 @@
         $(document).ready(function(){
             $("#menu>li>a").click(function(){
                 // e.preventDefault();
-                $(this).siblings(".inmenu").slideDown().parent().siblings().find(".inmenu").slideUp();  //點選到的.menu>li>a顯示裡面的.inmenu
-                $(this).addClass("active").parent().siblings().find("a").removeClass("active");         //點選到的.menu>li>a 顯示動態active
+                // $(this).siblings(".inmenu").slideDown().parent().siblings().find(".inmenu").slideUp();  //點選到的.menu>li>a顯示裡面的.inmenu
+                // $(this).addClass("active").parent().siblings().find("a").removeClass("active");         //點選到的.menu>li>a顯示動態active
+                if ($(this).find("input")[0].checked) {$(this).siblings(".inmenu").slideDown();} 
+                else {$(this).siblings(".inmenu").slideToggle();}
             });
         });
         function check_all(obj, cName){
-            var checkboxs = $('[name="' + cName + '"]');
+            var checkboxs = $('input[class="' + cName + '"]');
             for(var i = 0 ; i < checkboxs.length ; i++){checkboxs[i].checked = obj.checked;}
         };
     </script>
@@ -64,50 +66,50 @@
             <div class="outmenu">
                 <ul id="menu">
                     <li>
-                        <a href="#"><input type="checkbox" name="radar" value="0" id="radar0"><span>雷達</span></a>
-                        <ul class="inmenu radar">
-                            <li><input type="checkbox" name="radar" value="1" id="radar1"><span>整合回波</span><div><input type="checkbox" id="cbr1"><div>例</div></div></li>
-                            <li><input type="checkbox" name="radar" value="2" id="radar2"><span>對流胞偵測</span></li>
-                            <li><input type="checkbox" name="radar" value="3" id="radar3"><span>1h QPE</span></li>
-                            <li><input type="checkbox" name="radar" value="4" id="radar4"><span>1h QPF</span></li>
+                        <a href="#"><input type="checkbox" value="0" id="rdr0" class="rdr"><span>雷達</span></a>
+                        <ul class="inmenu rdr-list">
+                            <li><input type="checkbox" value="1" id="rdr1" class="rdr"><span>整合回波</span><div><input type="checkbox" id="cbr1"><div>例</div></div></li>
+                            <li><input type="checkbox" value="2" id="rdr2" class="rdr"><span>對流胞偵測</span></li>
+                            <li><input type="checkbox" value="3" id="rdr3" class="rdr"><span>1h QPE</span></li>
+                            <li><input type="checkbox" value="4" id="rdr4" class="rdr"><span>1h QPF</span></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><input type="checkbox" name="ltng" value="0" id="ltng0" onchange="check_all(this, 'ltng')"><span>閃電</span></a>
-                        <ul class="inmenu ltng">
-                            <li><input type="checkbox" name="ltng" value="1" id="ltng1"><span>即時觀測</span></li>
+                        <a href="#"><input type="checkbox" value="0" id="ltng0" class="ltng" onchange="check_all(this, 'ltng')"><span>閃電</span></a>
+                        <ul class="inmenu ltng-list">
+                            <li><input type="checkbox" value="1" id="ltng1" class="ltng"><span>即時觀測</span></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><input type="checkbox" name="stn" value="0" id="stn0" onchange="check_all(this, 'stn')"><span>測站</span></a>
-                        <ul class="inmenu stn">
-                            <li><input type="checkbox" name="stn" value="1" id="stn1"><span>局屬氣象站</span></li>
-                            <li><input type="checkbox" name="stn" value="2" id="stn2"><span>自動氣象站</span></li>
-                            <li><input type="checkbox" name="stn" value="3" id="stn3"><span>自動雨量站</span></li>
-                            <li><input type="checkbox" name="stn" value="4" id="stn4"><span>日累積雨量圖</span></li>
-                            <li><input type="checkbox" name="stn" value="5" id="stn5"><span>氣溫分布圖</span></li>
+                        <a href="#"><input type="checkbox" value="0" id="stn0" class="stn" onchange="check_all(this, 'stn')"><span>測站</span></a>
+                        <ul class="inmenu stn-list">
+                            <li><input type="checkbox" value="1" id="stn1" class="stn"><span>局屬氣象站</span></li>
+                            <li><input type="checkbox" value="2" id="stn2" class="stn"><span>自動氣象站</span></li>
+                            <li><input type="checkbox" value="3" id="stn3" class="stn"><span>自動雨量站</span></li>
+                            <li><input type="checkbox" value="4" id="stn4" class="stn"><span>日累積雨量圖</span></li>
+                            <li><input type="checkbox" value="5" id="stn5" class="stn"><span>氣溫分布圖</span></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><input type="checkbox" name="qpf" value="0" id="qpf0" onchange="check_all(this, 'qpf')"><span>QPF</span></a>
-                        <ul class="inmenu qpf">
-                            <li><input type="checkbox" name="qpf" value="1" id="qpf1"><span>0-12h</span></li>
-                            <li><input type="checkbox" name="qpf" value="2" id="qpf2"><span>12-24h</span></li>
+                        <a href="#"><input type="checkbox" value="0" id="qpf0" class="qpf" onchange="check_all(this, 'qpf')"><span>QPF</span></a>
+                        <ul class="inmenu qpf-list">
+                            <li><input type="checkbox" value="1" id="qpf1" class="qpf"><span>0-12h</span></li>
+                            <li><input type="checkbox" value="2" id="qpf2" class="qpf"><span>12-24h</span></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><input type="checkbox" name="sat" value="0" id="sat0" onchange="check_all(this, 'sat')"><span>衛星</span></a>
-                        <ul class="inmenu sat">
-                            <li><input type="checkbox" name="sat" value="1" id="sat1"><span>可見光雲圖</span></li>
-                            <li><input type="checkbox" name="sat" value="2" id="sat2"><span>IR彩色雲圖</span></li>
-                            <li><input type="checkbox" name="sat" value="3" id="sat3"><span>IR黑白雲圖</span></li>
-                            <li><input type="checkbox" name="sat" value="4" id="sat4"><span>IR色調強化雲圖</span></li>
+                        <a href="#"><input type="checkbox" value="0" id="sat0" class="sat" onchange="check_all(this, 'sat')"><span>衛星</span></a>
+                        <ul class="inmenu sat-list">
+                            <li><input type="checkbox" value="1" id="sat1" class="sat"><span>可見光雲圖</span></li>
+                            <li><input type="checkbox" value="2" id="sat2" class="sat"><span>IR彩色雲圖</span></li>
+                            <li><input type="checkbox" value="3" id="sat3" class="sat"><span>IR黑白雲圖</span></li>
+                            <li><input type="checkbox" value="4" id="sat4" class="sat"><span>IR色調強化雲圖</span></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><input type="checkbox" name="ty" value="0" id="ty0" onchange="check_all(this, 'ty')"><span>颱風</span></a>
-                        <ul class="inmenu ty">
-                            <li><input type="checkbox" name="ty" value="1" id="ty1"><span>路徑資訊</span></li>
+                        <a href="#"><input type="checkbox" value="0" id="ty0" class="ty" onchange="check_all(this, 'ty')"><span>颱風</span></a>
+                        <ul class="inmenu ty-list">
+                            <li><input type="checkbox" value="1" id="ty1" class="ty"><span>路徑資訊</span></li>
                         </ul>
                     </li>
                   </ul>

@@ -45,17 +45,20 @@ L.xmlTyphoon = function(url, options) {
 };
 
 L.Util.extend(L.XMLTyphoon, {
-
     parseXML: function (xml, options) {
 		var layers = [], l;
 		var typhoons = xml.getElementsByTagName('tropicalCyclone');
         for (var i = 0; i < typhoons.length; i++) {
             var location = [] , layer = L.layerGroup();
             var year = typhoons[i].getElementsByTagName('year')[0].innerHTML;
-            var typhoonName = typhoons[i].getElementsByTagName('typhoon_name')[0].innerHTML;
-            var cwbTyphoonName = typhoons[i].getElementsByTagName('cwb_typhoon_name')[0].innerHTML;
+            var isTyphoon = typhoons[i].getElementsByTagName('typhoon_name')[0] !== undefined;
+            if (isTyphoon) {
+                var typhoonName = typhoons[i].getElementsByTagName('typhoon_name')[0].innerHTML;
+                var cwbTyphoonName = typhoons[i].getElementsByTagName('cwb_typhoon_name')[0].innerHTML;
+                var cwbTyNo = typhoons[i].getElementsByTagName('cwb_ty_no')[0].innerHTML;
+            }
             var cwbTdNo = typhoons[i].getElementsByTagName('cwb_td_no')[0].innerHTML;
-            var cwbTyNo = typhoons[i].getElementsByTagName('cwb_ty_no')[0].innerHTML;
+            var title = (isTyphoon ? ('<h3>' + cwbTyphoonName + '颱風 (' + typhoonName + ')</h3>') : '<h3>熱帶性低氣壓</h3>')
             var analysisData = typhoons[i].getElementsByTagName('analysis_data')[0].getElementsByTagName('fix');
             for (var j = 0; j < analysisData.length; j++) {
                 var obsYYYY = analysisData[j].getElementsByTagName('fix_time')[0].innerHTML.substring(0 , 4);
@@ -107,13 +110,13 @@ L.Util.extend(L.XMLTyphoon, {
                         // html: `<i class="icofont-hurricane icofont-2x">`,
                         html: `<svg ${svgTag2} width="${windSvgWidth2}" height="${windSvgHeight2}" style="${windSvgStyle2}">${windSvgPath2}</svg>`,
                     }),
-                    title: cwbTyphoonName + '颱風 (' + obsTime + ')',
+                    title: isTyphoon ? (cwbTyphoonName + '颱風 (' + obsTime + ')') : ('熱帶性低氣壓 (' + obsTime + ')'),
                     attribution: options.attribution, 
                 })
                 layer.addLayer(l);
 
-                l.bindPopup('<h3>' + cwbTyphoonName + '颱風 (' + typhoonName + ')</h3>' + 
-                '<h4 style="font-weight: bold; display: inline;">TY/TD編號：</h4><h4 style="font-weight: normal; display: inline;">' + year + cwbTyNo + '/' + cwbTdNo + '<br></h4>' + 
+                l.bindPopup(title + 
+                '<h4 style="font-weight: bold; display: inline;">TY/TD編號：</h4><h4 style="font-weight: normal; display: inline;">' + year + (isTyphoon ? cwbTyNo : '--') + '/' + cwbTdNo + '<br></h4>' + 
                 '<h4 style="font-weight: bold; display: inline;">定位時間：</h4><h4 style="font-weight: normal; display: inline;">' + obsTime + '<br></h4>' + 
                 '<h4 style="font-weight: bold; display: inline;">經緯度：</h4><h4 style="font-weight: normal; display: inline;">' + locLon + ', ' + locLat + '<br></h4>' + 
                 '<h4 style="font-weight: bold; display: inline;">中心氣壓：</h4><h4 style="font-weight: normal; display: inline;">' + pressure + ' hPa<br></h4>' + 
@@ -121,7 +124,7 @@ L.Util.extend(L.XMLTyphoon, {
                 '<h4 style="font-weight: bold; display: inline;">瞬間最大陣風：</h4><h4 style="font-weight: normal; display: inline;">' + maxGustSpeed + ' m/s<br></h4>' + 
                 '<h4 style="font-weight: bold; display: inline;">7級/10級風暴風半徑：</h4><h4 style="font-weight: normal; display: inline;">' + circleOf15ms + '/' + circleOf25ms + ' km<br></h4>',
                 {className: 'xml-popup'});
-                l.bindTooltip('<h3>' + cwbTyphoonName + '颱風 (' + typhoonName + ')</h3>' + '<h4 style="font-weight: normal;">' + obsTime + '</h4>');
+                l.bindTooltip(title + '<h4 style="font-weight: normal;">' + obsTime + '</h4>');
 
                 l = new L.Circle(new L.LatLng(locLat, locLon) , {
                     radius: circleOf15ms * 1000, 
@@ -183,94 +186,6 @@ L.Util.extend(L.XMLTyphoon, {
             layers.push(new L.polyline(location , {weight: options.weight}));
             layers.push(layer);
         }
-		// for (var i = 0; i < locs.length; i++) {
-		// 	var locName = locs[i].getElementsByTagName('locationName')[0].innerHTML;
-		// 	if (locs[i].getElementsByTagName('lat_wgs84')[0] !== undefined) {
-		// 		var locLat = locs[i].getElementsByTagName('lat_wgs84')[0].innerHTML;
-		// 		var locLon = locs[i].getElementsByTagName('lon_wgs84')[0].innerHTML;
-		// 	} else {
-		// 		var locLonLat , locLon , locLat;
-		// 		var locLat67 = locs[i].getElementsByTagName('lat')[0].innerHTML;
-		// 		var locLon67 = locs[i].getElementsByTagName('lon')[0].innerHTML;
-		// 		locLonLat = TWD67toTWD97(locLon67 , locLat67);
-		// 		locLon = locLonLat.lon97;
-		// 		locLat = locLonLat.lat97;
-		// 	}
-
-		// 	var stID = locs[i].getElementsByTagName('stationId')[0].innerHTML;
-		// 	var obsYYYY = locs[i].getElementsByTagName('time')[0].childNodes[1].innerHTML.substring(0 , 4);
-		// 	var obsMM = locs[i].getElementsByTagName('time')[0].childNodes[1].innerHTML.substring(5 , 7);
-		// 	var obsDD = locs[i].getElementsByTagName('time')[0].childNodes[1].innerHTML.substring(8 , 10);
-		// 	var obshh = locs[i].getElementsByTagName('time')[0].childNodes[1].innerHTML.substring(11 , 13);
-		// 	var obsmm = locs[i].getElementsByTagName('time')[0].childNodes[1].innerHTML.substring(14 , 16);
-		// 	var obsss = locs[i].getElementsByTagName('time')[0].childNodes[1].innerHTML.substring(17 , 19);
-		// 	var obsTime = obsYYYY + '/' + obsMM + '/' + obsDD + ' ' + obshh + ':' + obsmm + ':' + obsss + ' L';
-		// 	var element = locs[i].getElementsByTagName('weatherElement');
-
-		// 	if (element[1].childNodes[1].innerHTML === 'WDIR') {
-		// 		const windSpeed = element[2].childNodes[3].childNodes[1].innerHTML;
-		// 		if (windSpeed >= windSvgLevel[0] & windSpeed < windSvgLevel[1]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[0]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[1] & windSpeed < windSvgLevel[2]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[1]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[2] & windSpeed < windSvgLevel[3]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[2]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[3] & windSpeed < windSvgLevel[4]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[3]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[4] & windSpeed < windSvgLevel[5]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[4]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[5] & windSpeed < windSvgLevel[6]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[5]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[6] & windSpeed < windSvgLevel[7]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[6]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[6] & windSpeed < windSvgLevel[8]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[7]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[8] & windSpeed < windSvgLevel[9]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[8]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[9] & windSpeed < windSvgLevel[10]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[9]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		} else if (windSpeed >= windSvgLevel[10]) {
-		// 			var windSvgStyle = `fill: ${windSvgColor[10]}; stroke: ${windSvgStroke}; stroke-width: ${windSvgStrokeWidth};`;
-		// 		};
-
-		// 		l = new L.Marker(new L.LatLng(locLat, locLon) , {
-		// 			icon: L.divIcon({
-		// 				className: "wind-pin",
-		// 				iconAnchor: [12.5, 12.5],
-		// 				html: `<svg ${svgTag} width="${windSvgWidth}" height="${windSvgHeight}" style="${windSvgStyle}">${windSvgPath}</svg>`,
-		// 			}),
-		// 			title: locName + '：' + windSpeed + ' m/s',
-		// 			rotationAngle: parseFloat(element[1].childNodes[3].childNodes[1].innerHTML) + 180,
-		// 			attribution: options.attribution, 
-		// 		})
-		// 		if (l) { layers.push(l); }
-		// 	} else {
-		// 		l = new L.CircleMarker(new L.LatLng(locLat, locLon) , {
-		// 			radius: options.radius, 
-		// 			color: options.color, 
-		// 			fillOpacity: options.fillOpacity, 
-		// 			attribution: options.attribution, 
-		// 		})
-		// 		if (l) { layers.push(l); }
-		// 	}
-
-		// 	var k, j, descr = '';
-		// 	for (k = 0; k < element.length; k++) {
-		// 		var obsData = processObs(element[k].childNodes[1].innerHTML , element[k].childNodes[3].childNodes[1].innerHTML);
-		// 		var obsName = obsData.obsName;
-		// 		var obsValue = obsData.obsValue;
-		// 		var obsUnit = obsData.obsUnit;
-		// 		descr = descr + '<h4 style="font-weight: bold; display: inline;">' + obsName + '：</h4><h4 style="font-weight: normal; display: inline;">' + obsValue + ' ' + obsUnit + '<br></h4>';
-		// 	}
-
-		// 	if (locName) {
-		// 		l.bindPopup('<h3>' + locName + ' (' + stID + ')</h3>' + 
-		// 		// '<h4>(' + parseFloat(locLat).toFixed(3) + ' , ' + parseFloat(locLon).toFixed(3) + ')</h4>' + 
-		// 		'<h4 style="font-weight: bold; display: inline;">觀測資料時間：</h4><h4 style="font-weight: normal; display: inline;">' + obsTime + '<br></h4>' + 
-		// 		descr + '', {className: 'xml-popup'});
-		// 		l.bindTooltip('<h3>' + locName + '</h3>' + '<h4 style="font-weight: normal;">' + stID + '</h4>');
-		// 	}
-		// }
 		return layers;
 	},
 });

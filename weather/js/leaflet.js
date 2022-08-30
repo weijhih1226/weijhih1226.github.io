@@ -65,7 +65,7 @@ var opts = {
     },
 };
 
-window.addEventListener("DOMContentLoaded" , function(e){
+document.addEventListener("DOMContentLoaded" , function(e){
     var map = L.map('map' , {   // 放置地圖
         center: [23.8, 121],    // 中心點座標
         zoom: 7,                // 0 - 18
@@ -171,7 +171,7 @@ window.addEventListener("DOMContentLoaded" , function(e){
     });
 
     map.on('plugins_loaded', function() {
-        document.querySelector('#radar1').checked = true;
+        document.querySelector('#rdr1').checked = true;
         document.querySelector('#ltng1').checked = true;
         radar = L.xmlPicture(xmlRadarUrl , 'radar' , {
             fillOpacity: 0.5 , 
@@ -255,24 +255,24 @@ window.addEventListener("DOMContentLoaded" , function(e){
         const optionsTyTrack = {weight: 2 , color1: '#3388ff' , color2: '#3388ff' , color3: '#3388ff' , color4: '#3388ff' , 
         fillOpacity1: 0.2 , fillOpacity2: 0.2 , fillOpacity3: 0.2 , fillOpacity4: 0.2 , attribution: cwbAttribution}
         
+        addLayer('xmlGrd' , 'radar' , '#rdr1' , '雷達-整合回波' , xmlRadarUrl , null , radar , optionsXmlGrd)
+        addLayer('pic' , 'conv' , '#rdr2' , '雷達-對流胞偵測' , imgConvUrl , imgRadarBounds , null , optionsPic)
+        addLayer('xmlGrd' , 'qpe' , '#rdr3' , '雷達-1h QPE' , xmlQPEUrl , null , null , optionsXmlGrd)
+        addLayer('xmlGrd' , 'qpf' , '#rdr4' , '雷達-1h QPF' , xmlQPFUrl , null , null , optionsXmlGrd)
+        addLayer('kmz' , 'ltng' , '#ltng1' , '閃電-即時觀測' , kmzLtngUrl , null , ltng , optionsPic)
+        addLayer('xmlPnt' , 'stn' , '#stn1' , '測站-局屬氣象站' , xmlStationUrl , null , null , optionsXmlSation)
+        addLayer('xmlPnt' , 'stn' , '#stn2' , '測站-自動氣象站' , xmlAutoStationUrl , null , null , optionsXmlSation)
+        addLayer('xmlPnt' , 'stn' , '#stn3' , '測站-自動雨量站' , xmlGaugeUrl , null , null , optionsXmlGauge)
+        addLayer('xmlGrd' , 'rain' , '#stn4' , '測站-日累積雨量圖' , xmlRainUrl , null , null , optionsXmlGrd)
+        addLayer('xmlGrd' , 'temp' , '#stn5' , '測站-氣溫分布圖' , xmlTempUrl , null , null , optionsXmlGrd)
+        addLayer('pic' , 'qpf' , '#qpf1' , 'QPF-0-12h' , imgQPF12Url , imgQPFBounds , null , optionsPicQPF)
+        addLayer('pic' , 'qpf' , '#qpf2' , 'QPF-12-24h' , imgQPF24Url , imgQPFBounds , null , optionsPicQPF)
+        addLayer('pic' , 'sat' , '#sat1' , '衛星-可見光雲圖' , imgSatVISUrl , imgSatBounds , null , optionsPic)
+        addLayer('pic' , 'sat' , '#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
+        addLayer('pic' , 'sat' , '#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
+        addLayer('pic' , 'sat' , '#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
+        addLayer('xmlTy' , 'ty' , '#ty1' , '颱風-路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
 
-        addXmlGrd('#radar1' , '雷達-整合回波' , xmlRadarUrl , 'radar' , radar , optionsXmlGrd)
-        addPic('#radar2' , '雷達-對流胞偵測' , imgConvUrl , imgRadarBounds , null , optionsPic)
-        addXmlGrd('#radar3' , '雷達-1h QPE' , xmlQPEUrl , 'qpe' , null , optionsXmlGrd)
-        addXmlGrd('#radar4' , '雷達-1h QPF' , xmlQPFUrl , 'qpf' , null , optionsXmlGrd)
-        addKmz('#ltng1' , '閃電-即時觀測' , kmzLtngUrl , ltng , optionsPic)
-        addXmlPnt('#stn1' , '測站-局屬氣象站' , xmlStationUrl , null , optionsXmlSation)
-        addXmlPnt('#stn2' , '測站-自動氣象站' , xmlAutoStationUrl , null , optionsXmlSation)
-        addXmlPnt('#stn3' , '測站-自動雨量站' , xmlGaugeUrl , null , optionsXmlGauge)
-        addXmlGrd('#stn4' , '測站-日累積雨量圖' , xmlRainUrl , 'rain' , null , optionsXmlGrd)
-        addXmlGrd('#stn5' , '測站-氣溫分布圖' , xmlTempUrl , 'temp' , null , optionsXmlGrd)
-        addPic('#qpf1' , 'QPF-0-12h' , imgQPF12Url , imgQPFBounds , null , optionsPicQPF)
-        addPic('#qpf2' , 'QPF-12-24h' , imgQPF24Url , imgQPFBounds , null , optionsPicQPF)
-        addPic('#sat1' , '衛星-可見光雲圖' , imgSatVISUrl , imgSatBounds , null , optionsPic)
-        addPic('#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
-        addPic('#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
-        addPic('#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
-        addXmlTy('#ty1' , xmlTyTrackUrl , '颱風-路徑資訊' , null , optionsTyTrack)
         // loadFile(kmzTyNewsUrl)
         // var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
 
@@ -285,10 +285,15 @@ window.addEventListener("DOMContentLoaded" , function(e){
         // xhr.open('GET', 'https://google.com')
         // xhr.send()
 
-        function addXmlGrd(id , name , url , type , product , options) {
+        function addLayer(format , type , id , name , url , bounds , product , options) {
             document.querySelector(id).addEventListener('change' , function(){
                 if (this.checked) {
-                    product = L.xmlPicture(url , type , options);
+                    if (format === 'xmlGrd') {product = L.xmlPicture(url , type , options);}
+                    else if (format === 'xmlTy') {product = L.xmlTyphoon(url , options);}
+                    else if (format === 'xmlPnt') {product = L.xmlLayer(url , options);}
+                    else if (format === 'kmz') {product = L.kmzLayer(url , options);}
+                    else if (format === 'kmzTy') {product = L.kmzTyLayer(url , options);}
+                    else if (format === 'pic') {product = L.imageOverlay(url , bounds , options);}
                     product.addTo(map);
                     cl.addOverlay(product , name);
                 } else {
@@ -298,76 +303,38 @@ window.addEventListener("DOMContentLoaded" , function(e){
             })
         }
 
-        function addXmlTy(id , url , name , product , options) {
-            document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
-                        product = L.xmlTyphoon(url , options);
-                        product.addTo(map);
-                        cl.addOverlay(product , name);
+        function check_all(obj, cName){
+            var checkboxs = $('input[class="' + cName + '"]');
+            for(var i = 0 ; i < checkboxs.length ; i++){
+                checkboxs[i].checked = obj.checked;
+                if (checkboxs[i].checked) {
+                    console.log('checked')
                 } else {
-                        cl.removeLayer(product);
-                        product.remove();
+                    console.log('not checked')
                 }
-            })
-        }
+            }
+        };
 
-        function addPic(id , name , url , bounds , product , options) {
-            document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
-                    product = L.imageOverlay(url , bounds , options);
-                    product.addTo(map);
-                    cl.addOverlay(product , name);
-                } else {
-                    cl.removeLayer(product);
-                    product.remove();
-                }
-            })
-        }
-
-        function addKmz(id , name , url , product , options) {
-            document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
-                    product = L.kmzLayer(url , options);
-                    product.addTo(map);
-                    cl.addOverlay(product , name);
-                } else {
-                    cl.removeLayer(product);
-                    product.remove();
-                }
-            })
-        }
-
-        function addKmzTy(id , name , url , product , options) {
-            document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
-                    product = L.kmzTyLayer(url , options);
-                    product.addTo(map);
-                    cl.addOverlay(product , name);
-                } else {
-                    cl.removeLayer(product);
-                    product.remove();
-                }
-            })
-        }
-
-        function addXmlPnt(id , name , url , product , options) {
-            document.querySelector(id).addEventListener('change' , function(){
-                if (this.checked) {
-                    product = L.xmlLayer(url , options);
-                    product.addTo(map);
-                    cl.addOverlay(product , name);
-                } else {
-                    cl.removeLayer(product);
-                    product.remove();
-                }
-            })
-        }
-
-        document.querySelector('#radar0').addEventListener('change' , function(){
-            check_all(this, 'radar');
+        document.querySelector('#rdr0').addEventListener('change' , function(){
+            check_all(this, 'rdr');
         })
 
-        document.querySelector('#radar1').addEventListener('change' , function(){
+        // var test = document.querySelectorAll('input[class="rdr"]');
+        // for(var i = 0 ; i < test.length ; i++) {
+        //     test[i].addEventListener('change' , function(){
+        //         console.log('change' + i)
+        //     })
+        // }
+        // test.addEventListener('change' , function(){
+        //     for(var i = 0 ; i < this.length ; i++) {console.log('change')}
+        // })
+        // console.log(document.querySelectorAll('input[class="rdr"]').length)
+
+        // document.querySelector('.rdr').addEventListener('input' , function(){
+        //     console.log('change')
+        // })
+
+        document.querySelector('#rdr1').addEventListener('change' , function(){
             document.querySelector('#cbr1').checked = this.checked ? true : false;
             document.querySelector('#cbr1').disabled = this.checked ? false : true;
             document.querySelector('#cbr1').checked ? legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map) : legend.remove();
