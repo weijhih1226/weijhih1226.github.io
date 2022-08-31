@@ -103,16 +103,16 @@ L.Util.extend(L.XMLTyphoon, {
                     radius: circleOf15ms * 1000, 
                     weight: isNow ? options.weightLine : options.weightOut, 
                     color: isNow ? options.colorFcstOut : options.colorPastOut, 
-                    opacity: options.opacityPast, 
-                    fillOpacity: options.fillOpacityPast, 
+                    opacity: isNow ? options.opacityFcst : options.opacityPast, 
+                    fillOpacity: isNow ? options.fillOpacityFcst : options.fillOpacityPast, 
                     attribution: options.attribution, 
                 }))
                 ty.push(new L.Circle(new L.LatLng(locLat, locLon) , {
                     radius: circleOf25ms * 1000, 
                     weight: isNow ? options.weightLine : options.weightIn, 
                     color: isNow ? options.colorFcstIn : options.colorPastIn, 
-                    opacity: options.opacityPast, 
-                    fillOpacity: options.fillOpacityPast, 
+                    opacity: isNow ? options.opacityFcst : options.opacityPast, 
+                    fillOpacity: isNow ? options.fillOpacityFcst : options.fillOpacityPast, 
                     attribution: options.attribution, 
                 }))
                 ty.push(new L.Marker(new L.LatLng(locLat, locLon) , {
