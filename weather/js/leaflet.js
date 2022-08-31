@@ -51,8 +51,10 @@ const optionsXmlSation = {color: '#ff6363' , fillOpacity: 1 , radius: 2.5 , attr
 const optionsXmlGauge = {color: 'blue' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution};
 const optionsPic = {opacity: 0.5 , attribution: cwbAttribution};
 const optionsPicQPF = {opacity: 0.7 , attribution: cwbAttribution};
-const optionsTyTrack = {weight: 2 , color1: '#3388ff' , color2: '#3388ff' , color3: '#3388ff' , color4: '#3388ff' , 
-fillOpacity1: 0.2 , fillOpacity2: 0.2 , fillOpacity3: 0.2 , fillOpacity4: 0.2 , attribution: cwbAttribution}
+const optionsTyTrack = {weightLine: 2 , weightOut: 1 , weightIn: 1 , 
+    colorPastOut: '#fff' , colorPastIn: '#fff' , colorFcstOut: 'yellow' , colorFcstIn: 'red' , 
+    opacityPast: .1 , opacityObs: 1 , opacityFcst: 1 , 
+    fillOpacityPast: .1 , fillOpacityObs: .1 , fillOpacityFcst: .2 , attribution: cwbAttribution}
 const optionsBnd = {
     style: {
         interactive: false,
