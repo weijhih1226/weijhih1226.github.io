@@ -43,7 +43,14 @@
         });
         function check_all(obj, cName){
             var checkboxs = $('input[class="' + cName + '"]');
-            for(var i = 0 ; i < checkboxs.length ; i++){checkboxs[i].checked = obj.checked;}
+            for(var i = 0 ; i < checkboxs.length ; i++){
+                checkboxs[i].checked = obj.checked;
+                if (checkboxs[i].checked) {
+                    console.log(checkboxs[i].id + 'checked')
+                } else {
+                    console.log(checkboxs[i].id + 'not checked')
+                }
+            }
         };
     </script>
     <body>
@@ -66,7 +73,7 @@
             <div class="outmenu">
                 <ul id="menu">
                     <li>
-                        <a href="#"><input type="checkbox" value="0" id="rdr0" class="rdr"><span>雷達</span></a>
+                        <a href="#"><input type="checkbox" value="0" id="rdr0" class="rdr" onchange="check_all(this, 'rdr')"><span>雷達</span></a>
                         <ul class="inmenu rdr-list">
                             <li><input type="checkbox" value="1" id="rdr1" class="rdr"><span>整合回波</span><div><input type="checkbox" id="cbr1"><div>例</div></div></li>
                             <li><input type="checkbox" value="2" id="rdr2" class="rdr"><span>對流胞偵測</span></li>
