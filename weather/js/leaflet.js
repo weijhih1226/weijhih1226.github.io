@@ -253,6 +253,11 @@ document.addEventListener("DOMContentLoaded" , function(e){
         //         'IR色調強化': satiretw , 
         //     }
         // };
+
+        // tyJTWC = L.kmzLayer(kmzJTWCUrl);
+        // tyJTWC = L.kmzLayer(kmzTyNewsUrl);
+        // tyJTWC.addTo(map);
+        // cl.addOverlay(tyJTWC , '颱風-JTWC');
         
         addRemoveLayer('xmlGrd' , 'radar' , '#rdr1' , '雷達-整合回波' , xmlRadarUrl , null , radar , optionsXmlGrd)
         addRemoveLayer('pic' , 'conv' , '#rdr2' , '雷達-對流胞偵測' , imgConvUrl , imgRadarBounds , null , optionsPic)
@@ -283,10 +288,6 @@ document.addEventListener("DOMContentLoaded" , function(e){
         // }
         // xhr.open('GET', 'https://google.com')
         // xhr.send()
-
-        tyJTWC = L.kmzLayer(kmzJTWCUrl);
-        tyJTWC.addTo(map);
-        cl.addOverlay(tyJTWC , '颱風-JTWC');
 
         function addLayer(format , type , name , url , bounds , product , options) {
             if (format === 'xmlGrd') {product = L.xmlPicture(url , type , options);}
