@@ -36,7 +36,7 @@ const imgSatIRgUrl = `${homeCWBOpendata2}MSC/O-C0042-004.jpg`;
 const imgSatIReUrl = `${homeCWBOpendata2}MSC/O-C0042-006.jpg`;
 const kmzTyNewsUrl = `${homeCWBOpendata}W-C0034-002?Authorization=${Authorization}&downloadType=WEB&format=KMZ`;
 const xmlTyTrackUrl = `${homeCWBOpendata}W-C0034-005?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const kmlJTWCUrl = 'https://www.metoc.navy.mil/jtwc/products/wp1122.kmz';
+const kmzJTWCUrl = 'https://www.metoc.navy.mil/jtwc/products/wp1222.kmz';
 // const imgWtrMapUrl = `${homeCWBOpendata2}MFC/F-C0035-001.jpg`;
 // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
 // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
@@ -52,6 +52,7 @@ const optionsXmlGauge = {color: 'blue' , fillOpacity: 1 , radius: 2.5 , attribut
 const optionsPic = {opacity: 0.5 , attribution: cwbAttribution};
 const optionsPicQPF = {opacity: 0.7 , attribution: cwbAttribution};
 const optionsTyTrack = {weightLine: 2 , weightOut: 1 , weightIn: 1 , 
+    colorTD: '#3388ff' , colorS: 'green' , colorM: 'yellow' , colorL: 'red' , 
     colorPastOut: '#fff' , colorPastIn: '#fff' , colorFcstOut: 'yellow' , colorFcstIn: 'red' , 
     opacityPast: .1 , opacityObs: 1 , opacityFcst: 1 , 
     fillOpacityPast: .1 , fillOpacityObs: .1 , fillOpacityFcst: .2 , attribution: cwbAttribution}
@@ -65,24 +66,6 @@ const optionsBnd = {
 }
 
 // const data = [{format: 'xmlGrd' , type: 'radar' , id: '#rdr1' , name: '雷達-整合回波' , url: xmlRadarUrl , bounds: null , product: radar , options: optionsXmlGrd} , {}]
-
-// addRemoveLayer('xmlGrd' , 'radar' , '#rdr1' , '雷達-整合回波' , xmlRadarUrl , null , radar , optionsXmlGrd)
-// addRemoveLayer('pic' , 'conv' , '#rdr2' , '雷達-對流胞偵測' , imgConvUrl , imgRadarBounds , null , optionsPic)
-// addRemoveLayer('xmlGrd' , 'qpe' , '#rdr3' , '雷達-1h QPE' , xmlQPEUrl , null , null , optionsXmlGrd)
-// addRemoveLayer('xmlGrd' , 'qpf' , '#rdr4' , '雷達-1h QPF' , xmlQPFUrl , null , null , optionsXmlGrd)
-// addRemoveLayer('kmz' , 'ltng' , '#ltng1' , '閃電-即時觀測' , kmzLtngUrl , null , ltng , optionsPic)
-// addRemoveLayer('xmlPnt' , 'stn' , '#stn1' , '測站-局屬氣象站' , xmlStationUrl , null , null , optionsXmlSation)
-// addRemoveLayer('xmlPnt' , 'stn' , '#stn2' , '測站-自動氣象站' , xmlAutoStationUrl , null , null , optionsXmlSation)
-// addRemoveLayer('xmlPnt' , 'stn' , '#stn3' , '測站-自動雨量站' , xmlGaugeUrl , null , null , optionsXmlGauge)
-// addRemoveLayer('xmlGrd' , 'rain' , '#stn4' , '測站-日累積雨量圖' , xmlRainUrl , null , null , optionsXmlGrd)
-// addRemoveLayer('xmlGrd' , 'temp' , '#stn5' , '測站-氣溫分布圖' , xmlTempUrl , null , null , optionsXmlGrd)
-// addRemoveLayer('pic' , 'qpf' , '#qpf1' , 'QPF-0-12h' , imgQPF12Url , imgQPFBounds , null , optionsPicQPF)
-// addRemoveLayer('pic' , 'qpf' , '#qpf2' , 'QPF-12-24h' , imgQPF24Url , imgQPFBounds , null , optionsPicQPF)
-// addRemoveLayer('pic' , 'sat' , '#sat1' , '衛星-可見光雲圖' , imgSatVISUrl , imgSatBounds , null , optionsPic)
-// addRemoveLayer('pic' , 'sat' , '#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
-// addRemoveLayer('pic' , 'sat' , '#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
-// addRemoveLayer('pic' , 'sat' , '#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
-// addRemoveLayer('xmlTy' , 'ty' , '#ty1' , '颱風-路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
 
 var opts = {
     opacityBaseControl: {
@@ -214,9 +197,11 @@ document.addEventListener("DOMContentLoaded" , function(e){
 
         document.querySelector('#rdr1').checked = true;
         document.querySelector('#ltng1').checked = true;
+        document.querySelector('#ty1').checked = true;
         document.querySelector('#cbr1').checked = true;
         var radar = addLayer('xmlGrd' , 'radar' , '雷達-整合回波' , xmlRadarUrl , null , null , optionsXmlGrd)
         var ltng = addLayer('kmz' , 'ltng' , '閃電-即時觀測' , kmzLtngUrl , null , null , optionsPic)
+        var ty = addLayer('xmlTy' , 'ty' , '颱風-路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
         
         var geojsonCounty = getGeojson(geojsonCountyUrl , optionsBnd)
         var geojsonTown = getGeojson(geojsonTownUrl , optionsBnd)
@@ -285,7 +270,7 @@ document.addEventListener("DOMContentLoaded" , function(e){
         addRemoveLayer('pic' , 'sat' , '#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
         addRemoveLayer('pic' , 'sat' , '#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
         addRemoveLayer('pic' , 'sat' , '#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
-        addRemoveLayer('xmlTy' , 'ty' , '#ty1' , '颱風-路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
+        addRemoveLayer('xmlTy' , 'ty' , '#ty1' , '颱風-路徑資訊' , xmlTyTrackUrl , null , ty , optionsTyTrack)
 
         // loadFile(kmzTyNewsUrl)
         // var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
@@ -298,6 +283,10 @@ document.addEventListener("DOMContentLoaded" , function(e){
         // }
         // xhr.open('GET', 'https://google.com')
         // xhr.send()
+
+        tyJTWC = L.kmzLayer(kmzJTWCUrl);
+        tyJTWC.addTo(map);
+        cl.addOverlay(tyJTWC , '颱風-JTWC');
 
         function addLayer(format , type , name , url , bounds , product , options) {
             if (format === 'xmlGrd') {product = L.xmlPicture(url , type , options);}
