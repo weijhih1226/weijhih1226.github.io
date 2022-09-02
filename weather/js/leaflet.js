@@ -44,7 +44,7 @@ const kmzJTWCUrl = 'https://www.metoc.navy.mil/jtwc/products/wp1222.kmz';
 // const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
 const imgRadarBounds = [[17.72, 114.95], [29.0125, 126.5125]];
 const imgQPFBounds = [[21.8, 118.95], [25.8, 122.45]];
-const imgSatBounds = [[19.100625745, 115.976888855], [28.29937425, 126.02300114]];
+const imgSatBounds = [[19.100625745 - 0.05, 115.976888855], [28.29937425 - 0.1, 126.02300114]];
 // const imgWtrMapBounds = [[-1, 80], [48, 175]];
 
 const optionsXmlGrd = {fillOpacity: 0.5 , attribution: cwbAttribution};
@@ -286,18 +286,6 @@ document.addEventListener("DOMContentLoaded" , function(e){
         addRemoveLayer('xmlTy' , 'ty' , '#ty2' , '颱風-CWB路徑資訊' , xmlTyTrackUrl , null , ty2 , optionsTyTrack)
         addRemoveLayer('kmzTy' , 'ty' , '#ty3' , '颱風-JTWC潛勢路徑' , kmzJTWCUrl , null , null , optionsJTWC)
 
-        // loadFile(kmzTyNewsUrl)
-        // var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
-
-        // const xhr = new XMLHttpRequest()
-        // xhr.onreadystatechange = () => {
-        // if (xhr.readyState === 4) {
-        //     console.log(xhr.status === 200 ? xhr.responseText : 'error')
-        // }
-        // }
-        // xhr.open('GET', 'https://google.com')
-        // xhr.send()
-
         function addLayer(format , type , name , url , bounds , product , options) {
             if (format === 'xmlGrd') {product = L.xmlPicture(url , type , options);}
             else if (format === 'xmlTy') {product = L.xmlTyphoon(url , options);}
@@ -395,10 +383,8 @@ document.addEventListener("DOMContentLoaded" , function(e){
         //     map.fitBounds(bounds);
         // });
 
-        var grade = [1, 0.8, 0.6, 0.4, 0.2, 0, -0.2, -0.4, -0.6, -0.8, -1];  
         var legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);
-        // console.log(legend.onAdd({grades: grades}));
-
+        var timeSlider = new L.Control.TimeSlider({position: 'bottomleft'}).addTo(map);
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         latlng = new L.Control.LatLng({position: 'bottomright'}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)
@@ -432,6 +418,30 @@ function getGeojson(url , options) {
 function LatLng(e) {
     console.log('(' + e.latlng.lat.toFixed(2) + ',' + e.latlng.lng.toFixed(2) + ')');
 }
+
+L.Map.include({
+    _initControlPos: function () {
+        var corners = this._controlCorners = {},
+        l = 'leaflet-',
+        container = this._controlContainer = L.DomUtil.create('div', l + 'control-container', this._container);
+  
+        function createCorner(vSide, hSide) {
+            var className = l + vSide + ' ' + l + hSide;
+            corners[vSide + hSide] = L.DomUtil.create('div', className, container);
+        }
+  
+        createCorner('top', 'left');
+        createCorner('top', 'right');
+        createCorner('bottom', 'left');
+        createCorner('bottom', 'right');
+    
+        createCorner('top', 'center');
+        createCorner('middle', 'center');
+        createCorner('middle', 'left');
+        createCorner('middle', 'right');
+        createCorner('bottom', 'center');
+    }
+});
 
 // L.Control.Pegman = L.Control.Pegman.extend(
 //     {
