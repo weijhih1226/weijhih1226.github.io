@@ -91,12 +91,12 @@ L.Util.extend(L.XMLTyphoon, {
                     var maxGustSpeed = analysisData[j].getElementsByTagName('max_gust_speed')[0].innerHTML;
                 }
                 var pressure = analysisData[j].getElementsByTagName('pressure')[0].innerHTML;
-                if (analysisData[j].getElementsByTagName('circle_of_15ms')[0].innerHTML === '') {
+                if (analysisData[j].getElementsByTagName('circle_of_15ms')[0].innerHTML.trim() === '' || analysisData[j].getElementsByTagName('circle_of_15ms')[0].innerHTML === ' ') {
                     var circleOf15ms = 0;
                 } else {
                     var circleOf15ms = analysisData[j].getElementsByTagName('circle_of_15ms')[0].getElementsByTagName('radius')[0].innerHTML;
                 }
-                if (analysisData[j].getElementsByTagName('circle_of_25ms')[0].innerHTML === '') {
+                if (analysisData[j].getElementsByTagName('circle_of_25ms')[0].innerHTML.trim() === '' || analysisData[j].getElementsByTagName('circle_of_25ms')[0].innerHTML === ' ') {
                     var circleOf25ms = 0;
                 } else {
                     var circleOf25ms = analysisData[j].getElementsByTagName('circle_of_25ms')[0].getElementsByTagName('radius')[0].innerHTML;
@@ -186,12 +186,12 @@ L.Util.extend(L.XMLTyphoon, {
                 var pressure = forecastData[j].getElementsByTagName('pressure')[0].innerHTML;
                 var movingSpeed = forecastData[j].getElementsByTagName('moving_speed')[0].innerHTML;
                 var movingDirection = forecastData[j].getElementsByTagName('moving_direction')[0].innerHTML;
-                if (forecastData[j].getElementsByTagName('circle_of_15ms')[0].innerHTML === '') {
+                if (forecastData[j].getElementsByTagName('circle_of_15ms')[0].innerHTML.trim() === '' || forecastData[j].getElementsByTagName('circle_of_15ms')[0].innerHTML === ' ') {
                     var circleOf15ms = 0;
                 } else {
                     var circleOf15ms = forecastData[j].getElementsByTagName('circle_of_15ms')[0].getElementsByTagName('radius')[0].innerHTML;
                 }
-                if (forecastData[j].getElementsByTagName('circle_of_25ms')[0].innerHTML === '') {
+                if (forecastData[j].getElementsByTagName('circle_of_25ms')[0].innerHTML.trim() === '' || forecastData[j].getElementsByTagName('circle_of_25ms')[0].innerHTML === ' ') {
                     var circleOf25ms = 0;
                 } else {
                     var circleOf25ms = forecastData[j].getElementsByTagName('circle_of_25ms')[0].getElementsByTagName('radius')[0].innerHTML;

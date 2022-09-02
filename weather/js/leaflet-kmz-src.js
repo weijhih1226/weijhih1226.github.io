@@ -7,11 +7,11 @@
 	// import JSZip from 'jszip';
 	// import * as toGeoJSON from '@tmcw/togeojson';
 
-	function loadFile(url) {
+	function loadFile(url, setRequestHeader) {
 		return new Promise((resolve, reject) => {
 			let xhr = new XMLHttpRequest();
 			xhr.open('GET', url);
-			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			xhr.setRequestHeader(setRequestHeader.header, setRequestHeader.value);
 			xhr.responseType = "arraybuffer";
 			xhr.onload = () => {
 				if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 0)) {
@@ -183,27 +183,27 @@
 			preferCanvas: false,
 		},
 
-		initialize: function(kmzUrl, options) {
+		initialize: function(kmzUrl, setRequestHeader, options) {
 			L.extend(this.options, options);
 
 			if (L.Browser.mobile) this.options.bindTooltip = false;
 
 			this._layers = {};
 
-			if (kmzUrl) this.load(kmzUrl);
+			if (kmzUrl) this.load(kmzUrl, setRequestHeader);
 		},
 
-		add: function(kmzUrl) {
-			this.load(kmzUrl);
+		add: function(kmzUrl, setRequestHeader) {
+			this.load(kmzUrl, setRequestHeader);
 		},
 
-		load: function(kmzUrl) {
+		load: function(kmzUrl, setRequestHeader) {
 			L.KMZLayer._jsPromise = lazyLoader(this._requiredJSModules(), L.KMZLayer._jsPromise)
-				.then(() => this._load(kmzUrl));
+				.then(() => this._load(kmzUrl, setRequestHeader));
 		},
 
-		_load: function(url) {
-			return loadFile(url).then((data) => this._parse(data, { name: getFileName(url), icons: {} }));
+		_load: function(url, setRequestHeader) {
+			return loadFile(url, setRequestHeader).then((data) => this._parse(data, { name: getFileName(url), icons: {} }));
 		},
 
 		_parse: function(data, props) {
@@ -328,8 +328,8 @@
 		},
 	});
 
-	L.kmzLayer = function(url, options) {
-		return new L.KMZLayer(url, options);
+	L.kmzLayer = function(url, setRequestHeader, options) {
+		return new L.KMZLayer(url, setRequestHeader, options);
 	};
 
 	/**

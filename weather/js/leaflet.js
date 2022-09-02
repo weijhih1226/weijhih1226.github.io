@@ -6,7 +6,8 @@ const Authorization = 'CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF';
 const ukrainianFlag = '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path fill="#4C7BE1" d="M0 0h12v4H0z"/><path fill="#FFD500" d="M0 4h12v3H0z"/><path fill="#E0BC00" d="M0 7h12v1H0z"/></svg>';
 const leafletAttribution = '<a href="https://leafletjs.com" title="Leaflet - 一個互動式地圖的JavaScript函式庫">' + (ukrainianFlag + ' ') + 'Leaflet</a>';
 const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html" target="_blank" title="地圖來源：Google">Google</a>';
-const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">中央氣象局</a>';
+const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">CWB</a>';
+const jtwcAttribution = '&copy; <a href="https://www.metoc.navy.mil/jtwc/jtwc.html?notices" target="_blank" title="氣象圖資來源：美軍聯合颱風警報中心">JTWC</a>';
 const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
 
 const geojsonCountyUrl = `${homeGeojson}COUNTY_MOI_1090820.json`;
@@ -56,6 +57,7 @@ const optionsTyTrack = {weightLine: 2 , weightOut: 1 , weightIn: 1 ,
     colorPastOut: '#fff' , colorPastIn: '#fff' , colorFcstOut: 'yellow' , colorFcstIn: 'red' , 
     opacityPast: .1 , opacityObs: 1 , opacityFcst: 1 , 
     fillOpacityPast: .1 , fillOpacityObs: .1 , fillOpacityFcst: .2 , attribution: cwbAttribution}
+const optionsJTWC = {attribution: jtwcAttribution}
 const optionsBnd = {
     style: {
         interactive: false,
@@ -64,6 +66,9 @@ const optionsBnd = {
         fillOpacity: 0,
     }
 }
+
+const setRequestHeader = {header: 'X-Requested-With', value: 'XMLHttpRequest'};
+const setRequestHeaderTy = {header: 'Content-Type', value: 'application/x-www-form-urlencoded'};
 
 // const data = [{format: 'xmlGrd' , type: 'radar' , id: '#rdr1' , name: '雷達-整合回波' , url: xmlRadarUrl , bounds: null , product: radar , options: optionsXmlGrd} , {}]
 
@@ -198,10 +203,13 @@ document.addEventListener("DOMContentLoaded" , function(e){
         document.querySelector('#rdr1').checked = true;
         document.querySelector('#ltng1').checked = true;
         document.querySelector('#ty1').checked = true;
+        document.querySelector('#ty2').checked = true;
         document.querySelector('#cbr1').checked = true;
         var radar = addLayer('xmlGrd' , 'radar' , '雷達-整合回波' , xmlRadarUrl , null , null , optionsXmlGrd)
         var ltng = addLayer('kmz' , 'ltng' , '閃電-即時觀測' , kmzLtngUrl , null , null , optionsPic)
-        var ty = addLayer('xmlTy' , 'ty' , '颱風-路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
+        var ty = addLayer('kmzTy' , 'ty' , '颱風-CWB潛勢路徑' , kmzTyNewsUrl , null , null , optionsTyTrack)
+        var ty2 = addLayer('xmlTy' , 'ty' , '颱風-CWB路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
+        // var sat = addLayer('kmzTy' , 'sat' , '衛星-可見光' , kmzSatVISUrl , null , null , optionsTyTrack)
         
         var geojsonCounty = getGeojson(geojsonCountyUrl , optionsBnd)
         var geojsonTown = getGeojson(geojsonTownUrl , optionsBnd)
@@ -254,10 +262,9 @@ document.addEventListener("DOMContentLoaded" , function(e){
         //     }
         // };
 
-        // tyJTWC = L.kmzLayer(kmzJTWCUrl);
-        // tyJTWC = L.kmzLayer(kmzTyNewsUrl);
-        // tyJTWC.addTo(map);
-        // cl.addOverlay(tyJTWC , '颱風-JTWC');
+        // sat = L.kmzLayer(kmzSatVISUrl , setRequestHeaderTy , optionsTyTrack);
+        // sat.addTo(map);
+        // cl.addOverlay(sat , '衛星-可見光');
         
         addRemoveLayer('xmlGrd' , 'radar' , '#rdr1' , '雷達-整合回波' , xmlRadarUrl , null , radar , optionsXmlGrd)
         addRemoveLayer('pic' , 'conv' , '#rdr2' , '雷達-對流胞偵測' , imgConvUrl , imgRadarBounds , null , optionsPic)
@@ -275,7 +282,9 @@ document.addEventListener("DOMContentLoaded" , function(e){
         addRemoveLayer('pic' , 'sat' , '#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
         addRemoveLayer('pic' , 'sat' , '#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
         addRemoveLayer('pic' , 'sat' , '#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
-        addRemoveLayer('xmlTy' , 'ty' , '#ty1' , '颱風-路徑資訊' , xmlTyTrackUrl , null , ty , optionsTyTrack)
+        addRemoveLayer('kmzTy' , 'ty' , '#ty1' , '颱風-CWB潛勢路徑' , kmzTyNewsUrl , null , ty , optionsTyTrack)
+        addRemoveLayer('xmlTy' , 'ty' , '#ty2' , '颱風-CWB路徑資訊' , xmlTyTrackUrl , null , ty2 , optionsTyTrack)
+        addRemoveLayer('kmzTy' , 'ty' , '#ty3' , '颱風-JTWC潛勢路徑' , kmzJTWCUrl , null , null , optionsJTWC)
 
         // loadFile(kmzTyNewsUrl)
         // var data = L.geoJSON(JSON.parse(xhr.responseText) , options);
@@ -293,8 +302,8 @@ document.addEventListener("DOMContentLoaded" , function(e){
             if (format === 'xmlGrd') {product = L.xmlPicture(url , type , options);}
             else if (format === 'xmlTy') {product = L.xmlTyphoon(url , options);}
             else if (format === 'xmlPnt') {product = L.xmlLayer(url , options);}
-            else if (format === 'kmz') {product = L.kmzLayer(url , options);}
-            else if (format === 'kmzTy') {product = L.kmzTyLayer(url , options);}
+            else if (format === 'kmz') {product = L.kmzLayer(url , setRequestHeader , options);}
+            else if (format === 'kmzTy') {product = L.kmzLayer(url , setRequestHeaderTy , options);}
             else if (format === 'pic') {product = L.imageOverlay(url , bounds , options);}
             product.addTo(map);
             cl.addOverlay(product , name);

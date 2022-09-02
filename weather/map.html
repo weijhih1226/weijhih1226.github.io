@@ -15,6 +15,7 @@
         <script src="https://unpkg.com/leaflet-ui@0.5.9/dist/leaflet-ui-src.js"></script>
         <!-- <script src="https://unpkg.com/leaflet-kmz@1.0.8/dist/leaflet-kmz-src.js"></script> -->
         <script src="js/leaflet-kmz-src.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jsfive@0.3.10/dist/browser/hdf5.js"></script>
         <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
         <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxfK5uv5MVnV51Y7THaBzNclplGe_PabA&callback=initMap"></script> -->
         <!-- <script src="https://unpkg.com/leaflet-pointable@0.0.4/leaflet-pointable.js"></script> -->
@@ -117,7 +118,9 @@
                     <li>
                         <a href="#"><input type="checkbox" value="0" id="ty0" class="ty" onchange="check_all(this, 'ty')"><span>颱風</span></a>
                         <ul class="inmenu ty-list">
-                            <li><input type="checkbox" value="1" id="ty1" class="ty"><span>路徑資訊</span></li>
+                            <li><input type="checkbox" value="1" id="ty1" class="ty"><span>CWB潛勢路徑</span></li>
+                            <li><input type="checkbox" value="2" id="ty2" class="ty"><span>CWB路徑資訊</span></li>
+                            <li><input type="checkbox" value="3" id="ty3" class="ty"><span>JTWC潛勢路徑</span></li>
                         </ul>
                     </li>
                   </ul>
