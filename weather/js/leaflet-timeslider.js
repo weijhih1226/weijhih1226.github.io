@@ -10,7 +10,6 @@ L.Control.TimeSlider = L.Control.extend({
         opacity_slider_div.style.height = '20px';
         opacity_slider_div.style.width = '20px';
         opacity_slider_div.style.backgroundColor = 'white';
-        console.log(L.Map)
         $(opacity_slider_div).slider({
             orientation: "vertical",
             range: "min",
