@@ -384,7 +384,10 @@ document.addEventListener("DOMContentLoaded" , function(e){
         // });
 
         var legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);
-        var timeSlider = new L.Control.TimeSlider({position: 'bottomleft'}).addTo(map);
+        var timeSlider = new L.Control.TimeSlider({position: 'bottomcenter'}).addTo(map);
+        // map.addControl(timeSlider)
+        // timeSlider.setOpacityLayer(radar);
+        // radar.setOpacity(0.5);
         new L.Control.Attribution({position: 'bottomright' , prefix: leafletAttribution}).addTo(map);
         latlng = new L.Control.LatLng({position: 'bottomright'}).addTo(map);
         new L.Control.Scale({position: 'bottomright' , imperial: false}).addTo(map)

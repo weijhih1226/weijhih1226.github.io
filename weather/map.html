@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/map.css"/>
         <link rel="stylesheet" href="css/leaflet.css"/>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
         <link rel="stylesheet" href="../image/icon/icofont/icofont.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
@@ -56,6 +57,18 @@
                 }
             }
         };
+    </script>
+    <script>
+        $( "#slider" ).slider({
+            orientation: "vertical",
+            range: "min",
+            min: 0,
+            max: 100,
+            value: 60,
+            slide: function( event, ui ) {
+                $( "#amount" ).val( ui.value );
+            }
+        });
     </script>
     <body>
         <header>
@@ -123,6 +136,7 @@
                             <li><input type="checkbox" value="1" id="ty1" class="ty"><span>CWB潛勢路徑</span></li>
                             <li><input type="checkbox" value="2" id="ty2" class="ty"><span>CWB路徑資訊</span></li>
                             <li><input type="checkbox" value="3" id="ty3" class="ty"><span>JTWC潛勢路徑</span></li>
+                            <li><div id="slider" style="height:200px;"></div></li>
                         </ul>
                     </li>
                   </ul>

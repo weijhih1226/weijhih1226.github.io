@@ -1,15 +1,18 @@
+var opacity_layer;
+// var opacity_layer_group;
+
 L.Control.TimeSlider = L.Control.extend({
     options: {
-        position: 'bottomleft'
+        position: 'bottomcenter'
     },
     setOpacityLayer: function (layer) {
         opacity_layer = layer;
     },
     onAdd: function (map) {
         var opacity_slider_div = L.DomUtil.create('div', 'leaflet-control-opacity leaflet-bar leaflet-control');
-        opacity_slider_div.style.height = '20px';
-        opacity_slider_div.style.width = '20px';
-        opacity_slider_div.style.backgroundColor = 'white';
+        opacity_slider_div.style.height = '50px';
+        opacity_slider_div.style.width = '1000px';
+        opacity_slider_div.style.backgroundColor = 'rgba(255 , 255 , 255 , .7)';
         $(opacity_slider_div).slider({
             orientation: "vertical",
             range: "min",
@@ -20,7 +23,7 @@ L.Control.TimeSlider = L.Control.extend({
             start: function ( event, ui) {
                 map.dragging.disable();
                 map.once('mousedown', function (e) { 
-                map.dragging.enable();
+                    map.dragging.enable();
                 });
             },
             slide: function ( event, ui ) {
