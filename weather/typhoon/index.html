@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <meta http-equiv="refresh" content="300">
+        <meta name="google-site-verification" content="3_tLbpMalpboQd6M2CIgfnBUIvA0lKi8eianyoQZiTw"/>
+        <title>觀天象｜小威的漂流手札</title>
+        <link rel="stylesheet" href="../css/style.css"/>
+        <link rel="stylesheet" href="../css/map.css"/>
+        <link rel="stylesheet" href="../css/leaflet.css"/>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="../../image/icon/icofont/icofont.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet@1.7.0/dist/leaflet-src.js"></script>
+        <script src="https://unpkg.com/leaflet-ui@0.5.9/dist/leaflet-ui-src.js"></script>
+        <script src="../js/leaflet-kmz-src.js"></script>
+        <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
+        <script src="../js/leaflet.js"></script>
+        <script src="../js/readKMZ.js"></script>
+        <script src="../js/readXMLWeather.js"></script>
+        <script src="../js/readXMLPicture.js"></script>
+        <script src="../js/readXMLTyphoon.js"></script>
+        <script src="../js/getColorbar.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    </head>
+    <script>
+        $(document).ready(function(){
+            $("#menu>li>a").click(function(){
+                if ($(this).find("input")[0].checked) {$(this).siblings(".inmenu").slideDown();} 
+                else {$(this).siblings(".inmenu").slideToggle();}
+            });
+        });
+        function check_all(obj, cName){
+            var checkboxs = $('input[class="' + cName + '"]');
+            for(var i = 0 ; i < checkboxs.length ; i++){
+                checkboxs[i].checked = obj.checked;
+                if (checkboxs[i].checked) {
+                    console.log(checkboxs[i].id + 'checked')
+                } else {
+                    console.log(checkboxs[i].id + 'not checked')
+                }
+            }
+        };
+    </script>
+    <script>
+        $( "#slider" ).slider({
+            orientation: "vertical",
+            range: "min",
+            min: 0,
+            max: 100,
+            value: 60,
+            slide: function( event, ui ) {
+                $( "#amount" ).val( ui.value );
+            }
+        });
+    </script>
+    <body>
+        <header>
+            <div class="header-inner">
+                <nav id="navbar" class="navbar fixed-top navbar-expand-lg scrolling-navbar top-nav-collapse">
+                    <div>
+                        <a class="logo" href=".."><strong>小威的漂流手札</strong></a>｜<a class="sublogo" href="index.html"><strong>觀天象</strong></a>
+                    </div>
+                    <ul>
+                        <li><a href="../">Home</a></li>
+                        <li><a href="../map/">Map</a></li>
+                        <li><a href="../typhoon/">Typhoon</a></li>
+                        <li><a href="../windy/">Windy</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <div id="map"></div>
+            <div class="outmenu">
+                <ul id="menu">
+                    <li>
+                        <a href="#"><input type="checkbox" value="0" id="rdr0" class="rdr" onchange="check_all(this, 'rdr')"><span>雷達</span></a>
+                        <ul class="inmenu rdr-list">
+                            <li><input type="checkbox" value="1" id="rdr1" class="rdr"><span>整合回波</span><div><input type="checkbox" id="cbr1"><div>例</div></div></li>
+                            <li><input type="checkbox" value="2" id="rdr2" class="rdr"><span>對流胞偵測</span></li>
+                            <li><input type="checkbox" value="3" id="rdr3" class="rdr"><span>1h QPE</span></li>
+                            <li><input type="checkbox" value="4" id="rdr4" class="rdr"><span>1h QPF</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><input type="checkbox" value="0" id="ltng0" class="ltng" onchange="check_all(this, 'ltng')"><span>閃電</span></a>
+                        <ul class="inmenu ltng-list">
+                            <li><input type="checkbox" value="1" id="ltng1" class="ltng"><span>即時觀測</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><input type="checkbox" value="0" id="stn0" class="stn" onchange="check_all(this, 'stn')"><span>測站</span></a>
+                        <ul class="inmenu stn-list">
+                            <li><input type="checkbox" value="1" id="stn1" class="stn"><span>局屬氣象站</span></li>
+                            <li><input type="checkbox" value="2" id="stn2" class="stn"><span>自動氣象站</span></li>
+                            <li><input type="checkbox" value="3" id="stn3" class="stn"><span>自動雨量站</span></li>
+                            <li><input type="checkbox" value="4" id="stn4" class="stn"><span>日累積雨量圖</span></li>
+                            <li><input type="checkbox" value="5" id="stn5" class="stn"><span>氣溫分布圖</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><input type="checkbox" value="0" id="qpf0" class="qpf" onchange="check_all(this, 'qpf')"><span>QPF</span></a>
+                        <ul class="inmenu qpf-list">
+                            <li><input type="checkbox" value="1" id="qpf1" class="qpf"><span>0-12h</span></li>
+                            <li><input type="checkbox" value="2" id="qpf2" class="qpf"><span>12-24h</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><input type="checkbox" value="0" id="sat0" class="sat" onchange="check_all(this, 'sat')"><span>衛星</span></a>
+                        <ul class="inmenu sat-list">
+                            <li><input type="checkbox" value="1" id="sat1" class="sat"><span>可見光雲圖</span></li>
+                            <li><input type="checkbox" value="2" id="sat2" class="sat"><span>IR彩色雲圖</span></li>
+                            <li><input type="checkbox" value="3" id="sat3" class="sat"><span>IR黑白雲圖</span></li>
+                            <li><input type="checkbox" value="4" id="sat4" class="sat"><span>IR色調強化雲圖</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><input type="checkbox" value="0" id="ty0" class="ty" onchange="check_all(this, 'ty')"><span>颱風</span></a>
+                        <ul class="inmenu ty-list">
+                            <li><input type="checkbox" value="1" id="ty1" class="ty"><span>CWB潛勢路徑</span></li>
+                            <li><input type="checkbox" value="2" id="ty2" class="ty"><span>CWB路徑資訊</span></li>
+                            <li><input type="checkbox" value="3" id="ty3" class="ty"><span>JTWC潛勢路徑</span></li>
+                            <li><div id="slider" style="height:200px;"></div></li>
+                        </ul>
+                    </li>
+                  </ul>
+            </div>
+        </main>
+        <footer>
+        </footer>
+    </body>
+</html>
