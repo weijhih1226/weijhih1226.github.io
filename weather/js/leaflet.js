@@ -1,4 +1,4 @@
-const homeGeojson = '../weather/map/geojson/';
+const homeGeojson = '/weather/map/geojson/';
 const homeCWBOpendata = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/';
 const homeCWBOpendata2 = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/';
 const Authorization = 'CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF';
