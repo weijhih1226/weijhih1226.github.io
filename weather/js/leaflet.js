@@ -384,7 +384,7 @@ document.addEventListener("DOMContentLoaded" , function(e){
         // });
 
         var legend = new L.Control.RadarDBZColorbar({position: 'bottomleft'}).addTo(map);
-        var timeSlider = new L.Control.TimeSlider({position: 'bottomcenter'}).addTo(map);
+        // var timeSlider = new L.Control.TimeSlider({position: 'bottomcenter'}).addTo(map);
         // map.addControl(timeSlider)
         // timeSlider.setOpacityLayer(radar);
         // radar.setOpacity(0.5);
