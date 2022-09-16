@@ -35,6 +35,31 @@ window.addEventListener("DOMContentLoaded" , function(){
     document.querySelector("#uvi>img").src = document.querySelector("#uvi").href = homeURL + "UVI/UVI.png";
     document.querySelector("#skt>img").src = document.querySelector("#skt").href = homeURL2 + "irisme_data/Weather/SKEWT/SKW___000_" + filenameSKT + "_46692.gif";
     document.querySelector("#ty>img").src = document.querySelector("#ty").href = homeURL + "typhoon/TY_NEWS/PTA_" + filenameTY + "-72_zhtw.png";
+    
+    // fetch(document.querySelector("#rain>img").src, {method: 'get'})
+    // .then(function(response) {
+    //     console.log(response)
+    // }).catch(function(err) {
+    //     console.log(err)
+    // })
+
+    // var xhr = new XMLHttpRequest();
+
+    // xhr.open('GET', homeURL + "rainfall/" + filenameG + ".QZJ8.jpg");
+    // // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    // // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // xhr.setRequestHeader('Content-Type', 'image/jpeg');
+    // xhr.responseType = "image";
+    // xhr.send(null);
+    // console.log(xhr)
+    // try { // statements to try
+    //     document.querySelector("#rain>img").src = homeURL + "rainfall/" + filenameG + ".QZJ81.jpg";
+    // }
+    // catch (e) {
+    //     console.log(e); // 將例外傳至例外處理機制
+    // }
+    
+
     // console.log(NetPing(document.querySelector("#rain>img").src))
     // console.log(getHttpRequest(document.querySelector("#rain>img").src))
 
