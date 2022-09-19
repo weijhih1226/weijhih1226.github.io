@@ -7,6 +7,7 @@
         <meta name="google-site-verification" content="3_tLbpMalpboQd6M2CIgfnBUIvA0lKi8eianyoQZiTw" />
         <title>觀天象｜小威的漂流手札</title>
         <link rel="stylesheet" href="/weather/css/style.css">
+        <link rel="stylesheet" href="/weather/css/gallery.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
         <script src="/weather/js/getTime.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -33,15 +34,24 @@
             <div class="content">
                 <div><a id="rain" target="_blank"><img title="Rainfall" alt="Rainfall"></a></div>
                 <div><a id="radar" target="_blank"><img title="Radar" alt="Radar"></a></div>
-                <div><a id="sat" target="_blank"><img title="Satellite" alt="Satellite"></a></div>
+                <div><a id="satvsg" target="_blank"><img title="Satellite" alt="Satellite"></a></div>
+                <div><a id="satvst" target="_blank"><img title="Satellite" alt="Satellite"></a></div>
+                <div><a id="satirc" target="_blank"><img title="Satellite" alt="Satellite"></a></div>
+                <div><a id="satire" target="_blank"><img title="Satellite" alt="Satellite"></a></div>
                 <div><a id="lgtn" target="_blank"><img title="Lightning" alt="Lightning"></a></div>
                 <div><a id="temp" target="_blank"><img title="Temperature" alt="Temperture"></a></div>
                 <div><a id="uvi" target="_blank"><img title="UV Index" alt="UV Index"></a></div>
                 <div><a id="skt" target="_blank"><img title="Skew-T" alt="Skew-T"></a></div>
                 <div><a id="ty" target="_blank"><img title="Typhoon" alt="Typhoon"></a></div>
             </div>
-            <div class="menu"></div>
-            <!-- <div class="timeline">Timeline</div> -->
+            <div class="outmenu">
+                <ul id="menu">
+                    <li>
+                        <a href="#"><span>觀測</span></a>
+                        <ul class="inmenu"></ul>
+                    </li>
+                </ul>
+            </div>
         </main>
         <footer>
         </footer>

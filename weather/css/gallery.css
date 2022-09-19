@@ -1,0 +1,57 @@
+.outmenu {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 300px;
+    background-color: rgba(37, 45, 56, 1);
+    display: flex;
+    overflow: hidden auto;
+    justify-content: center;
+    align-items: top;
+}
+
+#menu , #menu>li {
+    width: 100%;
+    background-color: rgba(37, 45, 56, 1);
+    display: block;
+}
+
+.inmenu , .inmenu>li {
+    width: 290px;
+    padding: 5px;
+    display: block;
+}
+
+.inmenu {
+    display: block;
+}
+
+.inmenu>li {
+    width: 280px;
+    padding: 5px;
+    background-color: rgba(37, 45, 56, 1);
+    display: flex;
+    transition: .5s;
+}
+.inmenu>li:hover {
+    background-color: rgba(74, 90, 112, 1);
+}
+
+#menu>li>a {
+    width: 280px;
+    padding: 10px;
+    color:#545454;
+    background-color: white;
+    border: 1px solid #181c27;
+    display: block;
+    font-size: 18px;
+    transition: .5s;
+}
+#menu>li>a:hover,
+#menu>li>a.active{
+    color: white;
+    background-color: #181c27;
+}
+
+.inmenu>li>a {color: white;}
+.inmenu>li>a:hover {color: #30a9de;}
