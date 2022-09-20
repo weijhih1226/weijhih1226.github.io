@@ -112,10 +112,6 @@ main {
     background-color: #fff;
 } */
 
-.content img {
-    width: 300px;
-}
-
 /* @media (min-width: 576px){
     .container, .container-sm {
         max-width: 540px;

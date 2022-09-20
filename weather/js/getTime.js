@@ -33,44 +33,118 @@ var pathL = homeURL + "lightning/" + timeStrL.substring(0, 4) + timeStrL.substri
 var pathT = homeURL + "temperature/" + timeStrT.substring(0, 4) + "-" + timeStrT.substring(5, 7) + "-" + timeStrT.substring(8, 10) + "_" + timeStrT.substring(11, 13) + "00.GTP8.jpg";
 var pathUVI = homeURL + "UVI/UVI.png"
 var pathSKT = homeURL2 + "irisme_data/Weather/SKEWT/SKW___000_" + timeStrSKT.substring(2, 4) + timeStrSKT.substring(5, 7) + timeStrSKT.substring(8, 10) + (parseInt(timeStrSKT.substring(11, 13)) < 12 ? "00" : "12") + "_46692.gif";
-var pathTY = homeURL + "typhoon/TY_NEWS/PTA_" + timeStrTY.substring(0, 4) + timeStrTY.substring(5, 7) + timeStrTY.substring(8, 10) + "0000-72_zhtw.png";
+
+var tyFcstTime = 72;
+if (parseInt(timeStrTY.substring(11, 13)) < 6) {
+    var tyInitTime = '00'
+} else if (parseInt(timeStrTY.substring(11, 13)) < 12) {
+    var tyInitTime = '06'
+} else if (parseInt(timeStrTY.substring(11, 13)) < 18) {
+    var tyInitTime = '12'
+} else {
+    var tyInitTime = '18'
+}
+var pathTY = homeURL + "typhoon/TY_NEWS/PTA_" + timeStrTY.substring(0, 4) + timeStrTY.substring(5, 7) + timeStrTY.substring(8, 10) + tyInitTime + "00-" + tyFcstTime + "_zhtw.png";
+
 window.addEventListener("DOMContentLoaded" , function(){
-    rain = document.querySelector("#rain");
-    radar = document.querySelector("#radar");
-    satvsg = document.querySelector("#satvsg");
-    satvst = document.querySelector("#satvst");
-    satirc = document.querySelector("#satirc");
-    satire = document.querySelector("#satire");
-    lgtn = document.querySelector("#lgtn");
-    temp = document.querySelector("#temp");
-    uvi = document.querySelector("#uvi");
-    skt = document.querySelector("#skt");
-    ty = document.querySelector("#ty");
+    rain = document.querySelector("#rain>.pic>a");
+    radar = document.querySelector("#radar>.pic>a");
+    satvsg = document.querySelector("#satvsg>.pic>a");
+    satvst = document.querySelector("#satvst>.pic>a");
+    satirc = document.querySelector("#satirc>.pic>a");
+    satire = document.querySelector("#satire>.pic>a");
+    lgtn = document.querySelector("#lgtn>.pic>a");
+    temp = document.querySelector("#temp>.pic>a");
+    uvi = document.querySelector("#uvi>.pic>a");
+    skt = document.querySelector("#skt>.pic>a");
+    ty = document.querySelector("#ty>.pic>a");
+
+    rainT = document.querySelector("#rain>.header>.time");
+    radarT = document.querySelector("#radar>.header>.time");
+    satvsgT = document.querySelector("#satvsg>.header>.time");
+    satvstT = document.querySelector("#satvst>.header>.time");
+    satircT = document.querySelector("#satirc>.header>.time");
+    satireT = document.querySelector("#satire>.header>.time");
+    lgtnT = document.querySelector("#lgtn>.header>.time");
+    tempT = document.querySelector("#temp>.header>.time");
+    uviT = document.querySelector("#uvi>.header>.time");
+    sktT = document.querySelector("#skt>.header>.time");
+    tyT = document.querySelector("#ty>.header>.time");
     
-    rain.childNodes[0].onerror = function() {rain.childNodes[0].src = pathError; rain.removeAttribute("href")}
-    radar.childNodes[0].onerror = function() {radar.childNodes[0].src = pathError; radar.removeAttribute("href")}
-    satvsg.childNodes[0].onerror = function() {satvsg.childNodes[0].src = pathError; satvsg.removeAttribute("href")}
-    satvst.childNodes[0].onerror = function() {satvst.childNodes[0].src = pathError; satvst.removeAttribute("href")}
-    satirc.childNodes[0].onerror = function() {satirc.childNodes[0].src = pathError; satirc.removeAttribute("href")}
-    satire.childNodes[0].onerror = function() {satire.childNodes[0].src = pathError; satire.removeAttribute("href")}
-    lgtn.childNodes[0].onerror = function() {lgtn.childNodes[0].src = pathError; lgtn.removeAttribute("href")}
-    temp.childNodes[0].onerror = function() {temp.childNodes[0].src = pathError; temp.removeAttribute("href")}
-    uvi.childNodes[0].onerror = function() {uvi.childNodes[0].src = pathError; uvi.removeAttribute("href")}
-    skt.childNodes[0].onerror = function() {skt.childNodes[0].src = pathError; skt.removeAttribute("href")}
-    ty.childNodes[0].onerror = function() {ty.childNodes[0].src = pathError; ty.removeAttribute("href")}
+    rain.childNodes[0].onerror = function() {rain.childNodes[0].src = pathError; rain.removeAttribute("href");}
+    radar.childNodes[0].onerror = function() {radar.childNodes[0].src = pathError; radar.removeAttribute("href");}
+    satvsg.childNodes[0].onerror = function() {satvsg.childNodes[0].src = pathError; satvsg.removeAttribute("href");}
+    satvst.childNodes[0].onerror = function() {satvst.childNodes[0].src = pathError; satvst.removeAttribute("href");}
+    satirc.childNodes[0].onerror = function() {satirc.childNodes[0].src = pathError; satirc.removeAttribute("href");}
+    satire.childNodes[0].onerror = function() {satire.childNodes[0].src = pathError; satire.removeAttribute("href");}
+    lgtn.childNodes[0].onerror = function() {lgtn.childNodes[0].src = pathError; lgtn.removeAttribute("href");}
+    temp.childNodes[0].onerror = function() {temp.childNodes[0].src = pathError; temp.removeAttribute("href");}
+    uvi.childNodes[0].onerror = function() {uvi.childNodes[0].src = pathError; uvi.removeAttribute("href");}
+    skt.childNodes[0].onerror = function() {skt.childNodes[0].src = pathError; skt.removeAttribute("href");}
+    ty.childNodes[0].onerror = function() {
+        if (tyFcstTime > 0) {
+            tyFcstTime -= 12
+            ty.childNodes[0].src = ty.href = homeURL + "typhoon/TY_NEWS/PTA_" + timeStrTY.substring(0, 4) + timeStrTY.substring(5, 7) + timeStrTY.substring(8, 10) + tyInitTime + "00-" + tyFcstTime + "_zhtw.png";
+        } else {
+            ty.childNodes[0].src = pathError;
+            ty.removeAttribute("href");
+        }
+    }
 
-    rain.childNodes[0].src = rain.href = pathG;
-    radar.childNodes[0].src = radar.href = pathR;
-    satvsg.childNodes[0].src = satvsg.href = pathSatVSgTW;
-    satvst.childNodes[0].src = satvst.href = pathSatVStTW;
-    satirc.childNodes[0].src = satirc.href = pathSatIRcTW;
-    satire.childNodes[0].src = satire.href = pathSatIReTW;
-    lgtn.childNodes[0].src = lgtn.href = pathL;
-    temp.childNodes[0].src = temp.href = pathT;
-    uvi.childNodes[0].src = uvi.href = pathUVI;
-    skt.childNodes[0].src = skt.href = pathSKT;
-    ty.childNodes[0].src = ty.href = pathTY;
+    rainT.innerText = timeStrG.substring(0, 4) + '/' + timeStrG.substring(5, 7) + '/' + timeStrG.substring(8, 10) + ' ' + timeStrG.substring(11, 13) + ':' + (parseInt(timeStrG.substring(14, 15)) < 3 ? '0' : '3') + '0';
+    radarT.innerText = timeStrR.substring(0, 4) + '/' + timeStrR.substring(5, 7) + '/' + timeStrR.substring(8, 10) + ' ' + timeStrR.substring(11, 13) + ':' + timeStrR.substring(14, 15) + '0';
+    satvsgT.innerText = timeStrS.substring(0, 4) + '/' + timeStrS.substring(5, 7) + '/' + timeStrS.substring(8, 10) + ' ' + timeStrS.substring(11, 13) + ':' + timeStrS.substring(14, 15) + '0';
+    satvstT.innerText = timeStrS.substring(0, 4) + '/' + timeStrS.substring(5, 7) + '/' + timeStrS.substring(8, 10) + ' ' + timeStrS.substring(11, 13) + ':' + timeStrS.substring(14, 15) + '0';
+    satircT.innerText = timeStrS.substring(0, 4) + '/' + timeStrS.substring(5, 7) + '/' + timeStrS.substring(8, 10) + ' ' + timeStrS.substring(11, 13) + ':' + timeStrS.substring(14, 15) + '0';
+    satireT.innerText = timeStrS.substring(0, 4) + '/' + timeStrS.substring(5, 7) + '/' + timeStrS.substring(8, 10) + ' ' + timeStrS.substring(11, 13) + ':' + timeStrS.substring(14, 15) + '0';
+    lgtnT.innerText = timeStrL.substring(0, 4) + '/' + timeStrL.substring(5, 7) + '/' + timeStrL.substring(8, 10) + ' ' + timeStrL.substring(11, 13) + ':' + timeStrL.substring(14, 15) + '0';
+    tempT.innerText = timeStrT.substring(0, 4) + '/' + timeStrT.substring(5, 7) + '/' + timeStrT.substring(8, 10) + ' ' + timeStrT.substring(11, 13) + ':00';
+    uviT.innerText = '';
+    sktT.innerText = timeStrSKT.substring(0, 4) + '/' + timeStrSKT.substring(5, 7) + '/' + timeStrSKT.substring(8, 10) + ' ' + (parseInt(timeStrSKT.substring(11, 13)) < 12 ? '00' : '12') + ':00Z';
+    tyT.innerText = timeStrTY.substring(0, 4) + '/' + timeStrTY.substring(5, 7) + '/' + timeStrTY.substring(8, 10) + ' ' + tyInitTime + ':00Z';
 
+    rain.childNodes[0].src = pathG;
+    radar.childNodes[0].src = pathR;
+    satvsg.childNodes[0].src = pathSatVSgTW;
+    satvst.childNodes[0].src = pathSatVStTW;
+    satirc.childNodes[0].src = pathSatIRcTW;
+    satire.childNodes[0].src = pathSatIReTW;
+    lgtn.childNodes[0].src = pathL;
+    temp.childNodes[0].src = pathT;
+    uvi.childNodes[0].src = pathUVI;
+    skt.childNodes[0].src = pathSKT;
+    ty.childNodes[0].src = pathTY;
+
+    var pics = document.querySelectorAll('.content>div>.pic>a');
+    var enlargeUrl = []
+    for (i = 0 ; i < pics.length ; i++) {
+        enlargeUrl.push(pics[i].childNodes[0].src);
+        
+        pics[i].addEventListener('click' , function() {
+            var enlarge = document.createElement('div');
+            enlarge.setAttribute('id' , 'enlarge');
+            enlarge.style.left = '0';
+            enlarge.style.right = '300px';
+            enlarge.style.top = '0';
+            enlarge.style.bottom = '0';
+            enlarge.style.position = 'absolute';
+            enlarge.style.display = 'flex';
+            enlarge.style.justifyContent = 'center';
+            enlarge.style.alignItems = 'center';
+            enlarge.style.flexWrap = 'wrap';
+            enlarge.style.overflow = 'auto';
+            enlarge.style.backgroundColor = 'rgba(0 , 0 , 0 , .8)';
+            document.querySelector("main").appendChild(enlarge);
+
+            var enlargeImg = new Image();
+            enlargeImg.setAttribute('id' , 'enlargeImg');
+            enlargeImg.src = this.childNodes[0].src;
+            enlargeImg.style.height = '90%';
+            enlarge.appendChild(enlargeImg)
+            enlarge.addEventListener('click' , function() {enlarge.remove();})
+        })
+    }
+    
     addElementTimeLi('.inmenu' , timeLST , 144);
 
     // fetch(document.querySelector("#rain>img").src, {method: 'get'})
@@ -140,21 +214,26 @@ function addElementLi(obj_p , time) {
         var pathT = homeURL + "temperature/" + timeStr.substring(0, 4) + "-" + timeStr.substring(5, 7) + "-" + timeStr.substring(8, 10) + "_" + timeStr.substring(11, 13) + "00.GTP8.jpg";
         var pathSKT = homeURL2 + "irisme_data/Weather/SKEWT/SKW___000_" + timeUTCStr.substring(2, 4) + timeUTCStr.substring(5, 7) + timeUTCStr.substring(8, 10) + (parseInt(timeUTCStr.substring(11, 13)) < 12 ? "00" : "12") + "_46692.gif";
 
-        try {
-            document.querySelector("#rain>img").src = document.querySelector("#rain").href = pathG;
-            document.querySelector("#radar>img").src = document.querySelector("#radar").href = pathR;
-            document.querySelector("#satvsg>img").src = document.querySelector("#satvsg").href = pathSatVSgTW;
-            document.querySelector("#satvst>img").src = document.querySelector("#satvst").href = pathSatVStTW;
-            document.querySelector("#satirc>img").src = document.querySelector("#satirc").href = pathSatIRcTW;
-            document.querySelector("#satire>img").src = document.querySelector("#satire").href = pathSatIReTW;
-            document.querySelector("#lgtn>img").src = document.querySelector("#lgtn").href = pathL;
-            document.querySelector("#temp>img").src = document.querySelector("#temp").href = pathT;
-            document.querySelector("#skt>img").src = document.querySelector("#skt").href = pathSKT;
-        }
-        catch (e) {
-            console.log('Fail')
-        }
-        
+        rainT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':' + (parseInt(timeStr.substring(14, 15)) < 3 ? '0' : '3') + '0';
+        radarT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':' + timeStr.substring(14, 15) + '0';
+        satvsgT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':' + timeStr.substring(14, 15) + '0';
+        satvstT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':' + timeStr.substring(14, 15) + '0';
+        satircT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':' + timeStr.substring(14, 15) + '0';
+        satireT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':' + timeStr.substring(14, 15) + '0';
+        lgtnT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':' + timeStr.substring(14, 15) + '0';
+        tempT.innerText = timeStr.substring(0, 4) + '/' + timeStr.substring(5, 7) + '/' + timeStr.substring(8, 10) + ' ' + timeStr.substring(11, 13) + ':00';
+        uviT.innerText = '';
+        sktT.innerText = timeUTCStr.substring(0, 4) + '/' + timeUTCStr.substring(5, 7) + '/' + timeUTCStr.substring(8, 10) + ' ' + (parseInt(timeUTCStr.substring(11, 13)) < 12 ? '00' : '12') + ':00Z';
+
+        rain.childNodes[0].src = pathG;
+        radar.childNodes[0].src = pathR;
+        satvsg.childNodes[0].src = pathSatVSgTW;
+        satvst.childNodes[0].src = pathSatVStTW;
+        satirc.childNodes[0].src = pathSatIRcTW;
+        satire.childNodes[0].src = pathSatIReTW;
+        lgtn.childNodes[0].src = pathL;
+        temp.childNodes[0].src = pathT;
+        skt.childNodes[0].src = pathSKT;
     })
     obj_p.appendChild(li);
 }

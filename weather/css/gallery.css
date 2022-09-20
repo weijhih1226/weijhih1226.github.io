@@ -1,3 +1,35 @@
+.content>div {
+    width: 300px;
+    margin-top: 1em;
+    background-color: rgba(37, 45, 56, 1);
+}
+
+.header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    color:#545454;
+    background-color: white;
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+.header>.time {
+    font-size: 16px;
+    color:#aaa;
+}
+
+.content img {
+    width: 300px;
+}
+
+.pic {
+    height: 300px;
+    display: flex;
+    align-items: center;
+}
+
 .outmenu {
     position: absolute;
     right: 0;
