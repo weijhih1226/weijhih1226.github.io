@@ -165,7 +165,10 @@ window.addEventListener("DOMContentLoaded" , function(){
         enlargeUrl.push(pics[i].querySelector('img').src);
         
         pics[i].addEventListener('click' , function() {
+            var opacity = 0;
             var enlarge = document.createElement('div');
+            enlarge.style.opacity = '0';
+            fadeIn(enlarge , opacity);
             enlarge.setAttribute('id' , 'enlarge');
             enlarge.style.left = '0';
             enlarge.style.right = content.style.right;
@@ -179,6 +182,7 @@ window.addEventListener("DOMContentLoaded" , function(){
             enlarge.style.overflow = 'auto';
             enlarge.style.backgroundColor = 'rgba(0 , 0 , 0 , .8)';
             document.querySelector("main").appendChild(enlarge);
+            
 
             var enlargeImg = new Image();
             var originImg = this.querySelector('img');
@@ -186,7 +190,7 @@ window.addEventListener("DOMContentLoaded" , function(){
             enlargeImg.src = originImg.src;
             enlargeImg.style.height = '90%';
             enlarge.appendChild(enlargeImg)
-            enlarge.addEventListener('click' , function() {enlarge.remove();})
+            enlarge.addEventListener('click' , function() {var opacity = 1; fadeOut(this , opacity);})
 
             var observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
@@ -327,4 +331,27 @@ function NetPing(url) {
         }
     });
 
+}
+
+function fadeIn(block , opacity) {
+    if (opacity < 1) {
+        setTimeout(function() {
+            opacity += 0.1;
+            block.style.opacity = opacity;
+            fadeIn(block , opacity)
+        } , 10)
+    }
+}
+
+function fadeOut(block , opacity) {
+    if (opacity > 0) {
+        setTimeout(function() {
+        opacity -= 0.1;
+        block.style.opacity = opacity;
+        fadeOut(block , opacity)
+        } , 10)
+    }
+    else {
+        block.remove();
+    }
 }

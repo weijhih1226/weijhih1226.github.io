@@ -6,7 +6,7 @@ function fadeIn(block , box , opacity) {
             block.style.backgroundColor = "rgba(0, 0, 0," + (opacity / 2) + ")";
             box.style.marginTop = (1 - opacity) + "em";
             fadeIn(block , box , opacity)
-        } , 50)
+        } , 10)
     }
 }
 
@@ -18,7 +18,7 @@ function fadeOut(block , box , opacity) {
         block.style.backgroundColor = "rgba(0, 0, 0," + (opacity / 2) + ")";
         box.style.marginTop = (1 - opacity) + "em";
         fadeOut(block , box , opacity)
-        } , 50)
+        } , 10)
     }
     else {
         block.style.display = "none";
