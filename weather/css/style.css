@@ -47,11 +47,9 @@ nav {
 
 nav ul {
     position: absolute;
-    right: 1em;
+    right: 3em;
 }
 nav div {
-    position: absolute;
-    left: 1em;
     font-size: 20px;
 }
 nav div *{
@@ -74,7 +72,16 @@ main {
     height: 3em;
 }
 
-.sublogo {
+#nav-logo {
+    position: absolute;
+    left: 1em;
+}
+#nav-menu {
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+}
+#sublogo {
     font-size: 18px;
 }
 

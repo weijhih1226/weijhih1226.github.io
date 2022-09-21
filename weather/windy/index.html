@@ -8,7 +8,9 @@
         <title>觀天象｜小威的漂流手札</title>
         <link rel="stylesheet" href="/weather/css/style.css">
         <link rel="stylesheet" href="/weather/css/map.css">
+        <link rel="stylesheet" href="/image/icon/icofont/icofont.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
+        <script src="/weather/js/navControl.js"></script>
         <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
         <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
     </head>
@@ -16,8 +18,8 @@
         <header>
             <div class="header-inner">
                 <nav id="navbar" class="navbar fixed-top navbar-expand-lg scrolling-navbar top-nav-collapse">
-                    <div>
-                        <a class="logo" href="/"><strong>小威的漂流手札</strong></a>｜<a class="sublogo" href="/weather/"><strong>觀天象</strong></a>
+                    <div id="nav-logo">
+                        <a id="logo" href="/"><strong>小威的漂流手札</strong></a>｜<a id="sublogo" href="/weather/"><strong>觀天象</strong></a>
                     </div>
                     <ul>
                         <li><a href="/weather/">Home</a></li>
@@ -25,6 +27,9 @@
                         <li><a href="/weather/typhoon/">Typhoon</a></li>
                         <li><a href="/weather/windy/">Windy</a></li>
                     </ul>
+                    <div id="nav-menu">
+                        <i class="icofont-navigation-menu"></i>
+                    </div>
                 </nav>
             </div>
         </header>

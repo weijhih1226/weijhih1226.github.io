@@ -71,22 +71,22 @@ window.addEventListener("DOMContentLoaded" , function(){
     sktT = document.querySelector("#skt>.header>.time");
     tyT = document.querySelector("#ty>.header>.time");
     
-    rain.childNodes[0].onerror = function() {rain.childNodes[0].src = pathError; rain.removeAttribute("href");}
-    radar.childNodes[0].onerror = function() {radar.childNodes[0].src = pathError; radar.removeAttribute("href");}
-    satvsg.childNodes[0].onerror = function() {satvsg.childNodes[0].src = pathError; satvsg.removeAttribute("href");}
-    satvst.childNodes[0].onerror = function() {satvst.childNodes[0].src = pathError; satvst.removeAttribute("href");}
-    satirc.childNodes[0].onerror = function() {satirc.childNodes[0].src = pathError; satirc.removeAttribute("href");}
-    satire.childNodes[0].onerror = function() {satire.childNodes[0].src = pathError; satire.removeAttribute("href");}
-    lgtn.childNodes[0].onerror = function() {lgtn.childNodes[0].src = pathError; lgtn.removeAttribute("href");}
-    temp.childNodes[0].onerror = function() {temp.childNodes[0].src = pathError; temp.removeAttribute("href");}
-    uvi.childNodes[0].onerror = function() {uvi.childNodes[0].src = pathError; uvi.removeAttribute("href");}
-    skt.childNodes[0].onerror = function() {skt.childNodes[0].src = pathError; skt.removeAttribute("href");}
-    ty.childNodes[0].onerror = function() {
+    rain.querySelector('img').onerror = function() {this.src = pathError; rain.removeAttribute("href");}
+    radar.querySelector('img').onerror = function() {this.src = pathError; radar.removeAttribute("href");}
+    satvsg.querySelector('img').onerror = function() {this.src = pathError; satvsg.removeAttribute("href");}
+    satvst.querySelector('img').onerror = function() {this.src = pathError; satvst.removeAttribute("href");}
+    satirc.querySelector('img').onerror = function() {this.src = pathError; satirc.removeAttribute("href");}
+    satire.querySelector('img').onerror = function() {this.src = pathError; satire.removeAttribute("href");}
+    lgtn.querySelector('img').onerror = function() {this.src = pathError; lgtn.removeAttribute("href");}
+    temp.querySelector('img').onerror = function() {this.src = pathError; temp.removeAttribute("href");}
+    uvi.querySelector('img').onerror = function() {this.src = pathError; uvi.removeAttribute("href");}
+    skt.querySelector('img').onerror = function() {this.src = pathError; skt.removeAttribute("href");}
+    ty.querySelector('img').onerror = function() {
         if (tyFcstTime > 0) {
             tyFcstTime -= 12
-            ty.childNodes[0].src = ty.href = homeURL + "typhoon/TY_NEWS/PTA_" + timeStrTY.substring(0, 4) + timeStrTY.substring(5, 7) + timeStrTY.substring(8, 10) + tyInitTime + "00-" + tyFcstTime + "_zhtw.png";
+            this.src = ty.href = homeURL + "typhoon/TY_NEWS/PTA_" + timeStrTY.substring(0, 4) + timeStrTY.substring(5, 7) + timeStrTY.substring(8, 10) + tyInitTime + "00-" + tyFcstTime + "_zhtw.png";
         } else {
-            ty.childNodes[0].src = pathError;
+            this.src = pathError;
             ty.removeAttribute("href");
         }
     }
@@ -103,28 +103,30 @@ window.addEventListener("DOMContentLoaded" , function(){
     sktT.innerText = timeStrSKT.substring(0, 4) + '/' + timeStrSKT.substring(5, 7) + '/' + timeStrSKT.substring(8, 10) + ' ' + (parseInt(timeStrSKT.substring(11, 13)) < 12 ? '00' : '12') + ':00Z';
     tyT.innerText = timeStrTY.substring(0, 4) + '/' + timeStrTY.substring(5, 7) + '/' + timeStrTY.substring(8, 10) + ' ' + tyInitTime + ':00Z';
 
-    rain.childNodes[0].src = pathG;
-    radar.childNodes[0].src = pathR;
-    satvsg.childNodes[0].src = pathSatVSgTW;
-    satvst.childNodes[0].src = pathSatVStTW;
-    satirc.childNodes[0].src = pathSatIRcTW;
-    satire.childNodes[0].src = pathSatIReTW;
-    lgtn.childNodes[0].src = pathL;
-    temp.childNodes[0].src = pathT;
-    uvi.childNodes[0].src = pathUVI;
-    skt.childNodes[0].src = pathSKT;
-    ty.childNodes[0].src = pathTY;
+    rain.querySelector('img').src = pathG;
+    radar.querySelector('img').src = pathR;
+    satvsg.querySelector('img').src = pathSatVSgTW;
+    satvst.querySelector('img').src = pathSatVStTW;
+    satirc.querySelector('img').src = pathSatIRcTW;
+    satire.querySelector('img').src = pathSatIReTW;
+    lgtn.querySelector('img').src = pathL;
+    temp.querySelector('img').src = pathT;
+    uvi.querySelector('img').src = pathUVI;
+    skt.querySelector('img').src = pathSKT;
+    ty.querySelector('img').src = pathTY;
 
     var pics = document.querySelectorAll('.content>div>.pic>a');
+    var content = document.querySelector('.content');
+    content.style.right = '300px';
     var enlargeUrl = []
     for (i = 0 ; i < pics.length ; i++) {
-        enlargeUrl.push(pics[i].childNodes[0].src);
+        enlargeUrl.push(pics[i].querySelector('img').src);
         
         pics[i].addEventListener('click' , function() {
             var enlarge = document.createElement('div');
             enlarge.setAttribute('id' , 'enlarge');
             enlarge.style.left = '0';
-            enlarge.style.right = '300px';
+            enlarge.style.right = content.style.right;
             enlarge.style.top = '0';
             enlarge.style.bottom = '0';
             enlarge.style.position = 'absolute';
@@ -137,11 +139,21 @@ window.addEventListener("DOMContentLoaded" , function(){
             document.querySelector("main").appendChild(enlarge);
 
             var enlargeImg = new Image();
+            var originImg = this.querySelector('img');
             enlargeImg.setAttribute('id' , 'enlargeImg');
-            enlargeImg.src = this.childNodes[0].src;
+            enlargeImg.src = originImg.src;
             enlargeImg.style.height = '90%';
             enlarge.appendChild(enlargeImg)
             enlarge.addEventListener('click' , function() {enlarge.remove();})
+
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === "attributes") {
+                        enlargeImg.src = originImg.src;
+                    }
+                });
+            });
+            observer.observe(originImg , {attributes: true});
         })
     }
     
@@ -190,7 +202,11 @@ window.addEventListener("DOMContentLoaded" , function(){
 function addElementTimeLi(obj_p , time) {
     var obj_p = document.querySelector(obj_p);
     for (t = 0; t < timeNum; t++) {
-        addElementLi(obj_p , time)
+        li = addElementLi(obj_p , time);
+        li.addEventListener('mouseover' , function() {
+            $(this).siblings().css({'background-color' : 'rgba(37, 45, 56, 1)'});
+            $(this).css({'background-color' : 'rgba(74, 90, 112, 1)'});
+        })
     }
 }
 
@@ -225,17 +241,18 @@ function addElementLi(obj_p , time) {
         uviT.innerText = '';
         sktT.innerText = timeUTCStr.substring(0, 4) + '/' + timeUTCStr.substring(5, 7) + '/' + timeUTCStr.substring(8, 10) + ' ' + (parseInt(timeUTCStr.substring(11, 13)) < 12 ? '00' : '12') + ':00Z';
 
-        rain.childNodes[0].src = pathG;
-        radar.childNodes[0].src = pathR;
-        satvsg.childNodes[0].src = pathSatVSgTW;
-        satvst.childNodes[0].src = pathSatVStTW;
-        satirc.childNodes[0].src = pathSatIRcTW;
-        satire.childNodes[0].src = pathSatIReTW;
-        lgtn.childNodes[0].src = pathL;
-        temp.childNodes[0].src = pathT;
-        skt.childNodes[0].src = pathSKT;
+        rain.querySelector('img').src = pathG;
+        radar.querySelector('img').src = pathR;
+        satvsg.querySelector('img').src = pathSatVSgTW;
+        satvst.querySelector('img').src = pathSatVStTW;
+        satirc.querySelector('img').src = pathSatIRcTW;
+        satire.querySelector('img').src = pathSatIReTW;
+        lgtn.querySelector('img').src = pathL;
+        temp.querySelector('img').src = pathT;
+        skt.querySelector('img').src = pathSKT;
     })
     obj_p.appendChild(li);
+    return li
 }
 
 function getHttpRequest(url) {
