@@ -49,6 +49,18 @@
     display: block;
 }
 
+input[type=radio] {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+input[type=radio]:checked + span {
+    font-weight: normal;
+}
+
 .inmenu , .inmenu>li {
     width: 290px;
     padding: 5px;
