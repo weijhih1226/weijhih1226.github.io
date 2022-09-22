@@ -116,11 +116,15 @@ window.addEventListener("DOMContentLoaded" , function(){
     menu.querySelector("#rain-d").addEventListener('click' , function(){
         tagRn = 'J';
         rain.querySelector('img').src = homeCWB + 'rainfall/' + isoStrRn.substring(0, 4) + '-' + isoStrRn.substring(5, 7) + '-' + isoStrRn.substring(8, 10) + '_' + isoStrRn.substring(11, 13) + (parseInt(isoStrRn.substring(14, 15)) < 3 ? '0' : '3') + '0.QZ' + tagRn + '8.jpg';
+        rain.querySelector('img').title = 'Rainfall Daily';
+        rain.querySelector('img').alt = 'Rainfall Daily';
         rain.querySelector('.title').innerText = '日雨量';
     })
     menu.querySelector("#rain-h").addEventListener('click' , function(){
         tagRn = 'T';
         rain.querySelector('img').src = homeCWB + 'rainfall/' + isoStrRn.substring(0, 4) + '-' + isoStrRn.substring(5, 7) + '-' + isoStrRn.substring(8, 10) + '_' + isoStrRn.substring(11, 13) + (parseInt(isoStrRn.substring(14, 15)) < 3 ? '0' : '3') + '0.QZ' + tagRn + '8.jpg';
+        rain.querySelector('img').title = 'Rainfall Hourly';
+        rain.querySelector('img').alt = 'Rainfall Hourly';
         rain.querySelector('.title').innerText = '時雨量';
     })
     menu.querySelector("#sat-tw").addEventListener('click' , function(){
