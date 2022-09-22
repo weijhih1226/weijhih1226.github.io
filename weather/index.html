@@ -16,6 +16,13 @@
         <script src="/weather/js/getTime.js"></script>
         <script src="/weather/js/navControl.js"></script>
     </head>
+    <script>
+        $(document).ready(function(){
+            $("#menu>li>a").click(function(){
+                $(this).siblings(".inmenu").slideToggle()
+            });
+        });
+    </script>
     <body>
         <header>
             <div class="header-inner">
@@ -37,13 +44,9 @@
         </header>
         <main>
             <div class="content">
-                <div id="raind">
+                <div id="rain">
                     <div class="header"><div class="title">日雨量</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Rainfall Daily" alt="Rainfall Daily"></a></div>
-                </div>
-                <div id="rainh">
-                    <div class="header"><div class="title">時雨量</div><div class="time"></div></div>
-                    <div class="pic"><a target="_blank"><img title="Rainfall Hourly" alt="Rainfall Hourly"></a></div>
                 </div>
                 <div id="radar">
                     <div class="header"><div class="title">雷達</div><div class="time"></div></div>
@@ -81,19 +84,42 @@
                     <div class="header"><div class="title">探空</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Skew-T" alt="Skew-T"></a></div>
                 </div>
-                <div id="ty">
+                <div id="ty-cwb">
                     <div class="header"><div class="title">CWB颱風路徑</div><div class="time"></div></div>
-                    <div class="pic"><a target="_blank"><img title="Typhoon" alt="Typhoon"></a></div>
+                    <div class="pic"><a target="_blank"><img title="Typhoon CWB" alt="Typhoon CWB"></a></div>
+                </div>
+                <div id="ty-t2">
+                    <div class="header"><div class="title">各國颱風路徑</div><div class="time"></div></div>
+                    <div class="pic"><a target="_blank"><img title="Typhoon 2000" alt="Typhoon 2000"></a></div>
                 </div>
             </div>
             <div class="outmenu">
                 <ul id="menu">
+                    <li>
+                        <a href="#"><span>雨量</span></a>
+                        <ul class="inmenu rain-list">
+                            <li><input type="radio" value="1" name="rain" id="rain-d" class="rain" checked><span>日雨量</span></li>
+                            <li><input type="radio" value="2" name="rain" id="rain-h" class="rain"><span>時雨量</span></li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="#"><span>衛星</span></a>
                         <ul class="inmenu sat-list">
                             <li><input type="radio" value="1" name="sat" id="sat-tw" class="sat" checked><span>臺灣</span></li>
                             <li><input type="radio" value="2" name="sat" id="sat-ea" class="sat"><span>東亞</span></li>
                             <li><input type="radio" value="3" name="sat" id="sat-gb" class="sat"><span>全球</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><span>颱風路徑</span></a>
+                        <ul class="inmenu ty-list">
+                            <li><input type="radio" value="1" name="ty" id="ty-all" class="ty" checked><span>各國</span></li>
+                            <li><input type="radio" value="2" name="ty" id="ty-ec" class="ty"><span>歐洲（ECMWF-IFS）</span></li>
+                            <li><input type="radio" value="3" name="ty" id="ty-ncep" class="ty"><span>美國（NCEP-GFS）</span></li>
+                            <li><input type="radio" value="4" name="ty" id="ty-uk" class="ty"><span>英國（UKMO-UM）</span></li>
+                            <li><input type="radio" value="5" name="ty" id="ty-cmc" class="ty"><span>加拿大（CMC-GEM）</span></li>
+                            <li><input type="radio" value="6" name="ty" id="ty-fnmoc" class="ty"><span>美國（FNMOC-NAVGEM）</span></li>
+                            <li><input type="radio" value="7" name="ty" id="ty-jma" class="ty"><span>日本（JMA-GSM）</span></li>
                         </ul>
                     </li>
                     <li>
