@@ -18,14 +18,14 @@ const homeCWB2 = 'https://npd.cwb.gov.tw/NPD/';
 const homeT2 = 'https://typhoon2000.ph/multi/models/';
 const urlErr = 'https://www.cwb.gov.tw/V8/assets/img/404_Yunbau.png'
 
-const tStrRn = isoStrRn.substring(0, 4) + '-' + isoStrRn.substring(5, 7) + '-' + isoStrRn.substring(8, 10) + '_' + isoStrRn.substring(11, 13) + (parseInt(isoStrRn.substring(14, 15)) < 3 ? '0' : '3') + '0';
-const tStrRdr = isoStrRdr.substring(0, 4) + isoStrRdr.substring(5, 7) + isoStrRdr.substring(8, 10) + isoStrRdr.substring(11, 13) + isoStrRdr.substring(14, 15) + '0';
-const tStrLtn = isoStrLtn.substring(0, 4) + isoStrLtn.substring(5, 7) + isoStrLtn.substring(8, 10) + isoStrLtn.substring(11, 13) + isoStrLtn.substring(14, 15) + '000';
-const tStrSat = isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0';
-const tStrTemp = isoStrTemp.substring(0, 4) + '-' + isoStrTemp.substring(5, 7) + '-' + isoStrTemp.substring(8, 10) + '_' + isoStrTemp.substring(11, 13) + '00';
-const tStrSkt = isoStrSkt.substring(2, 4) + isoStrSkt.substring(5, 7) + isoStrSkt.substring(8, 10) + (parseInt(isoStrSkt.substring(11, 13)) < 12 ? '00' : '12');
-const tStrTyCWB = isoStrTyCWB.substring(0, 4) + isoStrTyCWB.substring(5, 7) + isoStrTyCWB.substring(8, 10) + ((isoHrTyCWB < 6) ? '00' : (isoHrTyCWB < 12) ? '06' : (isoHrTyCWB < 18) ? '12' : '18') + '00';
-const tStrTyT2 = isoStrTyT2.substring(0, 4) + isoStrTyT2.substring(5, 7) + isoStrTyT2.substring(8, 10) + ((isoHrTyT2 < 12) ? '00' : '12') + '00';
+var tStrRn = isoStrRn.substring(0, 4) + '-' + isoStrRn.substring(5, 7) + '-' + isoStrRn.substring(8, 10) + '_' + isoStrRn.substring(11, 13) + (parseInt(isoStrRn.substring(14, 15)) < 3 ? '0' : '3') + '0';
+var tStrRdr = isoStrRdr.substring(0, 4) + isoStrRdr.substring(5, 7) + isoStrRdr.substring(8, 10) + isoStrRdr.substring(11, 13) + isoStrRdr.substring(14, 15) + '0';
+var tStrLtn = isoStrLtn.substring(0, 4) + isoStrLtn.substring(5, 7) + isoStrLtn.substring(8, 10) + isoStrLtn.substring(11, 13) + isoStrLtn.substring(14, 15) + '000';
+var tStrSat = isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0';
+var tStrTemp = isoStrTemp.substring(0, 4) + '-' + isoStrTemp.substring(5, 7) + '-' + isoStrTemp.substring(8, 10) + '_' + isoStrTemp.substring(11, 13) + '00';
+var tStrSkt = isoStrSkt.substring(2, 4) + isoStrSkt.substring(5, 7) + isoStrSkt.substring(8, 10) + (parseInt(isoStrSkt.substring(11, 13)) < 12 ? '00' : '12');
+var tStrTyCWB = isoStrTyCWB.substring(0, 4) + isoStrTyCWB.substring(5, 7) + isoStrTyCWB.substring(8, 10) + ((isoHrTyCWB < 6) ? '00' : (isoHrTyCWB < 12) ? '06' : (isoHrTyCWB < 18) ? '12' : '18') + '00';
+var tStrTyT2 = isoStrTyT2.substring(0, 4) + isoStrTyT2.substring(5, 7) + isoStrTyT2.substring(8, 10) + ((isoHrTyT2 < 12) ? '00' : '12') + '00';
 
 const tFmtRn = isoStrRn.substring(0, 4) + '/' + isoStrRn.substring(5, 7) + '/' + isoStrRn.substring(8, 10) + ' ' + isoStrRn.substring(11, 13) + ':' + (parseInt(isoStrRn.substring(14, 15)) < 3 ? '0' : '3') + '0'
 const tFmtRdr = isoStrRdr.substring(0, 4) + '/' + isoStrRdr.substring(5, 7) + '/' + isoStrRdr.substring(8, 10) + ' ' + isoStrRdr.substring(11, 13) + ':' + isoStrRdr.substring(14, 15) + '0';
@@ -51,41 +51,37 @@ var tagSatVStPx = '1375';
 var tagSatIRPx = '800';
 var fcstTyCWB = 72;
 
-const urlRn = homeCWB + 'rainfall/' + tStrRn + '.QZ' + tagRn + '8.jpg';
-const urlRdr = homeCWB + 'radar/CV1_TW_3600_' + tStrRdr + '.png';
-const urlLtn = homeCWB + 'lightning/' + tStrLtn + '_lgtl.jpg';
-const urlSatVSg = homeCWB + 'satellite/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '-' + tStrSat + '.jpg';
-const urlSatVSt = homeCWB + 'satellite/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '-' + tStrSat + '.jpg';
-const urlSatIRc = homeCWB + 'satellite/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '-' + tStrSat + '.jpg';
-const urlSatIRe = homeCWB + 'satellite/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '-' + tStrSat + '.jpg';
-const urlTemp = homeCWB + 'temperature/' + tStrTemp + '.GTP8.jpg';
-const urlUvi = homeCWB + 'UVI/UVI.png';
-const urlSkt = homeCWB2 + 'irisme_data/Weather/SKEWT/SKW___000_' + tStrSkt + '_46692.gif';
-const urlTyCWB = homeCWB + 'typhoon/TY_NEWS/PTA_' + tStrTyCWB + '-' + fcstTyCWB + '_zhtw.png';
-const urlTyT2 = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
+urlRn = (t , type) => homeCWB + 'rainfall/' + t + '.QZ' + type + '8.jpg';
+urlRdr = (t) => homeCWB + 'radar/CV1_TW_3600_' + t + '.png';
+urlLtn = (t) => homeCWB + 'lightning/' + t + '_lgtl.jpg';
+urlSatVSg = (t , area , px) => homeCWB + 'satellite/' + area + '_VIS_Gray_' + px + '/' + area + '_VIS_Gray_' + px + '-' + t + '.jpg';
+urlSatVSt = (t , area , px) => homeCWB + 'satellite/' + area + '_VIS_TRGB_' + px + '/' + area + '_VIS_TRGB_' + px + '-' + t + '.jpg';
+urlSatIRc = (t , area , px) => homeCWB + 'satellite/' + area + '_IR1_CR_' + px + '/' + area + '_IR1_CR_' + px + '-' + t + '.jpg';
+urlSatIRe = (t , area , px) => homeCWB + 'satellite/' + area + '_IR1_MB_' + px + '/' + area + '_IR1_MB_' + px + '-' + t + '.jpg';
+urlTemp = (t) => homeCWB + 'temperature/' + t + '.GTP8.jpg';
+urlUvi = () => homeCWB + 'UVI/UVI.png';
+urlSkt = (t) => homeCWB2 + 'irisme_data/Weather/SKEWT/SKW___000_' + t + '_46692.gif';
+urlTyCWB = (t , fcst) => homeCWB + 'typhoon/TY_NEWS/PTA_' + t + '-' + fcst + '_zhtw.png';
+urlTyT2 = (t , mdl) => homeT2 + t + '_' + mdl + '.PNG';
 
-window.addEventListener("DOMContentLoaded" , function(){
-    const content = document.querySelector(".content");
-    const menu = document.querySelector("#menu");
+window.addEventListener('DOMContentLoaded' , function(){
+    const content = document.querySelector('.content');
+    const menu = document.querySelector('#menu');
+    content.style.right = '300px';
+    addElementTimeLi('.time-list' , tNowLST , tNum , tStep);
 
-    rain = content.querySelector("#rain");
-    radar = content.querySelector("#radar");
-    lgtn = content.querySelector("#lgtn");
-    satvsg = content.querySelector("#satvsg");
-    satvst = content.querySelector("#satvst");
-    satirc = content.querySelector("#satirc");
-    satire = content.querySelector("#satire");
-    temp = content.querySelector("#temp");
-    uvi = content.querySelector("#uvi");
-    skt = content.querySelector("#skt");
-    tyCWB = content.querySelector("#ty-cwb");
-    tyT2 = content.querySelector("#ty-t2");
-
-    tyCWB.querySelector('img').onerror = function() {
-        if (fcstTyCWB > 0) {fcstTyCWB -= 12; this.src = homeCWB + "typhoon/TY_NEWS/PTA_" + tStrTyCWB + "-" + fcstTyCWB + "_zhtw.png";}
-        else {this.src = urlErr;}
-    }
-    content.querySelectorAll('img').forEach(img => img.onerror = () => img.src = urlErr);
+    rain = content.querySelector('#rain');
+    radar = content.querySelector('#radar');
+    lgtn = content.querySelector('#lgtn');
+    satvsg = content.querySelector('#satvsg');
+    satvst = content.querySelector('#satvst');
+    satirc = content.querySelector('#satirc');
+    satire = content.querySelector('#satire');
+    temp = content.querySelector('#temp');
+    uvi = content.querySelector('#uvi');
+    skt = content.querySelector('#skt');
+    tyCWB = content.querySelector('#ty-cwb');
+    tyT2 = content.querySelector('#ty-t2');
 
     rain.querySelector('.time').innerText = tFmtRn;
     radar.querySelector('.time').innerText = tFmtRdr;
@@ -100,146 +96,145 @@ window.addEventListener("DOMContentLoaded" , function(){
     tyCWB.querySelector('.time').innerText = tFmtTyCWB;
     tyT2.querySelector('.time').innerText = tFmtTyT2;
 
-    rain.querySelector('img').src = urlRn;
-    radar.querySelector('img').src = urlRdr;
-    lgtn.querySelector('img').src = urlLtn;
-    satvsg.querySelector('img').src = urlSatVSg;
-    satvst.querySelector('img').src = urlSatVSt;
-    satirc.querySelector('img').src = urlSatIRc;
-    satire.querySelector('img').src = urlSatIRe;
-    temp.querySelector('img').src = urlTemp;
-    uvi.querySelector('img').src = urlUvi;
-    skt.querySelector('img').src = urlSkt;
-    tyCWB.querySelector('img').src = urlTyCWB;
-    tyT2.querySelector('img').src = urlTyT2;
+    rain.querySelector('img').src = urlRn(tStrRn , tagRn);
+    radar.querySelector('img').src = urlRdr(tStrRdr);
+    lgtn.querySelector('img').src = urlLtn(tStrLtn);
+    satvsg.querySelector('img').src = urlSatVSg(tStrSat , tagSatArea , tagSatVSgPx);
+    satvst.querySelector('img').src = urlSatVSt(tStrSat , tagSatArea , tagSatVStPx);
+    satirc.querySelector('img').src = urlSatIRc(tStrSat , tagSatArea , tagSatIRPx);
+    satire.querySelector('img').src = urlSatIRe(tStrSat , tagSatArea , tagSatIRPx);
+    temp.querySelector('img').src = urlTemp(tStrTemp);
+    uvi.querySelector('img').src = urlUvi();
+    skt.querySelector('img').src = urlSkt(tStrSkt);
+    tyCWB.querySelector('img').src = urlTyCWB(tStrTyCWB , fcstTyCWB);
+    tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
 
-    menu.querySelector("#rain-d").addEventListener('click' , function(){
+    // Handle Error
+    tyCWB.querySelector('img').onerror = function() {
+        if (fcstTyCWB > 0) {fcstTyCWB -= 12; this.src = urlTyCWB(tStrTyCWB , fcstTyCWB);}
+        else {this.src = urlErr}
+    }
+    content.querySelectorAll('img').forEach(img => img.onerror = () => img.src = urlErr);
+
+    // Handle Click
+    const imgs = content.querySelectorAll('div>.pic>a>img');
+    imgs.forEach(img => {
+        img.onclick = () => {
+            const oriImg = img;
+            const zoom = document.createElement('div');
+            const zoomLk = document.createElement('a');
+            const zoomImg = new Image();
+            const zoomS = zoom.style;
+            const zoomLkS = zoomLk.style;
+            const zoomImgS = zoomImg.style;
+            document.querySelector('main').appendChild(zoom);
+            zoom.appendChild(zoomLk);
+            zoomLk.appendChild(zoomImg);
+
+            fadeIn(zoom , 10);
+            zoom.onclick = () => fadeOut(zoom , 10);
+            new MutationObserver(muts => {
+                muts.forEach(mut => {
+                    if (mut.type === 'attributes') zoomImg.src = oriImg.src;
+                })
+            }).observe(oriImg , {attributes: true});
+
+            zoom.id = 'zoom';
+            zoomS.left = '0';
+            zoomS.right = content.style.right;
+            zoomS.top = '0';
+            zoomS.bottom = '0';
+            zoomS.position = 'absolute';
+            zoomS.display = 'flex';
+            zoomS.justifyContent = 'center';
+            zoomS.alignItems = 'center';
+            zoomS.flexWrap = 'wrap';
+            zoomS.overflow = 'auto';
+            zoomS.backgroundColor = 'rgba(0 , 0 , 0 , .8)';
+            zoomLk.id = 'zoomLk';
+            // zoomLk.href = originImg.src;
+            // zoomLk.target = '_blank';
+            zoomLkS.height = '90%';
+            zoomLkS.position = 'absolute';
+            zoomLkS.display = 'flex';
+            zoomLkS.justifyContent = 'center';
+            zoomLkS.alignItems = 'center';
+            zoomImg.id = 'zoomImg';
+            zoomImg.src = oriImg.src;
+            zoomImgS.height = '100%';
+        }
+    })
+
+    menu.querySelector('#rain-d').onclick = () => {
         tagRn = 'J';
-        rain.querySelector('img').src = homeCWB + 'rainfall/' + isoStrRn.substring(0, 4) + '-' + isoStrRn.substring(5, 7) + '-' + isoStrRn.substring(8, 10) + '_' + isoStrRn.substring(11, 13) + (parseInt(isoStrRn.substring(14, 15)) < 3 ? '0' : '3') + '0.QZ' + tagRn + '8.jpg';
+        rain.querySelector('img').src = urlRn(tStrRn , tagRn);
         rain.querySelector('img').title = 'Rainfall Daily';
         rain.querySelector('img').alt = 'Rainfall Daily';
         rain.querySelector('.title').innerText = '日雨量';
-    })
-    menu.querySelector("#rain-h").addEventListener('click' , function(){
+    }
+    menu.querySelector('#rain-h').onclick = () => {
         tagRn = 'T';
-        rain.querySelector('img').src = homeCWB + 'rainfall/' + isoStrRn.substring(0, 4) + '-' + isoStrRn.substring(5, 7) + '-' + isoStrRn.substring(8, 10) + '_' + isoStrRn.substring(11, 13) + (parseInt(isoStrRn.substring(14, 15)) < 3 ? '0' : '3') + '0.QZ' + tagRn + '8.jpg';
+        rain.querySelector('img').src = urlRn(tStrRn , tagRn);
         rain.querySelector('img').title = 'Rainfall Hourly';
         rain.querySelector('img').alt = 'Rainfall Hourly';
         rain.querySelector('.title').innerText = '時雨量';
-    })
-    menu.querySelector("#sat-tw").addEventListener('click' , function(){
-        tagSatArea = 'TWI';
-        tagSatVSgPx = '1350';
-        tagSatVStPx = '1375';
-        tagSatIRPx = '800';
-        satvsg.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satvst.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satirc.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satire.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-    })
-    menu.querySelector("#sat-ea").addEventListener('click' , function(){
-        tagSatArea = 'LCC';
-        tagSatVSgPx = '2750';
-        tagSatVStPx = '2750';
-        tagSatIRPx = '2750';
-        satvsg.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satvst.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satirc.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satire.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-    })
-    menu.querySelector("#sat-gb").addEventListener('click' , function(){
-        tagSatArea = 'FDK';
-        tagSatVSgPx = '2750';
-        tagSatVStPx = '2750';
-        tagSatIRPx = '2750';
-        satvsg.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satvst.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satirc.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-        satire.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '-' + isoStrSat.substring(0, 4) + '-' + isoStrSat.substring(5, 7) + '-' + isoStrSat.substring(8, 10) + '-' + isoStrSat.substring(11, 13) + '-' + isoStrSat.substring(14, 15) + '0.jpg';
-    })
-    menu.querySelector("#ty-all").addEventListener('click' , function(){
-        tagTyT2 = 'ALL';
-        tyT2.querySelector('img').src = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
-        tyT2.querySelector('.title').innerText = '各國颱風路徑';
-    })
-    menu.querySelector("#ty-ec").addEventListener('click' , function(){
-        tagTyT2 = 'ALL';
-        tyT2.querySelector('img').src = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
-        tyT2.querySelector('.title').innerText = '各國颱風路徑';
-    })
-    menu.querySelector("#ty-ncep").addEventListener('click' , function(){
-        tagTyT2 = 'NCEP-GFS';
-        tyT2.querySelector('img').src = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
-        tyT2.querySelector('.title').innerText = 'NCEP颱風路徑';
-    })
-    menu.querySelector("#ty-uk").addEventListener('click' , function(){
-        tagTyT2 = 'UKMO-UM';
-        tyT2.querySelector('img').src = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
-        tyT2.querySelector('.title').innerText = 'UK颱風路徑';
-    })
-    menu.querySelector("#ty-cmc").addEventListener('click' , function(){
-        tagTyT2 = 'CMC-GEM';
-        tyT2.querySelector('img').src = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
-        tyT2.querySelector('.title').innerText = 'CMC颱風路徑';
-    })
-    menu.querySelector("#ty-fnmoc").addEventListener('click' , function(){
-        tagTyT2 = 'FNMOC-NAVGEM';
-        tyT2.querySelector('img').src = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
-        tyT2.querySelector('.title').innerText = 'FNMOC颱風路徑';
-    })
-    menu.querySelector("#ty-jma").addEventListener('click' , function(){
-        tagTyT2 = 'JMA-GSM';
-        tyT2.querySelector('img').src = homeT2 + tStrTyT2 + '_' + tagTyT2 + '.PNG';
-        tyT2.querySelector('.title').innerText = 'JMA颱風路徑';
-    })
-
-    var pics = document.querySelectorAll('.content>div>.pic>a');
-    content.style.right = '300px';
-    var enlargeUrl = []
-    for (i = 0 ; i < pics.length ; i++) {
-        enlargeUrl.push(pics[i].querySelector('img').src);
-        
-        pics[i].addEventListener('click' , function() {
-            var opacity = 0;
-            var enlarge = document.createElement('div');
-            enlarge.style.opacity = '0';
-            fadeIn(enlarge , opacity , 10);
-            enlarge.setAttribute('id' , 'enlarge');
-            enlarge.style.left = '0';
-            enlarge.style.right = content.style.right;
-            enlarge.style.top = '0';
-            enlarge.style.bottom = '0';
-            enlarge.style.position = 'absolute';
-            enlarge.style.display = 'flex';
-            enlarge.style.justifyContent = 'center';
-            enlarge.style.alignItems = 'center';
-            enlarge.style.flexWrap = 'wrap';
-            enlarge.style.overflow = 'auto';
-            enlarge.style.backgroundColor = 'rgba(0 , 0 , 0 , .8)';
-            document.querySelector('main').appendChild(enlarge);
-
-            var enlargeImg = new Image();
-            var originImg = this.querySelector('img');
-            enlargeImg.setAttribute('id' , 'enlargeImg');
-            enlargeImg.src = originImg.src;
-            enlargeImg.style.height = '90%';
-            enlargeImg.style.position = 'absolute';
-            enlargeImg.style.overflow = 'auto';
-            enlarge.appendChild(enlargeImg)
-            enlarge.addEventListener('click' , function() {var opacity = 1; fadeOut(this , opacity , 10);})
-
-            var observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === "attributes") {
-                        enlargeImg.src = originImg.src;
-                    }
-                });
-            });
-            observer.observe(originImg , {attributes: true});
-        })
     }
-    
-    addElementTimeLi('.time-list' , tNowLST , tNum , tStep);
+    menu.querySelector('#sat-tw').onclick = () => {
+        tagSatArea = 'TWI' , tagSatVSgPx = '1350' , tagSatVStPx = '1375' , tagSatIRPx = '800';
+        satvsg.querySelector('img').src = urlSatVSg(tStrSat , tagSatArea , tagSatVSgPx);
+        satvst.querySelector('img').src = urlSatVSt(tStrSat , tagSatArea , tagSatVStPx);
+        satirc.querySelector('img').src = urlSatIRc(tStrSat , tagSatArea , tagSatIRPx);
+        satire.querySelector('img').src = urlSatIRe(tStrSat , tagSatArea , tagSatIRPx);
+    }
+    menu.querySelector('#sat-ea').onclick = () => {
+        tagSatArea = 'LCC' , tagSatVSgPx = '2750' , tagSatVStPx = '2750' , tagSatIRPx = '2750';
+        satvsg.querySelector('img').src = urlSatVSg(tStrSat , tagSatArea , tagSatVSgPx);
+        satvst.querySelector('img').src = urlSatVSt(tStrSat , tagSatArea , tagSatVStPx);
+        satirc.querySelector('img').src = urlSatIRc(tStrSat , tagSatArea , tagSatIRPx);
+        satire.querySelector('img').src = urlSatIRe(tStrSat , tagSatArea , tagSatIRPx);
+    }
+    menu.querySelector('#sat-gb').onclick = () => {
+        tagSatArea = 'FDK' , tagSatVSgPx = '2750' , tagSatVStPx = '2750' , tagSatIRPx = '2750';
+        satvsg.querySelector('img').src = urlSatVSg(tStrSat , tagSatArea , tagSatVSgPx);
+        satvst.querySelector('img').src = urlSatVSt(tStrSat , tagSatArea , tagSatVStPx);
+        satirc.querySelector('img').src = urlSatIRc(tStrSat , tagSatArea , tagSatIRPx);
+        satire.querySelector('img').src = urlSatIRe(tStrSat , tagSatArea , tagSatIRPx);
+    }
+    menu.querySelector('#ty-all').onclick = () => {
+        tagTyT2 = 'ALL';
+        tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
+        tyT2.querySelector('.title').innerText = '各國颱風路徑';
+    }
+    menu.querySelector('#ty-ec').onclick = () => {
+        tagTyT2 = 'ALL';
+        tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
+        tyT2.querySelector('.title').innerText = '各國颱風路徑';
+    }
+    menu.querySelector('#ty-ncep').onclick = () => {
+        tagTyT2 = 'NCEP-GFS';
+        tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
+        tyT2.querySelector('.title').innerText = 'NCEP颱風路徑';
+    }
+    menu.querySelector('#ty-uk').onclick = () => {
+        tagTyT2 = 'UKMO-UM';
+        tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
+        tyT2.querySelector('.title').innerText = 'UK颱風路徑';
+    }
+    menu.querySelector('#ty-cmc').onclick = () => {
+        tagTyT2 = 'CMC-GEM';
+        tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
+        tyT2.querySelector('.title').innerText = 'CMC颱風路徑';
+    }
+    menu.querySelector('#ty-fnmoc').onclick = () => {
+        tagTyT2 = 'FNMOC-NAVGEM';
+        tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
+        tyT2.querySelector('.title').innerText = 'FNMOC颱風路徑';
+    }
+    menu.querySelector('#ty-jma').onclick = () => {
+        tagTyT2 = 'JMA-GSM';
+        tyT2.querySelector('img').src = urlTyT2(tStrTyT2 , tagTyT2);
+        tyT2.querySelector('.title').innerText = 'JMA颱風路徑';
+    }
 
     // fetch(document.querySelector("#rain>img").src, {method: 'get'})
     // .then(function(response) {
@@ -284,8 +279,7 @@ window.addEventListener("DOMContentLoaded" , function(){
 function addElementTimeLi(obj_p , tNowLST , tNum , tStep) {
     var obj_p = document.querySelector(obj_p);
     for (var t = 0; t < tNum; t++) {
-        const li = addElementLi(obj_p , tNowLST , t , tStep);
-        li.addEventListener('mouseover' , function() {
+        addElementLi(obj_p , tNowLST , t , tStep).addEventListener('mouseover' , function() {
             $(this).siblings().css({'background-color' : 'rgba(37, 45, 56, 1)'});
             $(this).css({'background-color' : 'rgba(74, 90, 112, 1)'});
         })
@@ -302,22 +296,22 @@ function addElementLi(obj_p , tNowLST , t , tStep) {
     
     const id = YYYY + MM + DD + '_' + hh + mm;
     const timeHTML = YYYY + '/' + MM + '/' + DD + ' ' + hh + ':' + mm;
-    const tStrRn = YYYY + '-' + MM + '-' + DD + '_' + hh + ((parseInt(mm) < 30) ? '0' : '3') + '0';
-    const tStrRdr = YYYY + MM + DD + hh + mm;
-    const tStrLtn = YYYY + MM + DD + hh + mm + '00';
-    const tStrSat = YYYY + '-' + MM + '-' + DD + '-' + hh + '-' + mm;
-    const tStrTemp = YYYY + '-' + MM + '-' + DD + '_' + hh + '00';
-    const tStrSkt = YYUTC + MMUTC + DDUTC + ((parseInt(hhUTC) < 12) ? '00' : '12');
-
     const tFmt10 = YYYY + '/' + MM + '/' + DD + ' ' + hh + ':' + mm;
     const tFmt30 = YYYY + '/' + MM + '/' + DD + ' ' + hh + ':' + (parseInt(mm) < 30 ? '0' : '3') + '0';
     const tFmt60 = YYYY + '/' + MM + '/' + DD + ' ' + hh + ':00';
     const tFmt12 = YYYYUTC + '/' + MMUTC + '/' + DDUTC + ' ' + ((parseInt(hhUTC) < 12) ? '00' : '12') + ':00Z';
 
     const li = document.createElement('li');
-    li.setAttribute('id' , id);
+    li.id = id;
     li.innerHTML = '<a href="#">' + timeHTML + '</a>';
-    li.addEventListener('mouseover' , function() {
+    li.addEventListener('mouseover' , () => {
+        tStrRn = YYYY + '-' + MM + '-' + DD + '_' + hh + ((parseInt(mm) < 30) ? '0' : '3') + '0';
+        tStrRdr = YYYY + MM + DD + hh + mm;
+        tStrLtn = YYYY + MM + DD + hh + mm + '00';
+        tStrSat = YYYY + '-' + MM + '-' + DD + '-' + hh + '-' + mm;
+        tStrTemp = YYYY + '-' + MM + '-' + DD + '_' + hh + '00';
+        tStrSkt = YYUTC + MMUTC + DDUTC + ((parseInt(hhUTC) < 12) ? '00' : '12');
+
         rain.querySelector('.time').innerText = tFmt30;
         radar.querySelector('.time').innerText = tFmt10;
         lgtn.querySelector('.time').innerText = tFmt10;
@@ -329,18 +323,18 @@ function addElementLi(obj_p , tNowLST , t , tStep) {
         uvi.querySelector('.time').innerText = '';
         skt.querySelector('.time').innerText = tFmt12;
 
-        rain.querySelector('img').src = homeCWB + 'rainfall/' + tStrRn + '.QZ' + tagRn + '8.jpg';
-        radar.querySelector('img').src = homeCWB + 'radar/CV1_TW_3600_' + tStrRdr + '.png';
-        lgtn.querySelector('img').src = homeCWB + 'lightning/' + tStrLtn + '_lgtl.jpg';
-        satvsg.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '/' + tagSatArea + '_VIS_Gray_' + tagSatVSgPx + '-' + tStrSat + '.jpg';
-        satvst.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '/' + tagSatArea + '_VIS_TRGB_' + tagSatVStPx + '-' + tStrSat + '.jpg';
-        satirc.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '/' + tagSatArea + '_IR1_CR_' + tagSatIRPx + '-' + tStrSat + '.jpg';
-        satire.querySelector('img').src = homeCWB + 'satellite/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '/' + tagSatArea + '_IR1_MB_' + tagSatIRPx + '-' + tStrSat + '.jpg';
-        temp.querySelector('img').src = homeCWB + 'temperature/' + tStrTemp + '.GTP8.jpg';
-        skt.querySelector('img').src = homeCWB2 + 'irisme_data/Weather/SKEWT/SKW___000_' + tStrSkt + '_46692.gif';
+        rain.querySelector('img').src = urlRn(tStrRn , tagRn);
+        radar.querySelector('img').src = urlRdr(tStrRdr);
+        lgtn.querySelector('img').src = urlLtn(tStrLtn);
+        satvsg.querySelector('img').src = urlSatVSg(tStrSat , tagSatArea , tagSatVSgPx);
+        satvst.querySelector('img').src = urlSatVSt(tStrSat , tagSatArea , tagSatVStPx);
+        satirc.querySelector('img').src = urlSatIRc(tStrSat , tagSatArea , tagSatIRPx);
+        satire.querySelector('img').src = urlSatIRe(tStrSat , tagSatArea , tagSatIRPx);
+        temp.querySelector('img').src = urlTemp(tStrTemp);
+        skt.querySelector('img').src = urlSkt(tStrSkt);
     })
     obj_p.appendChild(li);
-    return li
+    return li;
 }
 
 function getHttpRequest(url) {
@@ -371,22 +365,22 @@ function NetPing(url) {
     });
 }
 
-function fadeIn(el , opacity , delay) {
-    if (opacity < 1) {
-        setTimeout(function() {
-            opacity += 0.1;
-            el.style.opacity = opacity;
-            fadeIn(el , opacity , delay)
+function fadeIn(el , delay) {
+    if (el.style.opacity === '') el.style.opacity = '0';
+    if (parseFloat(el.style.opacity) < 1) {
+        setTimeout(() => {
+            el.style.opacity = parseFloat(el.style.opacity) + 0.1;
+            fadeIn(el , delay)
         } , delay)
     }
 }
 
-function fadeOut(el , opacity , delay) {
-    if (opacity > 0) {
-        setTimeout(function() {
-        opacity -= 0.1;
-        el.style.opacity = opacity;
-        fadeOut(el , opacity , delay)
+function fadeOut(el , delay) {
+    if (el.style.opacity === '') el.style.opacity = '1';
+    if (parseFloat(el.style.opacity) > 0) {
+        setTimeout(() => {
+            el.style.opacity = parseFloat(el.style.opacity) - 0.1;
+            fadeOut(el , delay)
         } , delay)
     } else {el.remove()}
 }
