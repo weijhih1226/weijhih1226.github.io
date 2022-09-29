@@ -1,54 +1,49 @@
+const delay = 10;
+const width = 300;
+
 window.addEventListener('DOMContentLoaded' , function(){
     var outmenu = document.querySelector('.outmenu');
+    var content = document.querySelector('.content');
+    var btn = document.querySelectorAll('.btn-goTop');
     var contentAll = [];
     if (outmenu != null) {
-        var content = document.querySelector('.content');
-        var enlarge = null
-        contentAll.push(content , enlarge)
+        var zoom = null;
         outmenu.style.right = '0px';
-        document.querySelector('#nav-menu').addEventListener('click' , function(){
-            contentAll[1] = document.querySelector('#enlarge');
-            if (outmenu.style.right == '0px') {
-                close(outmenu , contentAll , 0 , 300)
-                // content.style.right = '0px';
-                // outmenu.style.right = '-300px';
-            } else {
-                open(outmenu , contentAll , -300 , 0)
-                // content.style.right = '300px';
-                // outmenu.style.right = '0px';
-            }
+        content.style.right = '300px';
+        btn[0].style.right = '325px';
+        btn[1].style.right = '25px';
+        contentAll.push(content , zoom , ...btn);
+
+        document.querySelector('#nav-menu').addEventListener('click' , () => {
+            contentAll[1] = document.querySelector('#zoom');
+            if (outmenu.style.right == '0px') close(outmenu , contentAll , width , delay);
+            else open(outmenu , contentAll , width , delay);
         })
     }
 })
 
-function close(menu , content , menu_right , content_right){
-    if (menu_right > -300) {
-        setTimeout(function(){
-            menu_right -= 10;
-            content_right -= 10;
-            menu.style.right = menu_right + 'px';
+function close(menu , content , width , delay){
+    if (menu.style.right === '') menu.style.right = '0';
+    if (parseInt(menu.style.right) > -width) {
+        setTimeout(() => {
+            menu.style.right = (parseInt(menu.style.right) - 10) + 'px';
             for (i = 0 ; i < content.length ; i++) {
-                if (content[i] != null){
-                    content[i].style.right = content_right + 'px';
-                }
+                if (content[i] != null) content[i].style.right = (parseInt(content[i].style.right) - 10) + 'px';
             }
-            close(menu , content , menu_right , content_right)
-        } , 10)
+            close(menu , content , width , delay)
+        } , delay)
     }
 }
 
-function open(menu , content , menu_right , content_right){
-    if (menu_right < 0) {
-        setTimeout(function(){
-            menu_right += 10;
-            content_right += 10;
-            menu.style.right = menu_right + 'px';
+function open(menu , content , width , delay){
+    if (menu.style.right === '') menu.style.right = -width + 'px';
+    if (parseInt(menu.style.right) < 0) {
+        setTimeout(() => {
+            menu.style.right = (parseInt(menu.style.right) + 10) + 'px';
             for (i = 0 ; i < content.length ; i++) {
-                if (content[i] != null){
-                    content[i].style.right = content_right + 'px';
-                }
+                if (content[i] != null) content[i].style.right = (parseInt(content[i].style.right) + 10) + 'px';
             }
-            open(menu , content , menu_right , content_right)
-        } , 10)
+            open(menu , content , width , delay)
+        } , delay)
     }
 }

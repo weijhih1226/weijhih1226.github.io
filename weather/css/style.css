@@ -5,6 +5,10 @@
     font-family: 'Noto Sans TC';
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     color: #fff;
     background-color: #181c27;
@@ -24,6 +28,31 @@ header *{
 
 a {transition: color .5s ease-in-out;}
 a:hover {color: #30a9de;}
+
+a.btn-goTop {
+    position: fixed;
+    bottom: -50px;
+    right: 25px;
+    z-index: 1;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: #197C9D;
+    font-size: 1.6rem;
+    color: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+    opacity: 0;
+}
+a.btn-goTop.show {
+    opacity: 1;
+    bottom: 25px;
+}
+a.btn-goTop.btn-content {
+    right: 325px;
+}
 
 ul li {
     width: 5em;

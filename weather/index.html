@@ -4,26 +4,42 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta http-equiv="refresh" content="300">
-        <meta name="google-site-verification" content="3_tLbpMalpboQd6M2CIgfnBUIvA0lKi8eianyoQZiTw" />
+        <meta name="google-site-verification" content="3_tLbpMalpboQd6M2CIgfnBUIvA0lKi8eianyoQZiTw"/>
         <title>觀天象｜小威的漂流手札</title>
         <link rel="stylesheet" href="/weather/css/style.css">
         <link rel="stylesheet" href="/weather/css/gallery.css">
         <link rel="stylesheet" href="/image/icon/icofont/icofont.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+        <link rel="stylesheet" href="/image/icon/material-design-iconic-font/css/material-design-iconic-font.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
         <script src="/weather/js/getTime.js"></script>
         <script src="/weather/js/navControl.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.js"></script>
         <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     </head>
     <script>
+        var goTopFunc = function(){
+            const px = 100;
+            if ($(this).scrollTop() > px) $(this).children("a.btn-goTop").addClass("show");
+            else $(this).children("a.btn-goTop").removeClass("show");
+        }
         $(document).ready(function(){
             $("#menu>li>a").click(function(){
                 $(this).siblings(".inmenu").slideToggle()
             });
+            $(".outmenu").scroll(goTopFunc)
+            $(".content").scroll(goTopFunc)
+            $("a.btn-goTop").click(function(){
+                $(this).parent().animate({scrollTop: 0} , 300);
+            })
+            Waves.attach("a.btn-goTop", ['waves-light']);
+            Waves.init();
         });
+    </script>
     </script>
     <body>
         <header>
@@ -94,6 +110,7 @@
                     <div class="header"><div class="title">各國颱風路徑</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Typhoon 2000" alt="Typhoon 2000"></a></div>
                 </div>
+                <a href="#" class="btn-goTop btn-content"><i class="zmdi zmdi-long-arrow-up"></i></a>
             </div>
             <div class="outmenu">
                 <ul id="menu">
@@ -129,6 +146,7 @@
                         <ul class="inmenu time-list"></ul>
                     </li>
                 </ul>
+                <a href="#" class="btn-goTop btn-menu"><i class="zmdi zmdi-long-arrow-up"></i></a>
             </div>
         </main>
         <footer>
