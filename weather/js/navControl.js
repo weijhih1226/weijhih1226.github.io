@@ -1,21 +1,24 @@
 const delay = 10;
 const width = 300;
+const tagName = 'zoomBg';
 
 window.addEventListener('DOMContentLoaded' , function(){
     var outmenu = document.querySelector('.outmenu');
     var content = document.querySelector('.content');
     var btn = document.querySelectorAll('.btn-goTop');
     var contentAll = [];
-    if (outmenu != null) {
+    if (outmenu !== null) {
         var zoom = null;
         outmenu.style.right = '0px';
         content.style.right = '300px';
-        btn[0].style.right = '325px';
-        btn[1].style.right = '25px';
-        contentAll.push(content , zoom , ...btn);
+        if (btn.length !== 0) {
+            btn[0].style.right = '325px';
+            btn[1].style.right = '25px';
+            contentAll.push(content , zoom , ...btn);
+        } else contentAll.push(content , zoom);
 
         document.querySelector('#nav-menu').addEventListener('click' , () => {
-            contentAll[1] = document.querySelector('#zoom');
+            contentAll[1] = document.querySelector('#' + tagName);
             if (outmenu.style.right == '0px') close(outmenu , contentAll , width , delay);
             else open(outmenu , contentAll , width , delay);
         })

@@ -121,36 +121,36 @@ window.addEventListener('DOMContentLoaded' , function(){
     imgs.forEach(img => {
         img.onclick = () => {
             const oriImg = img;
-            const zoom = document.createElement('div');
+            const zoomBg = document.createElement('div');
             const zoomLk = document.createElement('a');
             const zoomImg = new Image();
-            const zoomS = zoom.style;
+            const zoomBgS = zoomBg.style;
             const zoomLkS = zoomLk.style;
             const zoomImgS = zoomImg.style;
-            document.querySelector('main').appendChild(zoom);
-            zoom.appendChild(zoomLk);
+            document.querySelector('main').appendChild(zoomBg);
+            zoomBg.appendChild(zoomLk);
             zoomLk.appendChild(zoomImg);
 
-            fadeIn(zoom , 10);
-            zoom.onclick = () => fadeOut(zoom , 10);
+            fadeIn(zoomBg , 10);
+            zoomBg.onclick = () => fadeOut(zoomBg , 10);
             new MutationObserver(muts => {
                 muts.forEach(mut => {
                     if (mut.type === 'attributes') zoomImg.src = oriImg.src;
                 })
             }).observe(oriImg , {attributes: true});
 
-            zoom.id = 'zoom';
-            zoomS.left = '0';
-            zoomS.right = content.style.right;
-            zoomS.top = '0';
-            zoomS.bottom = '0';
-            zoomS.position = 'absolute';
-            zoomS.display = 'flex';
-            zoomS.justifyContent = 'center';
-            zoomS.alignItems = 'center';
-            zoomS.flexWrap = 'wrap';
-            zoomS.overflow = 'auto';
-            zoomS.backgroundColor = 'rgba(0 , 0 , 0 , .8)';
+            zoomBg.id = 'zoomBg';
+            zoomBgS.left = '0';
+            zoomBgS.right = content.style.right;
+            zoomBgS.top = '0';
+            zoomBgS.bottom = '0';
+            zoomBgS.position = 'absolute';
+            zoomBgS.display = 'flex';
+            zoomBgS.justifyContent = 'center';
+            zoomBgS.alignItems = 'center';
+            zoomBgS.flexWrap = 'wrap';
+            zoomBgS.overflow = 'auto';
+            zoomBgS.backgroundColor = 'rgba(0 , 0 , 0 , .8)';
             zoomLk.id = 'zoomLk';
             // zoomLk.href = originImg.src;
             // zoomLk.target = '_blank';

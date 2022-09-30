@@ -55,32 +55,8 @@ L.Control.RadarDBZColorbar = L.Control.extend({
     }
 });
 
-
-L.Control.LatLng = L.Control.extend({
-    onAdd: function(opts) {
-        var ll = L.DomUtil.create('div', 'leaflet-control-lnglat leaflet-control');
-        ll.style.width = '85px';
-        // ll.style.border = '2px solid #888';
-        ll.style.margin = '0';
-        ll.style.padding = '0 4px';
-        ll.style.backgroundColor = 'rgba(255, 255, 255, .5)';
-        ll.style.color = '#333';
-        ll.style.textAlign = 'center'
-        ll.innerHTML = '<div class="lnglat"> ---, --- </div>'; 
-        return ll;
-    },
-  
-    onRemove: function(map) {
-      // Nothing to do here
-    }
-});
-
 L.control.radarDBZColorbar = function(opts) {
     return new L.Control.RadarDBZColorbar(opts);
-}
-
-L.control.latLng = function(opts) {
-    return new L.Control.LatLng(opts);
 }
 
 function getRadarDBZColor(d) {

@@ -38,6 +38,7 @@ const imgSatIReUrl = `${homeCWBOpendata2}MSC/O-C0042-006.jpg`;
 const kmzTyNewsUrl = `${homeCWBOpendata}W-C0034-002?Authorization=${Authorization}&downloadType=WEB&format=KMZ`;
 const xmlTyTrackUrl = `${homeCWBOpendata}W-C0034-005?Authorization=${Authorization}&downloadType=WEB&format=XML`;
 const kmzJTWCUrl = 'https://www.metoc.navy.mil/jtwc/products/wp1222.kmz';
+const hdfSat065Url = `${homeCWBOpendata2}DIV4/O-A0043-001.hdf`;
 // const imgWtrMapUrl = `${homeCWBOpendata2}MFC/F-C0035-001.jpg`;
 // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
 // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
@@ -401,8 +402,8 @@ document.addEventListener("DOMContentLoaded" , function(e){
         // map.removeControl(z)
     });
 
-    map.on('mousemove', function(e) {
-        latlng._container.innerHTML = '<div class="lnglat">' + e.latlng.lat.toFixed(2) + ', ' + e.latlng.lng.toFixed(2) + '</div>';
+    map.on('mousemove', (e) => {
+        latlng._container.innerHTML = LatLngHTML(e);
     });
 })
 
@@ -418,8 +419,41 @@ function getGeojson(url , options) {
     return data;
 }
 
-function LatLng(e) {
-    console.log('(' + e.latlng.lat.toFixed(2) + ',' + e.latlng.lng.toFixed(2) + ')');
+function Lng2deg(lng) {
+    if (lng <= 180) return (lng > -180) ? lng : Lng2deg(lng + 360);
+    else return Lng2deg(lng - 360);
+}
+
+function LatLngHTML(e) {
+    lat = e.latlng.lat;
+    lng = Lng2deg(e.latlng.lng);
+    latAbs = Math.abs(lat).toFixed(2);
+    lngAbs = Math.abs(lng).toFixed(2);
+    return '<div class="lnglat">' +
+           lngAbs + '&#176;' + (lng >= 0 ? 'E' : 'W') + ', ' + 
+           latAbs + '&#176;' + (lat >= 0 ? 'N' : 'S') + '</div>';
+}
+
+L.Control.LatLng = L.Control.extend({
+    onAdd: function(opts) {
+        var ll = L.DomUtil.create('div', 'leaflet-control-lnglat leaflet-control');
+        ll.style.width = '100px';
+        // ll.style.border = '2px solid #888';
+        ll.style.margin = '0';
+        ll.style.padding = '0 4px';
+        ll.style.backgroundColor = 'rgba(255, 255, 255, .5)';
+        ll.style.color = '#333';
+        ll.style.textAlign = 'center'
+        ll.innerHTML = '<div class="lnglat"> ---.-- &#176;E, --.-- &#176;N </div>'; 
+        return ll;
+    },
+  
+    onRemove: function(map) {
+      // Nothing to do here
+    }
+});
+L.control.latLng = function(opts) {
+    return new L.Control.LatLng(opts);
 }
 
 L.Map.include({
