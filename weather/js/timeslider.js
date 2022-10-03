@@ -133,7 +133,10 @@ document.addEventListener('DOMContentLoaded' , function(){
     });
 
     tsTrack.addEventListener('mousedown' , actionMouse);
-    this.addEventListener('keydown' , actionKey , false)
+    this.addEventListener('keydown' , actionKey , false);
+    tsCtlrewind.addEventListener('click' , actionRewind);
+    tsCtlforward.addEventListener('click' , actionForward);
+    tsCtlplay.addEventListener('click' , actionPlay);
 
     for (var t = 0 ; t < tAll1Hr.length ; t++) {
         const tick = this.createElement('div');
@@ -146,14 +149,37 @@ document.addEventListener('DOMContentLoaded' , function(){
         tickS.position = 'absolute';
         tickS.background = '#fff';
         tickS.cursor = 'pointer';
-    }
+    };
 
     function actionMouse(e){
         tBar = (e.clientX - this.getBoundingClientRect().left) / this.clientWidth;
         tSelect = tStart + (tEnd - tStart) * tBar;
         tsS.width = tBar * 100 + '%';
         actionSelect();
-    }
+    };
+    function actionRewind(){
+        tSelect -= 5 * min2msec;
+        tBar = (tSelect - tStart) / (tEnd - tStart);
+        tsS.width = tBar * 100 + '%';
+        actionSelect();
+    };
+    function actionForward(){
+        tSelect += 5 * min2msec;
+        tBar = (tSelect - tStart) / (tEnd - tStart);
+        tsS.width = tBar * 100 + '%';
+        actionSelect();
+    };
+    function actionPlay(){
+        if (tSelect + 5 * min2msec > tEnd) tSelect = tStart;
+        else tSelect += 5 * min2msec;
+        tBar = (tSelect - tStart) / (tEnd - tStart);
+        tsS.width = tBar * 100 + '%';
+        actionSelect();
+
+        setTimeout(() => {
+            actionPlay();
+        } , 500)
+    };
 
     function actionKey(e){
         switch(e.keyCode){
@@ -167,7 +193,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         tBar = (tSelect - tStart) / (tEnd - tStart);
         tsS.width = tBar * 100 + '%';
         actionSelect();
-    }
+    };
 
     function actionSelect(){
         var t = 0;
