@@ -50,8 +50,8 @@ a.btn-goTop.show {
     opacity: 1;
     bottom: 25px;
 }
-a.btn-goTop.btn-content {
-    right: 325px;
+a.btn-goTop.btn-content.show {
+    bottom: 50px;
 }
 
 ul li {
