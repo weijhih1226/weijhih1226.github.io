@@ -158,13 +158,15 @@ document.addEventListener('DOMContentLoaded' , function(){
         actionSelect();
     };
     function actionRewind(){
-        tSelect -= 5 * min2msec;
+        if (tSelect - 5 * min2msec < tStart) tSelect = tEnd;
+        else tSelect -= 5 * min2msec;
         tBar = (tSelect - tStart) / (tEnd - tStart);
         tsS.width = tBar * 100 + '%';
         actionSelect();
     };
     function actionForward(){
-        tSelect += 5 * min2msec;
+        if (tSelect + 5 * min2msec > tEnd) tSelect = tStart;
+        else tSelect += 5 * min2msec;
         tBar = (tSelect - tStart) / (tEnd - tStart);
         tsS.width = tBar * 100 + '%';
         actionSelect();
@@ -184,10 +186,12 @@ document.addEventListener('DOMContentLoaded' , function(){
     function actionKey(e){
         switch(e.keyCode){
             case 37:
-                tSelect -= 5 * min2msec;
+                if (tSelect - 5 * min2msec < tStart) tSelect = tEnd;
+                else tSelect -= 5 * min2msec;
                 break;
             case 39:
-                tSelect += 5 * min2msec;
+                if (tSelect + 5 * min2msec > tEnd) tSelect = tStart;
+                else tSelect += 5 * min2msec;
                 break;
         }
         tBar = (tSelect - tStart) / (tEnd - tStart);
@@ -238,8 +242,4 @@ document.addEventListener('DOMContentLoaded' , function(){
         temp.querySelector('img').src = urlTemp2(isoStr1Hr.substring(0, 4) , isoStr1Hr.substring(5, 7) , isoStr1Hr.substring(8, 10) , isoStr1Hr.substring(11, 13));
         skt.querySelector('img').src = urlSkt2(isoStr12Hr.substring(2, 4) , isoStr12Hr.substring(5, 7) , isoStr12Hr.substring(8, 10) , isoStr12Hr.substring(11, 13));
     };
-
-    // new MutationObserver(function(mutations , owner){
-    //     console.log(mutations , owner);
-    // }).observe(tSelect , {attributes: true});
 });
