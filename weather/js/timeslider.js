@@ -4,6 +4,8 @@ const tOpt = {year: 'numeric', month: '2-digit', day: '2-digit',
               hour: '2-digit', minute: '2-digit', hour12: false};
 var isoStrStart = new Date(tStart).toLocaleString('zh-TW', tOpt);
 isoStrStart = isoStrStart.substring(11, 13) === '24' ? isoStrStart.substring(0, 11) + '00' + isoStrStart.substring(13, 16) : isoStrStart;
+var tSelect = tEnd;
+var tBar;
 
 const tInt5Min = 5 * min2msec;
 const tInt10Min = 10 * min2msec;
@@ -11,10 +13,10 @@ const tInt30Min = 30 * min2msec;
 const tInt1Hr = 60 * min2msec;
 const tInt12Hr = 720 * min2msec;
 
-const tStart5Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + isoStrStart.substring(14, 15) + (parseInt(isoStrStart.substring(15, 16)) < 5 ? '0' : '5') + ':00') + tInt5Min;
-const tStart10Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + isoStrStart.substring(14, 15) + '0:00') + tInt10Min;
-const tStart30Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + (parseInt(isoStrStart.substring(14, 15)) < 3 ? '0' : '3') + '0:00') + tInt30Min;
-const tStart1Hr = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':00') + tInt1Hr;
+const tStart5Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + isoStrStart.substring(14, 15) + (parseInt(isoStrStart.substring(15, 16)) < 5 ? '0' : '5') + ':00');
+const tStart10Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + isoStrStart.substring(14, 15) + '0:00');
+const tStart30Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + (parseInt(isoStrStart.substring(14, 15)) < 3 ? '0' : '3') + '0:00');
+const tStart1Hr = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':00');
 const tStart12Hr = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + (parseInt(isoStrStart.substring(11, 13)) < 12 ? '00' : '12') + ':00') - tInt12Hr;
 
 const tAll5Min = [];
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsCtl.appendChild(tsCtlforward);
 
     tsCtn.id = 'tsCtn';
+    tsCtn.className = 'timeslider';
     tsTrack.id = 'tsTrack';
     ts.id = 'ts';
     tsDragBtn.id = 'tsDragBtn';
@@ -122,16 +125,51 @@ document.addEventListener('DOMContentLoaded' , function(){
 
     tsCtl.querySelectorAll('i').forEach(icon => {
         icon.style.margin = '5px';
-        icon.style.color = '#9da8b3';
-        icon.style.backgroundColor = '#000';
+        // icon.style.color = '#9da8b3';
+        icon.style.color = '#197C9D';
+        icon.style.backgroundColor = '#fff';
         icon.style.borderRadius = '50%';
         icon.style.cursor = 'pointer';
     });
 
-    tsTrack.onmousedown = function(e){
-        tsS.width = (e.clientX - this.getBoundingClientRect().left) / this.clientWidth * 100 + '%';
-        const tSelect = tStart + (tEnd - tStart) * (e.clientX - this.getBoundingClientRect().left) / this.clientWidth;
-        
+    tsTrack.addEventListener('mousedown' , actionMouse);
+    this.addEventListener('keydown' , actionKey , false)
+
+    for (var t = 0 ; t < tAll1Hr.length ; t++) {
+        const tick = this.createElement('div');
+        const tickS = tick.style;
+        tsTrack.appendChild(tick);
+
+        tickS.left = (tAll1Hr[t] - tStart) / (tEnd - tStart) * 100 + '%';
+        tickS.width = '2px';
+        tickS.height = '12px';
+        tickS.position = 'absolute';
+        tickS.background = '#fff';
+        tickS.cursor = 'pointer';
+    }
+
+    function actionMouse(e){
+        tBar = (e.clientX - this.getBoundingClientRect().left) / this.clientWidth;
+        tSelect = tStart + (tEnd - tStart) * tBar;
+        tsS.width = tBar * 100 + '%';
+        actionSelect();
+    }
+
+    function actionKey(e){
+        switch(e.keyCode){
+            case 37:
+                tSelect -= 5 * min2msec;
+                break;
+            case 39:
+                tSelect += 5 * min2msec;
+                break;
+        }
+        tBar = (tSelect - tStart) / (tEnd - tStart);
+        tsS.width = tBar * 100 + '%';
+        actionSelect();
+    }
+
+    function actionSelect(){
         var t = 0;
         while (tAll5Min[t] < tSelect) {var t5Min = tAll5Min[t]; t++;}
         var t = 0;
@@ -143,7 +181,6 @@ document.addEventListener('DOMContentLoaded' , function(){
         var t = 0;
         while (tAll12Hr[t] < tSelect) {var t12Hr = tAll12Hr[t]; t++;}
         
-        var isoStrSelect = new Date(tSelect).toLocaleString('zh-TW', tOpt);
         var isoStr5Min = new Date(t5Min).toLocaleString('zh-TW', tOpt);
         var isoStr10Min = new Date(t10Min).toLocaleString('zh-TW', tOpt);
         var isoStr30Min = new Date(t30Min).toLocaleString('zh-TW', tOpt);
@@ -176,17 +213,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         skt.querySelector('img').src = urlSkt2(isoStr12Hr.substring(2, 4) , isoStr12Hr.substring(5, 7) , isoStr12Hr.substring(8, 10) , isoStr12Hr.substring(11, 13));
     };
 
-    for (var t = 0 ; t < tAll1Hr.length ; t++) {
-        const tick = this.createElement('div');
-        const tickS = tick.style;
-        tsTrack.appendChild(tick);
-
-        tickS.left = (tAll1Hr[t] - tStart) / (tEnd - tStart) * 100 + '%';
-        tickS.width = '2px';
-        tickS.height = '12px';
-        tickS.position = 'absolute';
-        tickS.background = '#fff';
-        tickS.cursor = 'pointer';
-    }
-    
+    // new MutationObserver(function(mutations , owner){
+    //     console.log(mutations , owner);
+    // }).observe(tSelect , {attributes: true});
 });
