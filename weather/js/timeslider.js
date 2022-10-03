@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsCtlforward.addEventListener('click' , actionForward);
     tsCtlplay.addEventListener('click' , actionPlay);
 
-    for (var t = 0 ; t < tAll1Hr.length ; t++) {
+    for (var t = 1 ; t < tAll1Hr.length ; t++) {
         const tick = this.createElement('div');
         const tickS = tick.style;
         tsTrack.appendChild(tick);
