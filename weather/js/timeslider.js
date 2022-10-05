@@ -216,32 +216,24 @@ document.addEventListener('DOMContentLoaded' , function(){
 
     function actionMouse(e){
         tSelect = click2NearestTime(e , this);
-        tsS.width = time2BarWidth(tSelect);
-        tsPointerS.left = time2BarWidth(tSelect);
-        tsTag.innerHTML = time2Str(tSelect);
-        actionSelect();
+        displayTimeslider(tSelect);
+        displayContent(tSelect);
     };
     function actionRewind(){
         tSelect = rewind(tSelect , tSkip);
-        tsS.width = time2BarWidth(tSelect);
-        tsPointerS.left = time2BarWidth(tSelect);
-        tsTag.innerHTML = time2Str(tSelect);
-        actionSelect();
+        displayTimeslider(tSelect);
+        displayContent(tSelect);
     };
     function actionForward(){
         tSelect = forward(tSelect , tSkip);
-        tsS.width = time2BarWidth(tSelect);
-        tsPointerS.left = time2BarWidth(tSelect);
-        tsTag.innerHTML = time2Str(tSelect);
-        actionSelect();
+        displayTimeslider(tSelect);
+        displayContent(tSelect);
     };
     function actionPlay(){
         if (optPlay === 1){
             tSelect = forward(tSelect , tSkip);
-            tsS.width = time2BarWidth(tSelect);
-            tsPointerS.left = time2BarWidth(tSelect);
-            tsTag.innerHTML = time2Str(tSelect);
-            actionSelect();
+            displayTimeslider(tSelect);
+            displayContent(tSelect);
             setTimeout(() => {
                 actionPlay();
             } , playSpeed);
@@ -264,8 +256,9 @@ document.addEventListener('DOMContentLoaded' , function(){
 
     function actionKey(e){
         e.preventDefault();
-        if (e.shiftKey) tSkip = 60;
-        else if (e.ctrlKey) tSkip = 5;
+        if (!e.ctrlKey && e.shiftKey) tSkip = 30;
+        else if (e.ctrlKey && !e.shiftKey) tSkip = 5;
+        else if (e.ctrlKey && e.shiftKey) tSkip = 60;
         else tSkip = tSkipDefault;
 
         switch (e.keyCode){
@@ -281,7 +274,13 @@ document.addEventListener('DOMContentLoaded' , function(){
         }
     };
 
-    function actionSelect(){
+    function displayTimeslider(tSelect){
+        tsS.width = time2BarWidth(tSelect);
+        tsPointerS.left = time2BarWidth(tSelect);
+        tsTag.innerHTML = time2Str(tSelect);
+    }
+
+    function displayContent(tSelect){
         var t = 0;
         while (tAll5Min[t] < tSelect) {var t5Min = tAll5Min[t]; t++;}
         var t = 0;
