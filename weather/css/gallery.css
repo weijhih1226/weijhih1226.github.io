@@ -82,9 +82,9 @@ input[type=radio]:checked + span {
     background-color: rgba(74, 90, 112, 1);
 }
 
-.rain-list {display: none;}
-.sat-list {display: none;}
-.ty-list {display: none;}
+.rain-list {display: block;}
+.sat-list {display: block;}
+.ty-list {display: block;}
 .time-list {display: block;}
 
 #menu>li>a {

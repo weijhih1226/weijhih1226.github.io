@@ -3,9 +3,14 @@ const tEnd = tNowUTC;
 const tOpt = {year: 'numeric', month: '2-digit', day: '2-digit', 
               hour: '2-digit', minute: '2-digit', hour12: false};
 var isoStrStart = new Date(tStart).toLocaleString('zh-TW', tOpt);
+var isoStrEnd = new Date(tEnd).toLocaleString('zh-TW', tOpt);
 isoStrStart = isoStrStart.substring(11, 13) === '24' ? isoStrStart.substring(0, 11) + '00' + isoStrStart.substring(13, 16) : isoStrStart;
+isoStrEnd = isoStrEnd.substring(11, 13) === '24' ? isoStrEnd.substring(0, 11) + '00' + isoStrEnd.substring(13, 16) : isoStrEnd;
 var tSelect = tEnd;
-var tBar;
+var optPlay = 0;
+var tSkipDefault = 10;
+var tSkip = tSkipDefault;
+const playSpeed = 500;
 
 const tInt5Min = 5 * min2msec;
 const tInt10Min = 10 * min2msec;
@@ -47,6 +52,8 @@ document.addEventListener('DOMContentLoaded' , function(){
     const tsTrack = this.createElement('div');
     const ts = this.createElement('div');
     const tsDragBtn = this.createElement('div');
+    const tsPointer = this.createElement('div');
+    const tsTag = this.createElement('div');
     const tsCtl = this.createElement('div');
     const tsCtlplay = this.createElement('i');
     const tsCtlforward = this.createElement('i');
@@ -55,6 +62,8 @@ document.addEventListener('DOMContentLoaded' , function(){
     const tsTrackS = tsTrack.style;
     const tsS = ts.style;
     const tsDragBtnS = tsDragBtn.style;
+    const tsPointerS = tsPointer.style;
+    const tsTagS = tsTag.style;
     const tsCtlS = tsCtl.style;
 
     this.querySelector('main').appendChild(tsCtn);
@@ -62,6 +71,8 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsCtn.appendChild(tsCtl);
     tsTrack.appendChild(ts);
     tsTrack.appendChild(tsDragBtn);
+    tsTrack.appendChild(tsPointer);
+    tsPointer.appendChild(tsTag);
     tsCtl.appendChild(tsCtlrewind);
     tsCtl.appendChild(tsCtlplay);
     tsCtl.appendChild(tsCtlforward);
@@ -71,6 +82,8 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsTrack.id = 'tsTrack';
     ts.id = 'ts';
     tsDragBtn.id = 'tsDragBtn';
+    tsPointer.id = 'tsPointer';
+    tsTag.id = 'tsTag';
     tsCtl.id = 'tsCtl';
     tsCtlplay.className = 'icofont-play-alt-1 icofont-2x';
     tsCtlforward.className = 'icofont-forward icofont-2x';
@@ -85,6 +98,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsCtnS.display = 'flex';
     tsCtnS.alignItems = 'center';
     tsCtnS.background = 'rgba(255 , 255 , 255 , 0)';
+    tsCtnS.pointerEvents = 'none';
     
     tsTrackS.left = '20px';
     tsTrackS.right = '150px';
@@ -95,6 +109,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsTrackS.display = 'flex';
     tsTrackS.alignItems = 'center';
     tsTrackS.cursor = 'pointer';
+    tsTrackS.pointerEvents = 'auto';
 
     tsS.left = '0';
     tsS.top = '0';
@@ -115,6 +130,26 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsDragBtnS.borderRadius = '8px';
     tsDragBtnS.cursor = 'pointer';
 
+    tsPointerS.height = tsTrackS.height;
+    tsPointerS.position = 'absolute';
+    tsPointerS.left = '100%';
+
+    tsTag.innerHTML = isoStrEnd.substring(11, 16);
+    tsTagS.left = '-30px';
+    tsTagS.top = '-45px';
+    tsTagS.width = '60px';
+    tsTagS.height = '30px';
+    tsTagS.border = '1px solid #fff';
+    tsTagS.borderRadius = '5px';
+    tsTagS.position = 'absolute';
+    tsTagS.background = '#197C9D';
+    tsTagS.color = '#fff';
+    tsTagS.display = 'flex';
+    tsTagS.justifyContent = 'center';
+    tsTagS.alignItems = 'center';
+    tsTagS.fontSize = '14px';
+    tsTagS.pointerEvents = 'none';
+
     tsCtlS.right = '20px';
     tsCtlS.width = '110px';
     tsCtlS.height = '80%';
@@ -130,13 +165,15 @@ document.addEventListener('DOMContentLoaded' , function(){
         icon.style.backgroundColor = '#fff';
         icon.style.borderRadius = '50%';
         icon.style.cursor = 'pointer';
+        icon.style.pointerEvents = 'auto';
     });
 
     tsTrack.addEventListener('mousedown' , actionMouse);
-    this.addEventListener('keydown' , actionKey , false);
     tsCtlrewind.addEventListener('click' , actionRewind);
     tsCtlforward.addEventListener('click' , actionForward);
-    tsCtlplay.addEventListener('click' , actionPlay);
+    tsCtlplay.addEventListener('click' , switchPlayPause);
+    this.addEventListener('keydown' , actionKey , false);
+    this.addEventListener('keyup' , () => tSkip = tSkipDefault , false);
 
     for (var t = 1 ; t < tAll1Hr.length ; t++) {
         const tick = this.createElement('div');
@@ -151,52 +188,97 @@ document.addEventListener('DOMContentLoaded' , function(){
         tickS.cursor = 'pointer';
     };
 
+    for (var t = 1 ; t < tAll30Min.length ; t++) {
+        const tick = this.createElement('div');
+        const tickS = tick.style;
+        tsTrack.appendChild(tick);
+
+        tickS.left = (tAll30Min[t] - tStart) / (tEnd - tStart) * 100 + '%';
+        tickS.width = '1px';
+        tickS.height = '10px';
+        tickS.position = 'absolute';
+        tickS.background = '#fff';
+        tickS.cursor = 'pointer';
+    };
+
+    for (var t = 1 ; t < tAll10Min.length ; t++) {
+        const tick = this.createElement('div');
+        const tickS = tick.style;
+        tsTrack.appendChild(tick);
+
+        tickS.left = (tAll10Min[t] - tStart) / (tEnd - tStart) * 100 + '%';
+        tickS.width = '1px';
+        tickS.height = '5px';
+        tickS.position = 'absolute';
+        tickS.background = '#fff';
+        tickS.cursor = 'pointer';
+    };
+
     function actionMouse(e){
-        tBar = (e.clientX - this.getBoundingClientRect().left) / this.clientWidth;
-        tSelect = tStart + (tEnd - tStart) * tBar;
-        tsS.width = tBar * 100 + '%';
+        tSelect = click2NearestTime(e , this);
+        tsS.width = time2BarWidth(tSelect);
+        tsPointerS.left = time2BarWidth(tSelect);
+        tsTag.innerHTML = time2Str(tSelect);
         actionSelect();
     };
     function actionRewind(){
-        if (tSelect - 5 * min2msec < tStart) tSelect = tEnd;
-        else tSelect -= 5 * min2msec;
-        tBar = (tSelect - tStart) / (tEnd - tStart);
-        tsS.width = tBar * 100 + '%';
+        tSelect = rewind(tSelect , tSkip);
+        tsS.width = time2BarWidth(tSelect);
+        tsPointerS.left = time2BarWidth(tSelect);
+        tsTag.innerHTML = time2Str(tSelect);
         actionSelect();
     };
     function actionForward(){
-        if (tSelect + 5 * min2msec > tEnd) tSelect = tStart;
-        else tSelect += 5 * min2msec;
-        tBar = (tSelect - tStart) / (tEnd - tStart);
-        tsS.width = tBar * 100 + '%';
+        tSelect = forward(tSelect , tSkip);
+        tsS.width = time2BarWidth(tSelect);
+        tsPointerS.left = time2BarWidth(tSelect);
+        tsTag.innerHTML = time2Str(tSelect);
         actionSelect();
     };
     function actionPlay(){
-        if (tSelect + 5 * min2msec > tEnd) tSelect = tStart;
-        else tSelect += 5 * min2msec;
-        tBar = (tSelect - tStart) / (tEnd - tStart);
-        tsS.width = tBar * 100 + '%';
-        actionSelect();
+        if (optPlay === 1){
+            tSelect = forward(tSelect , tSkip);
+            tsS.width = time2BarWidth(tSelect);
+            tsPointerS.left = time2BarWidth(tSelect);
+            tsTag.innerHTML = time2Str(tSelect);
+            actionSelect();
+            setTimeout(() => {
+                actionPlay();
+            } , playSpeed);
+        };
+    };
 
-        setTimeout(() => {
-            actionPlay();
-        } , 500)
+    function switchPlayPause(){
+        switch (optPlay){
+            case 0:
+                optPlay = 1;
+                document.querySelector('.icofont-play-alt-1').className = 'icofont-pause icofont-2x';
+                actionPlay();
+                break;
+            case 1:
+                optPlay = 0;
+                document.querySelector('.icofont-pause').className = 'icofont-play-alt-1 icofont-2x';
+                break;
+        };
     };
 
     function actionKey(e){
-        switch(e.keyCode){
+        e.preventDefault();
+        if (e.shiftKey) tSkip = 60;
+        else if (e.ctrlKey) tSkip = 5;
+        else tSkip = tSkipDefault;
+
+        switch (e.keyCode){
+            case 32:
+                switchPlayPause();
+                break;
             case 37:
-                if (tSelect - 5 * min2msec < tStart) tSelect = tEnd;
-                else tSelect -= 5 * min2msec;
+                actionRewind();
                 break;
             case 39:
-                if (tSelect + 5 * min2msec > tEnd) tSelect = tStart;
-                else tSelect += 5 * min2msec;
+                actionForward();
                 break;
         }
-        tBar = (tSelect - tStart) / (tEnd - tStart);
-        tsS.width = tBar * 100 + '%';
-        actionSelect();
     };
 
     function actionSelect(){
@@ -243,3 +325,38 @@ document.addEventListener('DOMContentLoaded' , function(){
         skt.querySelector('img').src = urlSkt2(isoStr12Hr.substring(2, 4) , isoStr12Hr.substring(5, 7) , isoStr12Hr.substring(8, 10) , isoStr12Hr.substring(11, 13));
     };
 });
+
+function rewind(t , int){
+    return (t - int * min2msec < tStart) ? tEnd : t - int * min2msec;
+};
+
+function forward(t , int){
+    return (t + int * min2msec > tEnd) ? tStart : t + int * min2msec;
+};
+
+function time2BarWidth(t){
+    return (t - tStart) / (tEnd - tStart) * 100 + '%';
+};
+
+function time2Str(t){
+    var tStr = new Date(t).toLocaleString('zh-TW', tOpt).substring(11, 16);
+    return (tStr.substring(0, 2) === '24' ? '00' : tStr.substring(0, 2)) + tStr.substring(2, 5);
+}
+
+function click2Time(e , track){
+    return tStart + (tEnd - tStart) * (e.clientX - track.getBoundingClientRect().left) / track.clientWidth;
+};
+
+function click2NearestTime(e , track){
+    var t = click2Time(e , track);
+    var tAbs = [];
+    tAll5Min.forEach(t5Min => tAbs.push(Math.abs(t - t5Min)));
+    var tMin = Math.min(...tAbs);
+    for (var i = 0; i < tAbs.length; i++){
+        if (tAbs[i] === tMin) return tAll5Min[i];
+    };
+};
+
+function click2BarWidth(e , track){
+    return (e.clientX - track.getBoundingClientRect().left) / track.clientWidth * 100 + '%';
+};
