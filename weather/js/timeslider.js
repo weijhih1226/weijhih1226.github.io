@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     const content = this.querySelector('.content');
     const menu = this.querySelector('#menu');
     const tsCtn = this.createElement('div');
+    const tsTrackBg = this.createElement('div');
     const tsTrack = this.createElement('div');
     const ts = this.createElement('div');
     const tsDragBtn = this.createElement('div');
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     const tsCtlforward = this.createElement('i');
     const tsCtlrewind = this.createElement('i');
     const tsCtnS = tsCtn.style;
+    const tsTrackBgS = tsTrackBg.style;
     const tsTrackS = tsTrack.style;
     const tsS = ts.style;
     const tsDragBtnS = tsDragBtn.style;
@@ -68,11 +70,12 @@ document.addEventListener('DOMContentLoaded' , function(){
     const tsCtlS = tsCtl.style;
 
     this.querySelector('main').appendChild(tsCtn);
-    tsCtn.appendChild(tsTrack);
+    tsCtn.appendChild(tsTrackBg);
     tsCtn.appendChild(tsCtl);
+    tsTrackBg.appendChild(tsTrack);
+    tsTrackBg.appendChild(tsPointer);
     tsTrack.appendChild(ts);
     tsTrack.appendChild(tsDragBtn);
-    tsTrack.appendChild(tsPointer);
     tsPointer.appendChild(tsTag);
     tsCtl.appendChild(tsCtlrewind);
     tsCtl.appendChild(tsCtlplay);
@@ -80,6 +83,7 @@ document.addEventListener('DOMContentLoaded' , function(){
 
     tsCtn.id = 'tsCtn';
     tsCtn.className = 'timeslider';
+    tsTrackBg.id = 'tsTrackBg';
     tsTrack.id = 'tsTrack';
     ts.id = 'ts';
     tsDragBtn.id = 'tsDragBtn';
@@ -100,10 +104,21 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsCtnS.alignItems = 'center';
     tsCtnS.background = 'rgba(255 , 255 , 255 , 0)';
     tsCtnS.pointerEvents = 'none';
+
+    tsTrackBgS.left = '20px';
+    tsTrackBgS.right = '150px';
+    tsTrackBgS.height = '10px';
+    tsTrackBgS.position = 'absolute';
+    tsTrackBgS.background = '#9da8b3';
+    tsTrackBgS.borderRadius = '5px';
+    tsTrackBgS.display = 'flex';
+    tsTrackBgS.alignItems = 'center';
+    tsTrackBgS.pointerEvents = 'auto';
     
-    tsTrackS.left = '20px';
-    tsTrackS.right = '150px';
-    tsTrackS.height = '10px';
+    tsTrackS.left = '0';
+    tsTrackS.top = '0';
+    tsTrackS.bottom = '0';
+    tsTrackS.width = '100%';
     tsTrackS.position = 'absolute';
     tsTrackS.background = '#9da8b3';
     tsTrackS.borderRadius = '5px';
@@ -131,7 +146,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsDragBtnS.borderRadius = '8px';
     tsDragBtnS.cursor = 'pointer';
 
-    tsPointerS.height = tsTrackS.height;
+    tsPointerS.height = tsTrackBgS.height;
     tsPointerS.position = 'absolute';
     tsPointerS.left = time2BarWidth(tAll5Min[tAll5Min.length-1]);
 
@@ -149,7 +164,6 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsTagS.justifyContent = 'center';
     tsTagS.alignItems = 'center';
     tsTagS.fontSize = '14px';
-    tsTagS.pointerEvents = 'none';
 
     tsCtlS.right = '20px';
     tsCtlS.width = '110px';
