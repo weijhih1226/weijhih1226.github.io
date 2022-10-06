@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         icon.style.pointerEvents = 'auto';
     })
 
-    for (var t = 1 ; t < tAll1Hr.length ; t++) {
+    for (var t = 1 ; t < tAll1Hr.length ; t++){
         const tick = this.createElement('div');
         const tickS = tick.style;
         tsTrack.appendChild(tick);
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         }
     }
 
-    for (var t = 1 ; t < tAll30Min.length ; t++) {
+    for (var t = 1 ; t < tAll30Min.length ; t++){
         const tick = this.createElement('div');
         const tickS = tick.style;
         tsTrack.appendChild(tick);
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         } else tickS.background = '#fff';
     }
 
-    for (var t = 1 ; t < tAll10Min.length ; t++) {
+    for (var t = 1 ; t < tAll10Min.length ; t++){
         const time = tAll10Min[t];
         const tick = this.createElement('div');
         const tickS = tick.style;
