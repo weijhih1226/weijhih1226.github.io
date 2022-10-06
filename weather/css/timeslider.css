@@ -1,0 +1,12 @@
+#tsCtn {
+    z-Index: 2;
+    left: 0;
+    right: 300px;
+    bottom: 0;
+    height: 3em;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    background: rgba(255 , 255 , 255 , 0);
+    pointer-events: none;
+}

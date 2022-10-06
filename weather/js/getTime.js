@@ -33,9 +33,9 @@ const tFmtLtn = isoStrLtn.substring(0, 4) + '/' + isoStrLtn.substring(5, 7) + '/
 const tFmtSat = isoStrSat.substring(0, 4) + '/' + isoStrSat.substring(5, 7) + '/' + isoStrSat.substring(8, 10) + ' ' + isoStrSat.substring(11, 13) + ':' + isoStrSat.substring(14, 15) + '0';
 const tFmtTemp = isoStrTemp.substring(0, 4) + '/' + isoStrTemp.substring(5, 7) + '/' + isoStrTemp.substring(8, 10) + ' ' + isoStrTemp.substring(11, 13) + ':00';
 const tFmtUvi = '';
-const tFmtSkt = isoStrSkt.substring(0, 4) + '/' + isoStrSkt.substring(5, 7) + '/' + isoStrSkt.substring(8, 10) + ' ' + (parseInt(isoStrSkt.substring(11, 13)) < 12 ? '00' : '12') + ':00Z';
-const tFmtTyCWB = isoStrTyCWB.substring(0, 4) + '/' + isoStrTyCWB.substring(5, 7) + '/' + isoStrTyCWB.substring(8, 10) + ' ' + ((isoHrTyCWB < 6) ? '00' : (isoHrTyCWB < 12) ? '06' : (isoHrTyCWB < 18) ? '12' : '18') + ':00Z';
-const tFmtTyT2 = isoStrTyT2.substring(0, 4) + '/' + isoStrTyT2.substring(5, 7) + '/' + isoStrTyT2.substring(8, 10) + ' ' + (parseInt(isoStrTyT2.substring(11, 13)) < 12 ? '00' : '12') + ':00Z';
+const tFmtSkt = isoStrSkt.substring(0, 4) + '/' + isoStrSkt.substring(5, 7) + '/' + isoStrSkt.substring(8, 10) + ' ' + (parseInt(isoStrSkt.substring(11, 13)) < 12 ? '00' : '12') + 'Z';
+const tFmtTyCWB = isoStrTyCWB.substring(0, 4) + '/' + isoStrTyCWB.substring(5, 7) + '/' + isoStrTyCWB.substring(8, 10) + ' ' + ((isoHrTyCWB < 6) ? '00' : (isoHrTyCWB < 12) ? '06' : (isoHrTyCWB < 18) ? '12' : '18') + 'Z';
+const tFmtTyT2 = isoStrTyT2.substring(0, 4) + '/' + isoStrTyT2.substring(5, 7) + '/' + isoStrTyT2.substring(8, 10) + ' ' + (parseInt(isoStrTyT2.substring(11, 13)) < 12 ? '00' : '12') + 'Z';
 
 var rain , radar , lgtn;
 var satvsg , satvst , satirc , satire;

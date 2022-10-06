@@ -2,11 +2,8 @@ const tStart = tNowUTC - 1440 * min2msec;
 const tEnd = tNowUTC;
 const tOpt = {year: 'numeric', month: '2-digit', day: '2-digit', 
               hour: '2-digit', minute: '2-digit', hour12: false};
-var isoStrStart = new Date(tStart).toLocaleString('zh-TW', tOpt);
-var isoStrEnd = new Date(tEnd).toLocaleString('zh-TW', tOpt);
-isoStrStart = isoStrStart.substring(11, 13) === '24' ? isoStrStart.substring(0, 11) + '00' + isoStrStart.substring(13, 16) : isoStrStart;
-isoStrEnd = isoStrEnd.substring(11, 13) === '24' ? isoStrEnd.substring(0, 11) + '00' + isoStrEnd.substring(13, 16) : isoStrEnd;
-var tSelect = tEnd;
+const tStrStart = datetime2LSTStr(tStart);
+const tStrEnd = datetime2LSTStr(tEnd);
 var optPlay = 0;
 var tSkipDefault = 10;
 var tSkip = tSkipDefault;
@@ -18,11 +15,11 @@ const tInt30Min = 30 * min2msec;
 const tInt1Hr = 60 * min2msec;
 const tInt12Hr = 720 * min2msec;
 
-const tStart5Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + isoStrStart.substring(14, 15) + (parseInt(isoStrStart.substring(15, 16)) < 5 ? '0' : '5') + ':00');
-const tStart10Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + isoStrStart.substring(14, 15) + '0:00');
-const tStart30Min = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':' + (parseInt(isoStrStart.substring(14, 15)) < 3 ? '0' : '3') + '0:00');
-const tStart1Hr = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + isoStrStart.substring(11, 13) + ':00');
-const tStart12Hr = Date.parse(isoStrStart.substring(0, 4) + '-' + isoStrStart.substring(5, 7) + '-' + isoStrStart.substring(8, 10) + 'T' + (parseInt(isoStrStart.substring(11, 13)) < 12 ? '00' : '12') + ':00') - tInt12Hr;
+const tStart5Min = Date.parse(tStrStart.substring(0, 4) + '-' + tStrStart.substring(5, 7) + '-' + tStrStart.substring(8, 10) + 'T' + tStrStart.substring(11, 13) + ':' + tStrStart.substring(14, 15) + (parseInt(tStrStart.substring(15, 16)) < 5 ? '0' : '5') + ':00');
+const tStart10Min = Date.parse(tStrStart.substring(0, 4) + '-' + tStrStart.substring(5, 7) + '-' + tStrStart.substring(8, 10) + 'T' + tStrStart.substring(11, 13) + ':' + tStrStart.substring(14, 15) + '0:00');
+const tStart30Min = Date.parse(tStrStart.substring(0, 4) + '-' + tStrStart.substring(5, 7) + '-' + tStrStart.substring(8, 10) + 'T' + tStrStart.substring(11, 13) + ':' + (parseInt(tStrStart.substring(14, 15)) < 3 ? '0' : '3') + '0:00');
+const tStart1Hr = Date.parse(tStrStart.substring(0, 4) + '-' + tStrStart.substring(5, 7) + '-' + tStrStart.substring(8, 10) + 'T' + tStrStart.substring(11, 13) + ':00');
+const tStart12Hr = Date.parse(tStrStart.substring(0, 4) + '-' + tStrStart.substring(5, 7) + '-' + tStrStart.substring(8, 10) + 'T' + (parseInt(tStrStart.substring(11, 13)) < 12 ? '00' : '12') + ':00') - tInt12Hr;
 
 const tAll5Min = [];
 const tAll10Min = [];
@@ -34,6 +31,10 @@ for (var t = tStart10Min ; t <= tEnd ; t += tInt10Min) tAll10Min.push(t);
 for (var t = tStart30Min ; t <= tEnd ; t += tInt30Min) tAll30Min.push(t);
 for (var t = tStart1Hr ; t <= tEnd ; t += tInt1Hr) tAll1Hr.push(t);
 for (var t = tStart12Hr ; t <= tEnd ; t += tInt12Hr) tAll12Hr.push(t + 480 * min2msec);
+
+const tStartAll = tAll5Min[1];
+const tEndAll = tAll5Min[tAll5Min.length - 1];
+var tSelect = tEndAll;
 
 urlRn2 = (Y , M , D , h , m , type) => homeCWB + 'rainfall/' + (Y+'-'+M+'-'+D+'_'+h+m) + '.QZ' + type + '8.jpg';
 urlRdr2 = (Y , M , D , h , m) => homeCWB + 'radar/CV1_TW_3600_' + (Y+M+D+h+m) + '.png';
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     const content = this.querySelector('.content');
     const menu = this.querySelector('#menu');
     const tsCtn = this.createElement('div');
+    const tsTrackBg = this.createElement('div');
     const tsTrack = this.createElement('div');
     const ts = this.createElement('div');
     const tsDragBtn = this.createElement('div');
@@ -59,6 +61,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     const tsCtlforward = this.createElement('i');
     const tsCtlrewind = this.createElement('i');
     const tsCtnS = tsCtn.style;
+    const tsTrackBgS = tsTrackBg.style;
     const tsTrackS = tsTrack.style;
     const tsS = ts.style;
     const tsDragBtnS = tsDragBtn.style;
@@ -67,11 +70,12 @@ document.addEventListener('DOMContentLoaded' , function(){
     const tsCtlS = tsCtl.style;
 
     this.querySelector('main').appendChild(tsCtn);
-    tsCtn.appendChild(tsTrack);
+    tsCtn.appendChild(tsTrackBg);
     tsCtn.appendChild(tsCtl);
+    tsTrackBg.appendChild(tsTrack);
+    tsTrackBg.appendChild(tsPointer);
     tsTrack.appendChild(ts);
     tsTrack.appendChild(tsDragBtn);
-    tsTrack.appendChild(tsPointer);
     tsPointer.appendChild(tsTag);
     tsCtl.appendChild(tsCtlrewind);
     tsCtl.appendChild(tsCtlplay);
@@ -79,6 +83,7 @@ document.addEventListener('DOMContentLoaded' , function(){
 
     tsCtn.id = 'tsCtn';
     tsCtn.className = 'timeslider';
+    tsTrackBg.id = 'tsTrackBg';
     tsTrack.id = 'tsTrack';
     ts.id = 'ts';
     tsDragBtn.id = 'tsDragBtn';
@@ -99,10 +104,21 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsCtnS.alignItems = 'center';
     tsCtnS.background = 'rgba(255 , 255 , 255 , 0)';
     tsCtnS.pointerEvents = 'none';
+
+    tsTrackBgS.left = '20px';
+    tsTrackBgS.right = '150px';
+    tsTrackBgS.height = '10px';
+    tsTrackBgS.position = 'absolute';
+    tsTrackBgS.background = '#9da8b3';
+    tsTrackBgS.borderRadius = '5px';
+    tsTrackBgS.display = 'flex';
+    tsTrackBgS.alignItems = 'center';
+    tsTrackBgS.pointerEvents = 'auto';
     
-    tsTrackS.left = '20px';
-    tsTrackS.right = '150px';
-    tsTrackS.height = '10px';
+    tsTrackS.left = '0';
+    tsTrackS.top = '0';
+    tsTrackS.bottom = '0';
+    tsTrackS.width = '100%';
     tsTrackS.position = 'absolute';
     tsTrackS.background = '#9da8b3';
     tsTrackS.borderRadius = '5px';
@@ -114,7 +130,7 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsS.left = '0';
     tsS.top = '0';
     tsS.bottom = '0';
-    tsS.width = '100%';
+    tsS.width = time2BarWidth(tAll5Min[tAll5Min.length-1]);
     tsS.position = 'absolute';
     tsS.background = '#197C9D';
     tsS.borderRadius = '5px';
@@ -130,11 +146,11 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsDragBtnS.borderRadius = '8px';
     tsDragBtnS.cursor = 'pointer';
 
-    tsPointerS.height = tsTrackS.height;
+    tsPointerS.height = tsTrackBgS.height;
     tsPointerS.position = 'absolute';
-    tsPointerS.left = '100%';
+    tsPointerS.left = time2BarWidth(tAll5Min[tAll5Min.length-1]);
 
-    tsTag.innerHTML = isoStrEnd.substring(11, 16);
+    tsTag.innerHTML = time2LSTStr(tEndAll);
     tsTagS.left = '-30px';
     tsTagS.top = '-45px';
     tsTagS.width = '60px';
@@ -148,7 +164,6 @@ document.addEventListener('DOMContentLoaded' , function(){
     tsTagS.justifyContent = 'center';
     tsTagS.alignItems = 'center';
     tsTagS.fontSize = '14px';
-    tsTagS.pointerEvents = 'none';
 
     tsCtlS.right = '20px';
     tsCtlS.width = '110px';
@@ -168,11 +183,11 @@ document.addEventListener('DOMContentLoaded' , function(){
         icon.style.pointerEvents = 'auto';
     });
 
-    tsTrack.addEventListener('mousedown' , actionMouse);
-    tsCtlrewind.addEventListener('click' , actionRewind);
-    tsCtlforward.addEventListener('click' , actionForward);
+    tsTrack.addEventListener('mousedown' , eventMouse);
+    tsCtlrewind.addEventListener('click' , eventRewind);
+    tsCtlforward.addEventListener('click' , eventForward);
     tsCtlplay.addEventListener('click' , switchPlayPause);
-    this.addEventListener('keydown' , actionKey , false);
+    this.addEventListener('keydown' , eventKey , false);
     this.addEventListener('keyup' , () => tSkip = tSkipDefault , false);
 
     for (var t = 1 ; t < tAll1Hr.length ; t++) {
@@ -180,7 +195,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         const tickS = tick.style;
         tsTrack.appendChild(tick);
 
-        tickS.left = (tAll1Hr[t] - tStart) / (tEnd - tStart) * 100 + '%';
+        tickS.left = time2BarWidth(tAll1Hr[t]);
         tickS.width = '2px';
         tickS.height = '12px';
         tickS.position = 'absolute';
@@ -193,7 +208,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         const tickS = tick.style;
         tsTrack.appendChild(tick);
 
-        tickS.left = (tAll30Min[t] - tStart) / (tEnd - tStart) * 100 + '%';
+        tickS.left = time2BarWidth(tAll30Min[t]);
         tickS.width = '1px';
         tickS.height = '10px';
         tickS.position = 'absolute';
@@ -206,7 +221,7 @@ document.addEventListener('DOMContentLoaded' , function(){
         const tickS = tick.style;
         tsTrack.appendChild(tick);
 
-        tickS.left = (tAll10Min[t] - tStart) / (tEnd - tStart) * 100 + '%';
+        tickS.left = time2BarWidth(tAll10Min[t]);
         tickS.width = '1px';
         tickS.height = '5px';
         tickS.position = 'absolute';
@@ -214,28 +229,24 @@ document.addEventListener('DOMContentLoaded' , function(){
         tickS.cursor = 'pointer';
     };
 
-    function actionMouse(e){
+    function eventMouse(e){
         tSelect = click2NearestTime(e , this);
-        displayTimeslider(tSelect);
-        displayContent(tSelect);
+        display(tSelect);
     };
-    function actionRewind(){
+    function eventRewind(){
         tSelect = rewind(tSelect , tSkip);
-        displayTimeslider(tSelect);
-        displayContent(tSelect);
+        display(tSelect);
     };
-    function actionForward(){
+    function eventForward(){
         tSelect = forward(tSelect , tSkip);
-        displayTimeslider(tSelect);
-        displayContent(tSelect);
+        display(tSelect);
     };
-    function actionPlay(){
+    function eventPlay(){
         if (optPlay === 1){
             tSelect = forward(tSelect , tSkip);
-            displayTimeslider(tSelect);
-            displayContent(tSelect);
+            display(tSelect);
             setTimeout(() => {
-                actionPlay();
+                eventPlay();
             } , playSpeed);
         };
     };
@@ -245,7 +256,7 @@ document.addEventListener('DOMContentLoaded' , function(){
             case 0:
                 optPlay = 1;
                 document.querySelector('.icofont-play-alt-1').className = 'icofont-pause icofont-2x';
-                actionPlay();
+                eventPlay();
                 break;
             case 1:
                 optPlay = 0;
@@ -254,11 +265,11 @@ document.addEventListener('DOMContentLoaded' , function(){
         };
     };
 
-    function actionKey(e){
+    function eventKey(e){
         e.preventDefault();
-        if (!e.ctrlKey && e.shiftKey) tSkip = 30;
+        if (e.ctrlKey && e.shiftKey) tSkip = 60;
+        else if (!e.ctrlKey && e.shiftKey) tSkip = 30;
         else if (e.ctrlKey && !e.shiftKey) tSkip = 5;
-        else if (e.ctrlKey && e.shiftKey) tSkip = 60;
         else tSkip = tSkipDefault;
 
         switch (e.keyCode){
@@ -266,81 +277,105 @@ document.addEventListener('DOMContentLoaded' , function(){
                 switchPlayPause();
                 break;
             case 37:
-                actionRewind();
+                eventRewind();
                 break;
             case 39:
-                actionForward();
+                eventForward();
                 break;
         }
+    };
+    function display(t){
+        displayTimeslider(t);
+        displayContent(t);
     };
 
     function displayTimeslider(tSelect){
         tsS.width = time2BarWidth(tSelect);
         tsPointerS.left = time2BarWidth(tSelect);
-        tsTag.innerHTML = time2Str(tSelect);
-    }
+        tsTag.innerHTML = time2LSTStr(tSelect);
+    };
 
     function displayContent(tSelect){
-        var t = 0;
-        while (tAll5Min[t] < tSelect) {var t5Min = tAll5Min[t]; t++;}
-        var t = 0;
-        while (tAll10Min[t] < tSelect) {var t10Min = tAll10Min[t]; t++;}
-        var t = 0;
-        while (tAll30Min[t] < tSelect) {var t30Min = tAll30Min[t]; t++;}
-        var t = 0;
-        while (tAll1Hr[t] < tSelect) {var t1Hr = tAll1Hr[t]; t++;}
-        var t = 0;
-        while (tAll12Hr[t] < tSelect) {var t12Hr = tAll12Hr[t]; t++;}
+        const t5Min = findNewest(tSelect , tAll5Min);
+        const t10Min = findNewest(tSelect , tAll10Min);
+        const t30Min = findNewest(tSelect , tAll30Min);
+        const t1Hr = findNewest(tSelect , tAll1Hr);
+        const t12Hr = findNewest(tSelect , tAll12Hr);
         
-        var isoStr5Min = new Date(t5Min).toLocaleString('zh-TW', tOpt);
-        var isoStr10Min = new Date(t10Min).toLocaleString('zh-TW', tOpt);
-        var isoStr30Min = new Date(t30Min).toLocaleString('zh-TW', tOpt);
-        var isoStr1Hr = new Date(t1Hr).toLocaleString('zh-TW', tOpt);
-        var isoStr12Hr = new Date(t12Hr).toISOString();
-        isoStr5Min = isoStr5Min.substring(11, 13) === '24' ? isoStr5Min.substring(0, 11) + '00' + isoStr5Min.substring(13, 16) : isoStr5Min;
-        isoStr10Min = isoStr10Min.substring(11, 13) === '24' ? isoStr10Min.substring(0, 11) + '00' + isoStr10Min.substring(13, 16) : isoStr10Min;
-        isoStr30Min = isoStr30Min.substring(11, 13) === '24' ? isoStr30Min.substring(0, 11) + '00' + isoStr30Min.substring(13, 16) : isoStr30Min;
-        isoStr1Hr = isoStr1Hr.substring(11, 13) === '24' ? isoStr1Hr.substring(0, 11) + '00' + isoStr1Hr.substring(13, 16) : isoStr1Hr;
-        isoStr12Hr = isoStr12Hr.substring(0, 4) + '/' + isoStr12Hr.substring(5, 7) + '/' + isoStr12Hr.substring(8, 10) + ' ' + isoStr12Hr.substring(11, 13) + ':00Z';
+        const tStr5Min = datetime2LSTStr(t5Min);
+        const tStr10Min = datetime2LSTStr(t10Min);
+        const tStr30Min = datetime2LSTStr(t30Min);
+        const tStr1Hr = datetime2LSTStr(t1Hr);
+        const tStr12Hr = datetime2UTCStr(t12Hr);
 
-        rain.querySelector('.time').innerText = isoStr30Min;
-        radar.querySelector('.time').innerText = isoStr10Min;
-        lgtn.querySelector('.time').innerText = isoStr5Min;
-        satvsg.querySelector('.time').innerText = isoStr10Min;
-        satvst.querySelector('.time').innerText = isoStr10Min;
-        satirc.querySelector('.time').innerText = isoStr10Min;
-        satire.querySelector('.time').innerText = isoStr10Min;
-        temp.querySelector('.time').innerText = isoStr1Hr;
-        skt.querySelector('.time').innerText = isoStr12Hr;
+        const tDic5Min = timeDic(tStr5Min);
+        const tDic10Min = timeDic(tStr10Min);
+        const tDic30Min = timeDic(tStr30Min);
+        const tDic1Hr = timeDic(tStr1Hr);
+        const tDic12Hr = timeDic(tStr12Hr);
+
+        rain.querySelector('.time').innerText = tStr30Min;
+        radar.querySelector('.time').innerText = tStr10Min;
+        lgtn.querySelector('.time').innerText = tStr5Min;
+        satvsg.querySelector('.time').innerText = tStr10Min;
+        satvst.querySelector('.time').innerText = tStr10Min;
+        satirc.querySelector('.time').innerText = tStr10Min;
+        satire.querySelector('.time').innerText = tStr10Min;
+        temp.querySelector('.time').innerText = tStr1Hr;
+        skt.querySelector('.time').innerText = tStr12Hr;
         
-        rain.querySelector('img').src = urlRn2(isoStr30Min.substring(0, 4) , isoStr30Min.substring(5, 7) , isoStr30Min.substring(8, 10) , isoStr30Min.substring(11, 13) , isoStr30Min.substring(14, 16) , tagRn);
-        radar.querySelector('img').src = urlRdr2(isoStr10Min.substring(0, 4) , isoStr10Min.substring(5, 7) , isoStr10Min.substring(8, 10) , isoStr10Min.substring(11, 13) , isoStr10Min.substring(14, 16));
-        lgtn.querySelector('img').src = urlLtn2(isoStr5Min.substring(0, 4) , isoStr5Min.substring(5, 7) , isoStr5Min.substring(8, 10) , isoStr5Min.substring(11, 13) , isoStr5Min.substring(14, 16));
-        satvsg.querySelector('img').src = urlSatVSg2(isoStr10Min.substring(0, 4) , isoStr10Min.substring(5, 7) , isoStr10Min.substring(8, 10) , isoStr10Min.substring(11, 13) , isoStr10Min.substring(14, 16) , tagSatArea , tagSatVSgPx);
-        satvst.querySelector('img').src = urlSatVSt2(isoStr10Min.substring(0, 4) , isoStr10Min.substring(5, 7) , isoStr10Min.substring(8, 10) , isoStr10Min.substring(11, 13) , isoStr10Min.substring(14, 16) , tagSatArea , tagSatVStPx);
-        satirc.querySelector('img').src = urlSatIRc2(isoStr10Min.substring(0, 4) , isoStr10Min.substring(5, 7) , isoStr10Min.substring(8, 10) , isoStr10Min.substring(11, 13) , isoStr10Min.substring(14, 16) , tagSatArea , tagSatIRPx);
-        satire.querySelector('img').src = urlSatIRe2(isoStr10Min.substring(0, 4) , isoStr10Min.substring(5, 7) , isoStr10Min.substring(8, 10) , isoStr10Min.substring(11, 13) , isoStr10Min.substring(14, 16) , tagSatArea , tagSatIRPx);
-        temp.querySelector('img').src = urlTemp2(isoStr1Hr.substring(0, 4) , isoStr1Hr.substring(5, 7) , isoStr1Hr.substring(8, 10) , isoStr1Hr.substring(11, 13));
-        skt.querySelector('img').src = urlSkt2(isoStr12Hr.substring(2, 4) , isoStr12Hr.substring(5, 7) , isoStr12Hr.substring(8, 10) , isoStr12Hr.substring(11, 13));
+        rain.querySelector('img').src = urlRn2(tDic30Min.Y , tDic30Min.M , tDic30Min.D , tDic30Min.h , tDic30Min.m , tagRn);
+        radar.querySelector('img').src = urlRdr2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m);
+        lgtn.querySelector('img').src = urlLtn2(tDic5Min.Y , tDic5Min.M , tDic5Min.D , tDic5Min.h , tDic5Min.m);
+        satvsg.querySelector('img').src = urlSatVSg2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatVSgPx);
+        satvst.querySelector('img').src = urlSatVSt2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatVStPx);
+        satirc.querySelector('img').src = urlSatIRc2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatIRPx);
+        satire.querySelector('img').src = urlSatIRe2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatIRPx);
+        temp.querySelector('img').src = urlTemp2(tDic1Hr.Y , tDic1Hr.M , tDic1Hr.D , tDic1Hr.h);
+        skt.querySelector('img').src = urlSkt2(tDic12Hr.Y.substring(2, 4) , tDic12Hr.M , tDic12Hr.D , tDic12Hr.h);
     };
 });
 
-function rewind(t , int){
-    return (t - int * min2msec < tStart) ? tEnd : t - int * min2msec;
+function time2LSTStr(t){
+    var tStr = new Date(t).toLocaleString('zh-TW', tOpt).substring(11, 16);
+    return (tStr.substring(0, 2) === '24' ? '00' : tStr.substring(0, 2)) + tStr.substring(2, 5);
 };
 
-function forward(t , int){
-    return (t + int * min2msec > tEnd) ? tStart : t + int * min2msec;
+function datetime2LSTStr(t){
+    var tStr = new Date(t).toLocaleString('zh-TW', tOpt).substring(0, 16);
+    return tStr.substring(11, 13) === '24' ? (tStr.substring(0, 11) + '00' + tStr.substring(13, 16)) : tStr;
+};
+
+function datetime2UTCStr(t){
+    var tStr = new Date(t).toISOString().substring(0, 13);
+    return tStr.substring(0, 4) + '/' + tStr.substring(5, 7) + '/' + tStr.substring(8, 10) + ' ' + tStr.substring(11, 13) + 'Z';
+};
+
+function timeDic(s){
+    return {Y: s.substring(0, 4), M: s.substring(5, 7), D: s.substring(8, 10), 
+            h: s.substring(11, 13), m: s.substring(14, 16)};
+};
+
+function findNewest(tSelect , tAll){
+    var tNewest;
+    for (const t of tAll){
+        if (tSelect >= t) tNewest = t;
+        else return tNewest;
+    };
+    return tNewest;
 };
 
 function time2BarWidth(t){
     return (t - tStart) / (tEnd - tStart) * 100 + '%';
 };
 
-function time2Str(t){
-    var tStr = new Date(t).toLocaleString('zh-TW', tOpt).substring(11, 16);
-    return (tStr.substring(0, 2) === '24' ? '00' : tStr.substring(0, 2)) + tStr.substring(2, 5);
-}
+function rewind(t , int){
+    return (t - int * min2msec < tStart) ? tEndAll : t - int * min2msec;
+};
+
+function forward(t , int){
+    return (t + int * min2msec > tEnd) ? tStartAll : t + int * min2msec;
+};
 
 function click2Time(e , track){
     return tStart + (tEnd - tStart) * (e.clientX - track.getBoundingClientRect().left) / track.clientWidth;
