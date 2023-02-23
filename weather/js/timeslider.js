@@ -1,7 +1,12 @@
+import * as TAG from './tagInfo.js'
+
+const TAG_CLASS_ADD = TAG.COLLAPSE
+const INFO_TIME = ['00:00' , '06:00' , '12:00' , '18:00'];
+
 const MIN2MSEC = 60000;
 const tRange = 24;  // Units: hr
-const tStart = tNowUTC - tRange * 60 * MIN2MSEC;
-const tEnd = tNowUTC;
+const tStart = NOW_UTC - tRange * 60 * MIN2MSEC;
+const tEnd = NOW_UTC;
 const tOpt = {year: 'numeric', month: '2-digit', day: '2-digit', 
               hour: '2-digit', minute: '2-digit', hour12: false};
 const tStrStart = datetime2LSTStr(tStart);
@@ -11,11 +16,11 @@ var tSkipDefault = 10;
 var tSkip = tSkipDefault;
 const playSpeed = 500;
 
-const tInt5Min = 5 * min2msec;
-const tInt10Min = 10 * min2msec;
-const tInt30Min = 30 * min2msec;
-const tInt1Hr = 60 * min2msec;
-const tInt12Hr = 720 * min2msec;
+const tInt5Min = 5 * MIN2MSEC;
+const tInt10Min = 10 * MIN2MSEC;
+const tInt30Min = 30 * MIN2MSEC;
+const tInt1Hr = 60 * MIN2MSEC;
+const tInt12Hr = 720 * MIN2MSEC;
 
 const tStart5Min = Date.parse(tStrStart.substring(0, 4) + '-' + tStrStart.substring(5, 7) + '-' + tStrStart.substring(8, 10) + 'T' + tStrStart.substring(11, 13) + ':' + tStrStart.substring(14, 15) + (parseInt(tStrStart.substring(15, 16)) < 5 ? '0' : '5') + ':00');
 const tStart10Min = Date.parse(tStrStart.substring(0, 4) + '-' + tStrStart.substring(5, 7) + '-' + tStrStart.substring(8, 10) + 'T' + tStrStart.substring(11, 13) + ':' + tStrStart.substring(14, 15) + '0:00');
@@ -32,259 +37,102 @@ for (var t = tStart5Min ; t <= tEnd ; t += tInt5Min) tAll5Min.push(t);
 for (var t = tStart10Min ; t <= tEnd ; t += tInt10Min) tAll10Min.push(t);
 for (var t = tStart30Min ; t <= tEnd ; t += tInt30Min) tAll30Min.push(t);
 for (var t = tStart1Hr ; t <= tEnd ; t += tInt1Hr) tAll1Hr.push(t);
-for (var t = tStart12Hr ; t <= tEnd ; t += tInt12Hr) tAll12Hr.push(t + 480 * min2msec);
+for (var t = tStart12Hr ; t <= tEnd ; t += tInt12Hr) tAll12Hr.push(t + 480 * MIN2MSEC);
 
 const tStartAll = tAll5Min[1];
 const tEndAll = tAll5Min[tAll5Min.length - 1];
 var tSelect = tEndAll;
 
-urlRn2 = (Y , M , D , h , m , type) => homeCWB + 'rainfall/' + (Y+'-'+M+'-'+D+'_'+h+m) + '.QZ' + type + '8.jpg';
-urlRdr2 = (Y , M , D , h , m) => homeCWB + 'radar/CV1_TW_3600_' + (Y+M+D+h+m) + '.png';
-urlLtn2 = (Y , M , D , h , m) => homeCWB + 'lightning/' + (Y+M+D+h+m) + '00_lgtl.jpg';
-urlSatVSg2 = (Y , M , D , h , m , area , px) => homeCWB + 'satellite/' + area + '_VIS_Gray_' + px + '/' + area + '_VIS_Gray_' + px + '-' + (Y+'-'+M+'-'+D+'-'+h+'-'+m) + '.jpg';
-urlSatVSt2 = (Y , M , D , h , m , area , px) => homeCWB + 'satellite/' + area + '_VIS_TRGB_' + px + '/' + area + '_VIS_TRGB_' + px + '-' + (Y+'-'+M+'-'+D+'-'+h+'-'+m) + '.jpg';
-urlSatIRc2 = (Y , M , D , h , m , area , px) => homeCWB + 'satellite/' + area + '_IR1_CR_' + px + '/' + area + '_IR1_CR_' + px + '-' + (Y+'-'+M+'-'+D+'-'+h+'-'+m) + '.jpg';
-urlSatIRe2 = (Y , M , D , h , m , area , px) => homeCWB + 'satellite/' + area + '_IR1_MB_' + px + '/' + area + '_IR1_MB_' + px + '-' + (Y+'-'+M+'-'+D+'-'+h+'-'+m) + '.jpg';
-urlTemp2 = (Y , M , D , h) => homeCWB + 'temperature/' + (Y+'-'+M+'-'+D+'_'+h) + '00.GTP8.jpg';
-urlSkt2 = (Y , M , D , h) => homeCWB2 + 'irisme_data/Weather/SKEWT/SKW___000_' + (Y+M+D+h) + '_46692.gif';
+function createElement(tagName , id , cls){
+    const el = document.createElement(tagName);
+    if (id !== null) el.id = id;
+    if (cls !== null) el.className = cls;
+    return el;
+}
+
+function createTick(cls , time){
+    const el = createElement('div' , null , cls);
+    el.style.left = time2BarWidth(time);
+    return el;
+}
+
+function actionMouseOverAndLeave(objMouseOver , objActionOn , clsActionOn){
+    objMouseOver.addEventListener('mouseover' , function(){
+        objActionOn.classList.remove(clsActionOn)
+    });
+    objMouseOver.addEventListener('mouseleave' , function(){
+        objActionOn.classList.add(clsActionOn)
+    });
+}
 
 document.addEventListener('DOMContentLoaded' , function(){
-    const content = this.querySelector('.content');
-    const menu = this.querySelector('#menu');
-    const tsCtn = this.createElement('div');
-    const tsTrackBg = this.createElement('div');
-    const tsTrack = this.createElement('div');
-    const ts = this.createElement('div');
-    const tsPointer = this.createElement('div');
-    const tsDragBtn = this.createElement('div');
-    const tsAnchor = this.createElement('div');
-    const tsTag = this.createElement('div');
-    const tsTickTag = this.createElement('div');
-    const tsCtl = this.createElement('div');
-    const tsCtlplay = this.createElement('i');
-    const tsCtlforward = this.createElement('i');
-    const tsCtlrewind = this.createElement('i');
-    const tsCtnS = tsCtn.style;
-    const tsTrackBgS = tsTrackBg.style;
-    const tsTrackS = tsTrack.style;
-    const tsS = ts.style;
-    const tsPointerS = tsPointer.style;
-    const tsDragBtnS = tsDragBtn.style;
-    const tsAnchorS = tsAnchor.style;
-    const tsTagS = tsTag.style;
-    const tsTickTagS = tsTickTag.style;
-    const tsCtlS = tsCtl.style;
+    const content = document.querySelector('.content');
+    const tsCtn = document.querySelector('#timeslider');
+    const tsBody = createElement('div' , 'ts-body' , TAG.CLS_TS_BODY);
+    const tsTrack = createElement('div' , 'ts-track' , TAG.CLS_TS_BODY);
+    const tsBar = createElement('div' , 'ts-bar' , TAG.CLS_TS_BODY);
+    const tsAnchor = createElement('div' , 'ts-anchor' , TAG.CLS_TS_BODY);
+    const tsPointer = createElement('div' , 'ts-pointer' , TAG.CLS_TS_BODY);
+    const tsPointerTag = createElement('div' , 'ts-pointer-tag' , TAG.CLS_TS_BODY);
+    const tsBarPointer = createElement('div' , 'ts-bar-pointer' , TAG.CLS_TS_BODY);
+    const tsBarTag = createElement('div' , 'ts-bar-tag' , TAG.CLS_TS_BODY);
+    
+    const tsCtl = createElement('div' , 'ts-ctl' , TAG.CLS_TS_BODY);
+    const tsCtlPlay = createElement('i' , 'ts-ctl-play' , TAG.CLS_TS_CTL_PLAY);
+    const tsCtlForward = createElement('i' , 'ts-ctl-forward' , TAG.CLS_TS_CTL_FORWARD);
+    const tsCtlRewind = createElement('i' , 'ts-ctl-rewind' , TAG.CLS_TS_CTL_REWIND);
 
-    this.querySelector('main').appendChild(tsCtn);
-    tsCtn.appendChild(tsTrackBg);
+    tsCtn.classList.add(TAG_CLASS_ADD);
+    tsCtlPlay.classList.add('ts-ctl-icon');
+    tsCtlForward.classList.add('ts-ctl-icon');
+    tsCtlRewind.classList.add('ts-ctl-icon');
+    tsBar.style.width = time2BarWidth(tAll5Min[tAll5Min.length-1]);
+    tsAnchor.style.left = time2BarWidth(tAll5Min[tAll5Min.length-1]);
+    tsBarTag.innerText = time2LSTStr(tEndAll);
+    tsPointerTag.innerText = time2LSTStr(tEndAll);
+
+    tsCtn.appendChild(tsBody);
     tsCtn.appendChild(tsCtl);
-    tsTrackBg.appendChild(tsTrack);
-    tsTrackBg.appendChild(tsPointer);
-    tsTrack.appendChild(ts);
-    tsPointer.appendChild(tsDragBtn);
-    tsPointer.appendChild(tsAnchor);
-    tsPointer.appendChild(tsTickTag);
-    tsPointer.appendChild(tsTag);
-    tsCtl.appendChild(tsCtlrewind);
-    tsCtl.appendChild(tsCtlplay);
-    tsCtl.appendChild(tsCtlforward);
+    tsBody.appendChild(tsTrack);
+    tsBody.appendChild(tsAnchor);
+    tsTrack.appendChild(tsBar);
+    tsAnchor.appendChild(tsBarPointer);
+    tsAnchor.appendChild(tsPointer);
+    tsAnchor.appendChild(tsPointerTag);
+    tsAnchor.appendChild(tsBarTag);
+    tsCtl.appendChild(tsCtlRewind);
+    tsCtl.appendChild(tsCtlPlay);
+    tsCtl.appendChild(tsCtlForward);
 
-    tsCtn.id = 'tsCtn';
-    tsCtn.className = 'timeslider';
-    tsTrackBg.id = 'tsTrackBg';
-    tsTrack.id = 'tsTrack';
-    ts.id = 'ts';
-    tsPointer.id = 'tsPointer';
-    tsDragBtn.id = 'tsDragBtn';
-    tsAnchor.id = 'tsAnchor';
-    tsTag.id = 'tsTag';
-    tsTickTag.id = 'tsTickTag';
-    tsCtl.id = 'tsCtl';
-    tsCtlplay.className = 'icofont-play-alt-1 icofont-2x';
-    tsCtlforward.className = 'icofont-forward icofont-2x';
-    tsCtlrewind.className = 'icofont-rewind icofont-2x';
-    
-    tsCtnS.zIndex = '2';
-    tsCtnS.left = '0';
-    tsCtnS.right = '300px';
-    tsCtnS.bottom = '0';
-    tsCtnS.height = '3em';
-    tsCtnS.position = 'fixed';
-    tsCtnS.display = 'flex';
-    tsCtnS.alignItems = 'center';
-    tsCtnS.background = 'rgba(255 , 255 , 255 , 0)';
-    tsCtnS.pointerEvents = 'none';
-
-    tsTrackBgS.left = '20px';
-    tsTrackBgS.right = '150px';
-    tsTrackBgS.height = '10px';
-    tsTrackBgS.position = 'absolute';
-    tsTrackBgS.background = '#9da8b3';
-    tsTrackBgS.borderRadius = '5px';
-    tsTrackBgS.display = 'flex';
-    tsTrackBgS.alignItems = 'center';
-    tsTrackBgS.pointerEvents = 'auto';
-    
-    tsTrackS.left = '0';
-    tsTrackS.top = '0';
-    tsTrackS.bottom = '0';
-    tsTrackS.width = '100%';
-    tsTrackS.position = 'absolute';
-    tsTrackS.background = '#9da8b3';
-    tsTrackS.borderRadius = '5px';
-    tsTrackS.display = 'flex';
-    tsTrackS.alignItems = 'center';
-    tsTrackS.cursor = 'pointer';
-    tsTrackS.pointerEvents = 'auto';
-
-    tsS.left = '0';
-    tsS.top = '0';
-    tsS.bottom = '0';
-    tsS.width = time2BarWidth(tAll5Min[tAll5Min.length-1]);
-    tsS.position = 'absolute';
-    tsS.background = '#197C9D';
-    tsS.borderRadius = '5px';
-
-    tsPointerS.left = time2BarWidth(tAll5Min[tAll5Min.length-1]);
-    tsPointerS.height = tsTrackBgS.height;
-    tsPointerS.position = 'absolute';
-    tsPointerS.display = 'flex';
-    tsPointerS.justifyContent = 'center';
-    tsPointerS.alignItems = 'center';
-
-    // tsDragBtn.draggable = 'true';
-    tsDragBtnS.width = tsAnchorS.width = '16px';
-    tsDragBtnS.height = tsAnchorS.height = '16px';
-    tsDragBtnS.position = tsAnchorS.position = 'absolute';
-    tsDragBtnS.display = tsAnchorS.display = 'none';
-    tsDragBtnS.background = '#197C9D' , tsAnchorS.background = '#fff';
-    tsDragBtnS.borderRadius = tsAnchorS.borderRadius = '8px';
-    tsDragBtnS.cursor = tsAnchorS.cursor = 'pointer';
-
-    tsTag.innerText = tsTickTag.innerText = time2LSTStr(tEndAll);
-    tsTagS.left = tsTickTagS.left = '-30px';
-    tsTagS.top = '-38px' , tsTickTagS.top = '-40px';
-    tsTagS.width = tsTickTagS.width = '56px';
-    tsTagS.height = tsTickTagS.height = '26px';
-    tsTagS.border = tsTickTagS.border = '1px solid #fff';
-    tsTagS.borderRadius = tsTickTagS.borderRadius = '5px';
-    tsTagS.position = tsTickTagS.position = 'absolute';
-    tsTagS.background = '#197C9D' , tsTickTagS.background = '#9da8b3';
-    tsTagS.color = tsTickTagS.color = '#fff';
-    tsTagS.display = 'flex' , tsTickTagS.display = 'none';
-    tsTagS.justifyContent = tsTickTagS.justifyContent = 'center';
-    tsTagS.alignItems = tsTickTagS.alignItems = 'center';
-    tsTagS.fontSize = tsTickTagS.fontSize = '14px';
-
-    tsCtlS.right = '20px';
-    tsCtlS.width = '110px';
-    tsCtlS.height = '80%';
-    tsCtlS.position = 'absolute';
-    tsCtlS.display = 'flex';
-    tsCtlS.justifyContent = 'center';
-    tsCtlS.alignItems = 'center';
-
-    tsCtl.querySelectorAll('i').forEach(icon => {
-        icon.style.margin = '5px';
-        // icon.style.color = '#9da8b3';
-        icon.style.color = '#197C9D';
-        icon.style.backgroundColor = '#fff';
-        icon.style.borderRadius = '50%';
-        icon.style.cursor = 'pointer';
-        icon.style.pointerEvents = 'auto';
-    })
-
-    for (var t = 1 ; t < tAll1Hr.length ; t++){
-        const tick = this.createElement('div');
-        const tickS = tick.style;
-        tsTrack.appendChild(tick);
-
-        tickS.left = time2BarWidth(tAll1Hr[t]);
-        tickS.width = '2px';
-        tickS.height = '12px';
-        tickS.position = 'absolute';
-        tickS.display = 'flex';
-        tickS.justifyContent = 'center';
-        tickS.alignItems = 'center';
-        tickS.cursor = 'pointer';
-
-        if (time2LSTStr(tAll1Hr[t]).substring(0, 2) === '00' || 
-            time2LSTStr(tAll1Hr[t]).substring(0, 2) === '06' || 
-            time2LSTStr(tAll1Hr[t]).substring(0, 2) === '12' || 
-            time2LSTStr(tAll1Hr[t]).substring(0, 2) === '18'){
-            const tsTickInfo = this.createElement('span');
-            tick.appendChild(tsTickInfo);
-            tsTickInfo.innerText = time2LSTStr(tAll1Hr[t]);
-            tsTickInfo.style.top = '-26px';
-            tsTickInfo.style.position = 'absolute';
-            tsTickInfo.style.pointerEvents = 'none';
-            tsTickInfo.style.fontSize = '14px';
-            tsTickInfo.style.textShadow = '0 0 10px #000';
-            tickS.background = '#000';
-        } else tickS.background = '#fff';
-
-        if (time2LSTStr(tAll1Hr[t]).substring(0, 2) === '00'){
-            const tsTickInfo = this.createElement('span');
-            tick.appendChild(tsTickInfo);
-            tsTickInfo.innerText = date2LSTStr(tAll1Hr[t]);
-            tsTickInfo.style.top = '-46px';
-            tsTickInfo.style.position = 'absolute';
-            tsTickInfo.style.pointerEvents = 'none';
-            tsTickInfo.style.fontSize = '14px';
-            tsTickInfo.style.textShadow = '0 0 10px #000';
+    for (let t = 1 ; t < tAll10Min.length ; t++){
+        const timeLST = time2LSTStr(tAll10Min[t]);
+        if (timeLST.substring(3, 5) === '00'){
+            var tick = createTick('ts-ticks-1hr' , tAll10Min[t]);
+        } else if (timeLST.substring(3, 5) === '30'){
+            var tick = createTick('ts-ticks-30min' , tAll10Min[t]);
+        } else {
+            var tick = createTick('ts-ticks-10min' , tAll10Min[t]);
         }
-    }
+        tick.classList.add('ts-ticks');
 
-    for (var t = 1 ; t < tAll30Min.length ; t++){
-        const tick = this.createElement('div');
-        const tickS = tick.style;
         tsTrack.appendChild(tick);
 
-        tickS.left = time2BarWidth(tAll30Min[t]);
-        tickS.width = '1px';
-        tickS.height = '10px';
-        tickS.position = 'absolute';
-        tickS.display = 'flex';
-        tickS.justifyContent = 'center';
-        tickS.alignItems = 'center';
-        tickS.cursor = 'pointer';
-        if (time2LSTStr(tAll30Min[t]).substring(0, 5) === '00:00' || 
-            time2LSTStr(tAll30Min[t]).substring(0, 5) === '06:00' || 
-            time2LSTStr(tAll30Min[t]).substring(0, 5) === '12:00' || 
-            time2LSTStr(tAll30Min[t]).substring(0, 5) === '18:00'){
-            tickS.background = '#000';
-        } else tickS.background = '#fff';
-    }
-
-    for (var t = 1 ; t < tAll10Min.length ; t++){
-        const time = tAll10Min[t];
-        const tick = this.createElement('div');
-        const tickS = tick.style;
-        tick.className = 'tick';
-        tsTrack.appendChild(tick);
-
-        tickS.left = time2BarWidth(time);
-        tickS.width = '1px';
-        tickS.height = '6px';
-        tickS.position = 'absolute';
-        tickS.display = 'flex';
-        tickS.justifyContent = 'center';
-        tickS.alignItems = 'center';
-        tickS.cursor = 'pointer';
-        if (time2LSTStr(tAll10Min[t]).substring(0, 5) === '00:00' || 
-            time2LSTStr(tAll10Min[t]).substring(0, 5) === '06:00' || 
-            time2LSTStr(tAll10Min[t]).substring(0, 5) === '12:00' || 
-            time2LSTStr(tAll10Min[t]).substring(0, 5) === '18:00'){
-            tickS.background = '#000';
-        } else tickS.background = '#fff';
+        if (INFO_TIME.includes(timeLST.substring(0, 5))){
+            if (['00'].includes(timeLST.substring(0, 2))){
+                var tsTickInfo = createElement('span' , null , 'ts-ticks-info-00L');
+                tsTickInfo.innerText = date2LSTStr(tAll10Min[t]);
+            } else {
+                var tsTickInfo = createElement('span' , null , 'ts-ticks-info-06L');
+                tsTickInfo.innerText = time2LSTStr(tAll10Min[t]);
+            }
+            tsTickInfo.classList.add('ts-ticks-info' , 'ts-ticks-info-nodisplay');
+            tick.appendChild(tsTickInfo);
+            tick.style.background = '#000';
+            actionMouseOverAndLeave(tsBody , tsTickInfo , 'ts-ticks-info-nodisplay');
+        } else tick.style.background = '#fff';
 
         tick.addEventListener('mouseover' , function(){
-            this.appendChild(tsTickTag)
-            tsTickTag.innerText = time2LSTStr(time);
-            tsTickTagS.display = 'flex';
-        });
-        tick.addEventListener('mouseleave' , function(){
-            tsTickTagS.display = 'none';
+            tsPointerTag.innerText = time2LSTStr(tAll10Min[t]);
         });
     }
 
@@ -314,12 +162,12 @@ document.addEventListener('DOMContentLoaded' , function(){
         switch (optPlay){
             case 0:
                 optPlay = 1;
-                tsCtl.querySelector('.icofont-play-alt-1').className = 'icofont-pause icofont-2x';
+                tsCtl.querySelector('.icofont-play-alt-1').className = 'ts-ctl-icon icofont-pause icofont-2x';
                 eventPlay(playSpeed);
                 break;
             case 1:
                 optPlay = 0;
-                tsCtl.querySelector('.icofont-pause').className = 'icofont-play-alt-1 icofont-2x';
+                tsCtl.querySelector('.icofont-pause').className = 'ts-ctl-icon icofont-play-alt-1 icofont-2x';
                 break;
         };
     }
@@ -349,9 +197,9 @@ document.addEventListener('DOMContentLoaded' , function(){
     }
 
     function displayTimeslider(tSelect){
-        tsS.width = time2BarWidth(tSelect);
-        tsPointerS.left = time2BarWidth(tSelect);
-        tsTag.innerText = time2LSTStr(tSelect);
+        tsBar.style.width = time2BarWidth(tSelect);
+        tsAnchor.style.left = time2BarWidth(tSelect);
+        tsBarTag.innerText = time2LSTStr(tSelect);
     }
 
     function displayContent(tSelect){
@@ -373,48 +221,53 @@ document.addEventListener('DOMContentLoaded' , function(){
         const tDic1Hr = timeDic(tStr1Hr);
         const tDic12Hr = timeDic(tStr12Hr);
 
-        rain.querySelector('.time').innerText = tStr30Min;
-        radar.querySelector('.time').innerText = tStr10Min;
-        lgtn.querySelector('.time').innerText = tStr5Min;
-        satvsg.querySelector('.time').innerText = tStr10Min;
-        satvst.querySelector('.time').innerText = tStr10Min;
-        satirc.querySelector('.time').innerText = tStr10Min;
-        satire.querySelector('.time').innerText = tStr10Min;
-        temp.querySelector('.time').innerText = tStr1Hr;
-        skt.querySelector('.time').innerText = tStr12Hr;
-        
-        rain.querySelector('img').src = urlRn2(tDic30Min.Y , tDic30Min.M , tDic30Min.D , tDic30Min.h , tDic30Min.m , tagRn);
-        radar.querySelector('img').src = urlRdr2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m);
-        lgtn.querySelector('img').src = urlLtn2(tDic5Min.Y , tDic5Min.M , tDic5Min.D , tDic5Min.h , tDic5Min.m);
-        satvsg.querySelector('img').src = urlSatVSg2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatVSgPx);
-        satvst.querySelector('img').src = urlSatVSt2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatVStPx);
-        satirc.querySelector('img').src = urlSatIRc2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatIRPx);
-        satire.querySelector('img').src = urlSatIRe2(tDic10Min.Y , tDic10Min.M , tDic10Min.D , tDic10Min.h , tDic10Min.m , tagSatArea , tagSatIRPx);
-        temp.querySelector('img').src = urlTemp2(tDic1Hr.Y , tDic1Hr.M , tDic1Hr.D , tDic1Hr.h);
-        skt.querySelector('img').src = urlSkt2(tDic12Hr.Y.substring(2, 4) , tDic12Hr.M , tDic12Hr.D , tDic12Hr.h);
+        tStrRn = tStr30Min;
+        tStrRdr = tStr10Min;
+        tStrSat = tStr10Min;
+        tStrLtn = tStr5Min;
+        tStrTemp = tStr1Hr;
+        tStrSkt = tStr12Hr;
+
+        tDicRn = tDic30Min;
+        tDicRdr = tDic10Min;
+        tDicSat = tDic10Min;
+        tDicLtn = tDic5Min;
+        tDicTemp = tDic1Hr;
+        tDicSkt = tDic12Hr;
+
+        setProduct(content , '#rain' , titleRn , tStrRn , urlRn(tDicRn , tagRn));
+        setProduct(content , '#radar' , titleRdr , tStrRdr , urlRdr(tDicRdr));
+        setProduct(content , '#satvsg' , titleSatVSg , tStrSat , urlSatVSg(tDicSat , tagSatArea , tagSatVSgPx));
+        setProduct(content , '#satvst' , titleSatVSt , tStrSat , urlSatVSt(tDicSat , tagSatArea , tagSatVStPx));
+        setProduct(content , '#satirc' , titleSatIRc , tStrSat , urlSatIRc(tDicSat , tagSatArea , tagSatIRPx));
+        setProduct(content , '#satire' , titleSatIRe , tStrSat , urlSatIRe(tDicSat , tagSatArea , tagSatIRPx));
+        setProduct(content , '#lgtn' , titleLtn , tStrLtn , urlLtn(tDicLtn));
+        setProduct(content , '#temp' , titleTemp , tStrTemp , urlTemp(tDicTemp));
+        setProduct(content , '#skt' , titleSkt , tStrSkt , urlSkt(tDicSkt , tagSkt));
     }
 
-    const onTicks = (eventType, eventHandler) => on(tsTrack , 'div', eventType, '.tick', eventHandler);
+    const onTicks = (eventType, eventHandler) => on(tsTrack , 'div' , eventType , '.ts-ticks', eventHandler);
 
     tsTrack.addEventListener('mousedown' , eventMouse);
-    tsCtlrewind.addEventListener('click' , eventRewind);
-    tsCtlforward.addEventListener('click' , eventForward);
-    tsCtlplay.addEventListener('click' , switchPlayPause);
+    tsCtlRewind.addEventListener('click' , eventRewind);
+    tsCtlForward.addEventListener('click' , eventForward);
+    tsCtlPlay.addEventListener('click' , switchPlayPause);
     this.addEventListener('keydown' , eventKey , false);
     this.addEventListener('keyup' , () => tSkip = tSkipDefault , false);
 
-    tsPointer.addEventListener('mouseover' , () => {
-        tsDragBtnS.display = 'flex';
+    tsAnchor.addEventListener('mouseover' , () => {
+        tsBarPointer.style.display = 'flex';
     });
-    tsPointer.addEventListener('mouseleave' , () => {
-        tsDragBtnS.display = 'none';
+    tsAnchor.addEventListener('mouseleave' , () => {
+        tsBarPointer.style.display = 'none';
     });
     onTicks('mouseover', e => {
-        e.target.appendChild(tsAnchor);
-        tsAnchorS.display = 'flex';
+        e.target.appendChild(tsPointer);
+        tsPointer.appendChild(tsPointerTag)
+        tsPointer.style.display = tsPointerTag.style.display = 'flex';
     })
     onTicks('mouseleave', () => {
-        tsAnchorS.display = 'none';
+        tsPointer.style.display = tsPointerTag.style.display = 'none';
     })
 });
 
@@ -456,11 +309,11 @@ function time2BarWidth(t){
 }
 
 function rewind(t , int){
-    return (t - int * min2msec < tStart) ? tEndAll : t - int * min2msec;
+    return (t - int * MIN2MSEC < tStart) ? tEndAll : t - int * MIN2MSEC;
 }
 
 function forward(t , int){
-    return (t + int * min2msec > tEnd) ? tStartAll : t + int * min2msec;
+    return (t + int * MIN2MSEC > tEnd) ? tStartAll : t + int * MIN2MSEC;
 }
 
 function click2Time(e , track){
