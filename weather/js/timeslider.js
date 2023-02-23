@@ -1,7 +1,7 @@
-import * as TAG from './tagInfo.js'
-
+const CLS_TS_CTL_PLAY = 'icofont-play-alt-1 icofont-2x'
+const CLS_TS_CTL_FORWARD = 'icofont-forward icofont-2x'
+const CLS_TS_CTL_REWIND = 'icofont-rewind icofont-2x'
 const TAG_CLASS_ADD = 'collapse'
-
 const INFO_TIME = ['00:00' , '06:00' , '12:00' , '18:00'];
 
 const MIN2MSEC = 60000;
@@ -46,8 +46,8 @@ var tSelect = tEndAll;
 
 function createElement(tagName , id , cls){
     const el = document.createElement(tagName);
-    if (id !== null) el.id = id;
-    if (cls !== null) el.className = cls;
+    if (Boolean(id)) el.id = id;
+    if (Boolean(cls)) el.className = cls;
     return el;
 }
 
@@ -66,24 +66,22 @@ function actionMouseOverAndLeave(objMouseOver , objActionOn , clsActionOn){
     });
 }
 
-
-
 document.addEventListener('DOMContentLoaded' , function(){
     const content = document.querySelector('.content');
     const tsCtn = document.querySelector('#timeslider');
-    const tsBody = createElement('div' , 'ts-body' , TAG.CLS_TS_BODY);
-    const tsTrack = createElement('div' , 'ts-track' , TAG.CLS_TS_BODY);
-    const tsBar = createElement('div' , 'ts-bar' , TAG.CLS_TS_BODY);
-    const tsAnchor = createElement('div' , 'ts-anchor' , TAG.CLS_TS_BODY);
-    const tsPointer = createElement('div' , 'ts-pointer' , TAG.CLS_TS_BODY);
-    const tsPointerTag = createElement('div' , 'ts-pointer-tag' , TAG.CLS_TS_BODY);
-    const tsBarPointer = createElement('div' , 'ts-bar-pointer' , TAG.CLS_TS_BODY);
-    const tsBarTag = createElement('div' , 'ts-bar-tag' , TAG.CLS_TS_BODY);
+    const tsBody = createElement('div' , 'ts-body' , );
+    const tsTrack = createElement('div' , 'ts-track' , );
+    const tsBar = createElement('div' , 'ts-bar' , );
+    const tsAnchor = createElement('div' , 'ts-anchor' , );
+    const tsPointer = createElement('div' , 'ts-pointer' , );
+    const tsPointerTag = createElement('div' , 'ts-pointer-tag' , );
+    const tsBarPointer = createElement('div' , 'ts-bar-pointer' , );
+    const tsBarTag = createElement('div' , 'ts-bar-tag' , );
     
-    const tsCtl = createElement('div' , 'ts-ctl' , TAG.CLS_TS_BODY);
-    const tsCtlPlay = createElement('i' , 'ts-ctl-play' , TAG.CLS_TS_CTL_PLAY);
-    const tsCtlForward = createElement('i' , 'ts-ctl-forward' , TAG.CLS_TS_CTL_FORWARD);
-    const tsCtlRewind = createElement('i' , 'ts-ctl-rewind' , TAG.CLS_TS_CTL_REWIND);
+    const tsCtl = createElement('div' , 'ts-ctl' , );
+    const tsCtlPlay = createElement('i' , 'ts-ctl-play' , CLS_TS_CTL_PLAY);
+    const tsCtlForward = createElement('i' , 'ts-ctl-forward' , CLS_TS_CTL_FORWARD);
+    const tsCtlRewind = createElement('i' , 'ts-ctl-rewind' , CLS_TS_CTL_REWIND);
 
     tsCtn.classList.add(TAG_CLASS_ADD);
     tsCtlPlay.classList.add('ts-ctl-icon');
