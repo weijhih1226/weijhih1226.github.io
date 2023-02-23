@@ -105,7 +105,7 @@ main {
     position: absolute;
     left: 1em;
 }
-#nav-menu {
+#btn-sidemenu {
     position: absolute;
     right: 1em;
     cursor: pointer;
