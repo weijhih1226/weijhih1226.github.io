@@ -114,14 +114,14 @@
             </div>
             <div class="outmenu">
                 <ul id="menu">
-                    <li>
+                    <li id="menu-rain">
                         <a href="#"><span>雨量</span></a>
                         <ul class="inmenu rain-list">
                             <li><input type="radio" value="1" name="rain" id="rain-d" class="rain" checked><span>日雨量</span></li>
                             <li><input type="radio" value="2" name="rain" id="rain-h" class="rain"><span>時雨量</span></li>
                         </ul>
                     </li>
-                    <li>
+                    <li id="menu-sat">
                         <a href="#"><span>衛星</span></a>
                         <ul class="inmenu sat-list">
                             <li><input type="radio" value="1" name="sat" id="sat-tw" class="sat" checked><span>臺灣</span></li>
@@ -129,7 +129,7 @@
                             <li><input type="radio" value="3" name="sat" id="sat-gb" class="sat"><span>全球</span></li>
                         </ul>
                     </li>
-                    <li>
+                    <li id="menu-ty">
                         <a href="#"><span>颱風路徑</span></a>
                         <ul class="inmenu ty-list">
                             <li><input type="radio" value="1" name="ty" id="ty-all" class="ty" checked><span>各國</span></li>
@@ -141,9 +141,17 @@
                             <li><input type="radio" value="7" name="ty" id="ty-jma" class="ty"><span>日本（JMA-GSM）</span></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><span>觀測時間</span></a>
-                        <ul class="inmenu time-list"></ul>
+                    <li id="menu-skt">
+                        <a href="#"><span>探空</span></a>
+                        <ul class="inmenu ty-list">
+                            <li><input type="radio" value="1" name="skt" id="skt-tp" class="menu-skt-list" checked><span>台北</span></li>
+                            <li><input type="radio" value="2" name="skt" id="skt-ds" class="menu-skt-list"><span>東沙</span></li>
+                            <li><input type="radio" value="3" name="skt" id="skt-hl" class="menu-skt-list"><span>花蓮</span></li>
+                            <li><input type="radio" value="4" name="skt" id="skt-pt" class="menu-skt-list"><span>屏東</span></li>
+                            <li><input type="radio" value="5" name="skt" id="skt-mk" class="menu-skt-list"><span>馬公</span></li>
+                            <li><input type="radio" value="6" name="skt" id="skt-pj" class="menu-skt-list"><span>彭佳嶼</span></li>
+                            <li><input type="radio" value="7" name="skt" id="skt-gi" class="menu-skt-list"><span>綠島</span></li>
+                        </ul>
                     </li>
                 </ul>
                 <a href="#" class="btn-goTop btn-menu"><i class="zmdi zmdi-long-arrow-up"></i></a>
