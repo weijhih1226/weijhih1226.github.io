@@ -1,5 +1,6 @@
+const MIN2MSEC = 60000;
 const tRange = 24;  // Units: hr
-const tStart = tNowUTC - tRange * 60 * min2msec;
+const tStart = tNowUTC - tRange * 60 * MIN2MSEC;
 const tEnd = tNowUTC;
 const tOpt = {year: 'numeric', month: '2-digit', day: '2-digit', 
               hour: '2-digit', minute: '2-digit', hour12: false};
