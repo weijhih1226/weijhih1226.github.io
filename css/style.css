@@ -438,11 +438,17 @@ body:hover {color: #3c4858;}
     margin: 3em 0;
 }
 
-#about_content div{
+#about_content_inner {
+    font-size: 1.2em;
+    word-wrap: break-word;
+    word-break: normal;
+}
+
+/* #about_content div{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
+} */
 
 #box{
     width: 100px;
