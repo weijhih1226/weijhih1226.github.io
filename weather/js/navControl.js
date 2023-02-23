@@ -1,56 +1,52 @@
-const delay = 10;
-const width = 300;
-const tagZoom = 'zoomBg';
-const tagTimeslider = 'timeslider';
+const ID_BTN_SIDEMENU = '#btn-sidemenu'
+const CLS_SIDEMENU = '.sidemenu'
+const CLS_COLLAPSE = '.collapse'
+
+const DELAY = 10;
+const WIDTH = 300;
 
 window.addEventListener('DOMContentLoaded' , function(){
-    var outmenu = document.querySelector('.outmenu');
-    var content = document.querySelector('.content');
-    var timeslider = document.querySelector('.timeslider');
-    var btn = document.querySelectorAll('.btn-goTop');
-    var contentAll = [];
-    if (outmenu !== null) {
-        var zoom = null;
-        outmenu.style.right = '0px';
-        content.style.right = '300px';
-        timeslider.style.right = '300px';
-        if (btn.length !== 0) {
-            btn[0].style.right = '325px';
-            btn[1].style.right = '25px';
-            contentAll.push(content , timeslider , zoom , ...btn);
-        } else contentAll.push(content , timeslider , zoom);
-
-        document.querySelector('#nav-menu').addEventListener('click' , () => {
-            contentAll[1] = document.querySelector('.' + tagTimeslider);
-            contentAll[2] = document.querySelector('#' + tagZoom);
-            if (outmenu.style.right === '0px') close(outmenu , contentAll , width , delay);
-            else open(outmenu , contentAll , width , delay);
-        })
-    }
+    collapseSidemenu(ID_BTN_SIDEMENU , CLS_SIDEMENU , CLS_COLLAPSE , WIDTH , DELAY)
 })
 
-function close(menu , content , width , delay){
-    if (menu.style.right === '') menu.style.right = '0';
+function collapseSidemenu(tagClickObj , tagSidemenu , tagCollapses , width , delay){
+    var sidemenu = document.querySelector(tagSidemenu);
+    if (sidemenu !== null) {
+        sidemenu.style.right = getComputedStyle(sidemenu).right;
+        document.querySelector(tagClickObj).addEventListener('click' , () => {
+            var collapses = document.querySelectorAll(tagCollapses);
+            collapses = Array.from(collapses)
+            collapses.forEach(function(collapse){
+                collapse.style.right = getComputedStyle(collapse).right
+            })
+            if (sidemenu.style.right === '0px') closeSidemenu(sidemenu , collapses , width , delay);
+            else openSidemenu(sidemenu , collapses , width , delay);
+        })
+    }
+}
+
+function closeSidemenu(menu , contents , width , delay){
+    if (menu.style.right === '') menu.style.right = '0px';
     if (parseInt(menu.style.right) > -width) {
         setTimeout(() => {
             menu.style.right = (parseInt(menu.style.right) - 10) + 'px';
-            for (i = 0 ; i < content.length ; i++) {
-                if (content[i] !== null) content[i].style.right = (parseInt(content[i].style.right) - 10) + 'px';
+            for (var i = 0 ; i < contents.length ; i++) {
+                if (contents[i] !== null) contents[i].style.right = (parseInt(contents[i].style.right) - 10) + 'px';
             }
-            close(menu , content , width , delay)
+            closeSidemenu(menu , contents , width , delay)
         } , delay)
     }
 }
 
-function open(menu , content , width , delay){
+function openSidemenu(menu , contents , width , delay){
     if (menu.style.right === '') menu.style.right = -width + 'px';
     if (parseInt(menu.style.right) < 0) {
         setTimeout(() => {
             menu.style.right = (parseInt(menu.style.right) + 10) + 'px';
-            for (i = 0 ; i < content.length ; i++) {
-                if (content[i] !== null) content[i].style.right = (parseInt(content[i].style.right) + 10) + 'px';
+            for (var i = 0 ; i < contents.length ; i++) {
+                if (contents[i] !== null) contents[i].style.right = (parseInt(contents[i].style.right) + 10) + 'px';
             }
-            open(menu , content , width , delay)
+            openSidemenu(menu , contents , width , delay)
         } , delay)
     }
 }
