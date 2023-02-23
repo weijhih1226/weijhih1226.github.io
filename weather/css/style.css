@@ -105,11 +105,7 @@ main {
     position: absolute;
     left: 1em;
 }
-#btn-sidemenu {
-    position: absolute;
-    right: 1em;
-    cursor: pointer;
-}
+
 #sublogo {
     font-size: 18px;
 }
