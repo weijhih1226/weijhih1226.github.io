@@ -33,7 +33,7 @@
             $("#menu>li>a").click(function(){
                 $(this).siblings(".inmenu").slideToggle()
             });
-            $(".outmenu").scroll(goTopFunc)
+            $(".sidemenu").scroll(goTopFunc)
             $(".content").scroll(goTopFunc)
             $("a.btn-goTop").click(function(){
                 $(this).parent().animate({scrollTop: 0} , 300);

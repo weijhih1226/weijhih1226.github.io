@@ -1,6 +1,7 @@
 import * as TAG from './tagInfo.js'
 
-const TAG_CLASS_ADD = TAG.COLLAPSE
+const TAG_CLASS_ADD = 'collapse'
+
 const INFO_TIME = ['00:00' , '06:00' , '12:00' , '18:00'];
 
 const MIN2MSEC = 60000;
@@ -64,6 +65,8 @@ function actionMouseOverAndLeave(objMouseOver , objActionOn , clsActionOn){
         objActionOn.classList.add(clsActionOn)
     });
 }
+
+
 
 document.addEventListener('DOMContentLoaded' , function(){
     const content = document.querySelector('.content');
