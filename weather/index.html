@@ -28,25 +28,6 @@
         <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> -->
     </head>
-    <script>
-        var goTopFunc = function(){
-            const px = 100;
-            if ($(this).scrollTop() > px) $(this).children("a.btn-goTop").addClass("show");
-            else $(this).children("a.btn-goTop").removeClass("show");
-        }
-        $(document).ready(function(){
-            $("#menu>li>a").click(function(){
-                $(this).siblings(".inmenu").slideToggle()
-            });
-            $(".sidemenu").scroll(goTopFunc)
-            $(".content").scroll(goTopFunc)
-            $("a.btn-goTop").click(function(){
-                $(this).parent().animate({scrollTop: 0} , 300);
-            })
-            Waves.attach('a.btn-goTop', ['waves-light']);
-            Waves.init();
-        });
-    </script>
     <body>
         <header>
             <div class="header-inner">
@@ -67,52 +48,52 @@
             </div>
         </header>
         <main>
-            <div class="content">
-                <div id="rain">
+            <div class="content collapse">
+                <div id="rain" class="product">
                     <div class="header"><div class="title">日雨量</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Rainfall Daily" alt="Rainfall Daily"></a></div>
                 </div>
-                <div id="radar">
+                <div id="radar" class="product">
                     <div class="header"><div class="title">雷達</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Radar" alt="Radar"></a></div>
                 </div>
-                <div id="satvsg">
+                <div id="satvsg" class="product">
                     <div class="header"><div class="title">衛星-可見光</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Satellite Visible" alt="Satellite Visible Taiwan"></a></div>
                 </div>
-                <div id="satvst">
+                <div id="satvst" class="product">
                     <div class="header"><div class="title">衛星-真實色</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Satellite TrueColor" alt="Satellite TrueColor Taiwan"></a></div>
                 </div>
-                <div id="satirc">
+                <div id="satirc" class="product">
                     <div class="header"><div class="title">衛星-彩色</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Satellite RGB" alt="Satellite RGB Taiwan"></a></div>
                 </div>
-                <div id="satire">
+                <div id="satire" class="product">
                     <div class="header"><div class="title">衛星-色調強化</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Satellite Enhanced" alt="Satellite Enhanced Taiwan"></a></div>
                 </div>
-                <div id="lgtn">
+                <div id="lgtn" class="product">
                     <div class="header"><div class="title">閃電</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Lightning" alt="Lightning"></a></div>
                 </div>
-                <div id="temp">
+                <div id="temp" class="product">
                     <div class="header"><div class="title">氣溫</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Temperature" alt="Temperture"></a></div>
                 </div>
-                <div id="uvi">
+                <div id="uvi" class="product">
                     <div class="header"><div class="title">紫外線指數</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="UV Index" alt="UV Index"></a></div>
                 </div>
-                <div id="skt">
+                <div id="skt" class="product">
                     <div class="header"><div class="title">探空</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Skew-T" alt="Skew-T"></a></div>
                 </div>
-                <div id="ty-cwb">
+                <div id="ty-cwb" class="product">
                     <div class="header"><div class="title">CWB颱風路徑</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Typhoon CWB" alt="Typhoon CWB"></a></div>
                 </div>
-                <div id="ty-t2">
+                <div id="ty-t2" class="product">
                     <div class="header"><div class="title">各國颱風路徑</div><div class="time"></div></div>
                     <div class="pic"><a target="_blank"><img title="Typhoon 2000" alt="Typhoon 2000"></a></div>
                 </div>
