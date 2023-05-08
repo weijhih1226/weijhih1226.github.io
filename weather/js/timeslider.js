@@ -4,7 +4,6 @@ const CLS_TS_CTL_REWIND = 'icofont-rewind icofont-2x'
 const TAG_CLASS_ADD = 'collapse'
 const INFO_TIME = ['00:00' , '06:00' , '12:00' , '18:00'];
 
-const MIN2MSEC = 60000;
 const tRange = 24;  // Units: hr
 const tStart = NOW_UTC - tRange * 60 * MIN2MSEC;
 const tEnd = NOW_UTC;
