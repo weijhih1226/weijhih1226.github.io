@@ -14,9 +14,6 @@ body {
     background-color: #181c27;
     transition: .5s;
 }
-header *{
-    color: #D0D0D0;
-}
 *::-webkit-scrollbar {height: .4em; width: .4em;}
 *::-webkit-scrollbar-thumb {
     background-color: #687582;
@@ -46,6 +43,9 @@ a.btn-goTop {
     transition: 0.3s;
     opacity: 0;
 }
+a.btn-content {
+    right: 325px;
+}
 a.btn-goTop.show {
     opacity: 1;
     bottom: 25px;
@@ -59,35 +59,6 @@ ul li {
     display: inline-block;
 }
 
-nav {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 3em;
-    padding: 0 1em;
-    background-color: #2f4154;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
-}
-
-nav ul {
-    position: absolute;
-    right: 3em;
-}
-nav div {
-    font-size: 20px;
-}
-nav div *{
-    transition: color .5s ease-in-out;
-}
-nav div *:hover {
-    color: #fff;
-}
-
 main {
     position: absolute;
     width: 100%;
@@ -95,19 +66,6 @@ main {
     bottom: 0;
     overflow: hidden;
     z-index: -1;
-}
-
-.header-inner {
-    height: 3em;
-}
-
-#nav-logo {
-    position: absolute;
-    left: 1em;
-}
-
-#sublogo {
-    font-size: 18px;
 }
 
 .menu {

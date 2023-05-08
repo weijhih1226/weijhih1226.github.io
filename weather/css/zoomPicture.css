@@ -1,0 +1,25 @@
+#zoom {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: auto;
+    background-color: rgba(0 , 0 , 0 , .8);
+}
+
+#zm-link {
+    top: 1em;
+    bottom: 4em;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#zm-img {
+    height: 100%;
+}

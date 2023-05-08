@@ -1,4 +1,6 @@
-.content>div {
+@import url('menu.css');
+
+.product {
     width: 300px;
     margin-top: 1em;
     /* border: 1px solid white; */
@@ -21,7 +23,7 @@
     color:#aaa;
 }
 
-.content img {
+.product img {
     width: 300px;
 }
 
@@ -29,18 +31,6 @@
     height: 300px;
     display: flex;
     align-items: center;
-}
-
-.sidemenu {
-    position: absolute;
-    right: 0;
-    height: 100%;
-    width: 300px;
-    background-color: rgba(37, 45, 56, 1);
-    display: flex;
-    overflow: hidden auto;
-    justify-content: center;
-    align-items: top;
 }
 
 #menu , #menu>li {

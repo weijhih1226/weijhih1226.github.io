@@ -6,22 +6,27 @@
         <meta http-equiv="refresh" content="600"/>
         <meta name="google-site-verification" content="3_tLbpMalpboQd6M2CIgfnBUIvA0lKi8eianyoQZiTw"/>
         <title>觀天象｜小威的漂流手札</title>
-        <link rel="stylesheet" href="/weather/css/style.css">
-        <link rel="stylesheet" href="/weather/css/navControl.css">
-        <link rel="stylesheet" href="/weather/css/gallery.css">
-        <link rel="stylesheet" href="/image/icon/icofont/icofont.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+        <link rel="stylesheet" href="/image/icon/icofont/icofont.min.css">
+        <link rel="stylesheet" href="/weather/css/header.css">
+        <link rel="stylesheet" href="/weather/css/style.css">
+        <link rel="stylesheet" href="/weather/css/gallery.css">
+        <link rel="stylesheet" href="/weather/css/zoomPicture.css">
+        <link rel="stylesheet" href="/weather/css/timeslider.css">
         <link rel="stylesheet" href="/image/icon/material-design-iconic-font/css/material-design-iconic-font.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
-        <script src="/weather/js/getTime.js"></script>
-        <script src="/weather/js/navControl.js"></script>
-        <script src="/weather/js/timeslider.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="/weather/js/navControl.js"></script>
+        <script src="/weather/js/getTime.js"></script>
+        <script src="/weather/js/zoomPicture.js"></script>
+        <script src="/weather/js/timeslider.js"></script>
+        <script src="/weather/js/galleryMenu.js"></script>
+        <script src="/weather/js/goTop.js' %"></script>
+        <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> -->
     </head>
     <script>
         var goTopFunc = function(){
@@ -119,28 +124,28 @@
                     <li id="menu-rain">
                         <a href="#"><span>雨量</span></a>
                         <ul class="inmenu rain-list">
-                            <li><input type="radio" value="1" name="rain" id="rain-d" class="rain" checked><span>日雨量</span></li>
-                            <li><input type="radio" value="2" name="rain" id="rain-h" class="rain"><span>時雨量</span></li>
+                            <li><input type="radio" value="1" name="rain" id="rain-d" class="menu-rain-list" checked><span>日雨量</span></li>
+                            <li><input type="radio" value="2" name="rain" id="rain-h" class="menu-rain-list"><span>時雨量</span></li>
                         </ul>
                     </li>
                     <li id="menu-sat">
                         <a href="#"><span>衛星</span></a>
                         <ul class="inmenu sat-list">
-                            <li><input type="radio" value="1" name="sat" id="sat-tw" class="sat" checked><span>臺灣</span></li>
-                            <li><input type="radio" value="2" name="sat" id="sat-ea" class="sat"><span>東亞</span></li>
-                            <li><input type="radio" value="3" name="sat" id="sat-gb" class="sat"><span>全球</span></li>
+                            <li><input type="radio" value="1" name="sat" id="sat-tw" class="menu-sat-list" checked><span>臺灣</span></li>
+                            <li><input type="radio" value="2" name="sat" id="sat-ea" class="menu-sat-list"><span>東亞</span></li>
+                            <li><input type="radio" value="3" name="sat" id="sat-gb" class="menu-sat-list"><span>全球</span></li>
                         </ul>
                     </li>
                     <li id="menu-ty">
                         <a href="#"><span>颱風路徑</span></a>
                         <ul class="inmenu ty-list">
-                            <li><input type="radio" value="1" name="ty" id="ty-all" class="ty" checked><span>各國</span></li>
-                            <li><input type="radio" value="2" name="ty" id="ty-ec" class="ty"><span>歐洲（ECMWF-IFS）</span></li>
-                            <li><input type="radio" value="3" name="ty" id="ty-ncep" class="ty"><span>美國（NCEP-GFS）</span></li>
-                            <li><input type="radio" value="4" name="ty" id="ty-uk" class="ty"><span>英國（UKMO-UM）</span></li>
-                            <li><input type="radio" value="5" name="ty" id="ty-cmc" class="ty"><span>加拿大（CMC-GEM）</span></li>
-                            <li><input type="radio" value="6" name="ty" id="ty-fnmoc" class="ty"><span>美國（FNMOC-NAVGEM）</span></li>
-                            <li><input type="radio" value="7" name="ty" id="ty-jma" class="ty"><span>日本（JMA-GSM）</span></li>
+                            <li><input type="radio" value="1" name="ty" id="ty-all" class="menu-ty-list" checked><span>各國</span></li>
+                            <li><input type="radio" value="2" name="ty" id="ty-ec" class="menu-ty-list"><span>歐洲（ECMWF-IFS）</span></li>
+                            <li><input type="radio" value="3" name="ty" id="ty-ncep" class="menu-ty-list"><span>美國（NCEP-GFS）</span></li>
+                            <li><input type="radio" value="4" name="ty" id="ty-uk" class="menu-ty-list"><span>英國（UKMO-UM）</span></li>
+                            <li><input type="radio" value="5" name="ty" id="ty-cmc" class="menu-ty-list"><span>加拿大（CMC-GEM）</span></li>
+                            <li><input type="radio" value="6" name="ty" id="ty-fnmoc" class="menu-ty-list"><span>美國（FNMOC-NAVGEM）</span></li>
+                            <li><input type="radio" value="7" name="ty" id="ty-jma" class="menu-ty-list"><span>日本（JMA-GSM）</span></li>
                         </ul>
                     </li>
                     <li id="menu-skt">

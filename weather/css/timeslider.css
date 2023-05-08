@@ -1,5 +1,30 @@
-#tsCtn {
-    z-Index: 2;
+:root {
+    --ts-body-height-before: 5px;
+    --ts-body-height-after: 10px;
+    --ts-body-background: #9da8b3;
+    --ts-body-border-radius: 5px;
+    --ts-body-display: flex;
+    --ts-body-align-items: center;
+    --ts-body-pointer-events: auto;
+
+    --ts-pointer-width: 12px;
+    --ts-pointer-height: 12px;
+    --ts-pointer-position: absolute;
+    --ts-pointer-display: none;
+    --ts-pointer-border-radius: 8px;
+    --ts-pointer-cursor: pointer;
+
+    --ts-pointer-tag-width: 56px;
+    --ts-pointer-tag-height: 26px;
+    --ts-pointer-tag-position: absolute;
+    --ts-pointer-tag-color: #fff;
+    --ts-pointer-tag-justify-content: center;
+    --ts-pointer-tag-align-items: center;
+    --ts-pointer-tag-font-size: 14px;
+}
+
+#timeslider {
+    z-index: 2;
     left: 0;
     right: 300px;
     bottom: 0;
@@ -9,4 +34,164 @@
     align-items: center;
     background: rgba(255 , 255 , 255 , 0);
     pointer-events: none;
+}
+
+#ts-body {
+    left: 20px;
+    right: 160px;
+    height: var(--ts-body-height-before);
+    position: absolute;
+    background: var(--ts-body-background);
+    border-radius: var(--ts-body-border-radius);
+    display: var(--ts-body-display);
+    align-items: var(--ts-body-align-items);
+    pointer-events: var(--ts-body-pointer-events);
+    transition: height .2s ease-in-out;
+}
+#ts-body:hover {
+    height: var(--ts-body-height-after);
+}
+
+#ts-track {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    cursor: pointer;
+    background: var(--ts-body-background);
+    border-radius: var(--ts-body-border-radius);
+    display: var(--ts-body-display);
+    align-items: var(--ts-body-align-items);
+    pointer-events: var(--ts-body-pointer-events);
+}
+
+#ts-bar {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    background: #197C9D;
+    border-radius: 5px;
+}
+
+#ts-anchor {
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ts-pointer {
+    width: var(--ts-pointer-width);
+    height: var(--ts-pointer-height);
+    position: var(--ts-pointer-position);
+    display: var(--ts-pointer-display);
+    background: #9da8b3;
+    border: 2px solid #fff;
+    border-radius: var(--ts-pointer-border-radius);
+    cursor: var(--ts-pointer-cursor);
+}
+
+#ts-pointer-tag {
+    left: -25px;
+    top: -37px;
+    width: var(--ts-pointer-tag-width);
+    height: var(--ts-pointer-tag-height);
+    border: 2px solid #fff;
+    border-radius: 5px;
+    position: var(--ts-pointer-tag-position);
+    background: #9da8b3;
+    color: var(--ts-pointer-tag-color);
+    display: none;
+    justify-content: var(--ts-pointer-tag-justify-content);
+    align-items: var(--ts-pointer-tag-align-items);
+    font-size: var(--ts-pointer-tag-font-size);
+    z-index: 2;
+}
+
+#ts-bar-pointer {
+    /* draggable: true; */
+    width: var(--ts-pointer-width);
+    height: var(--ts-pointer-height);
+    position: var(--ts-pointer-position);
+    display: var(--ts-pointer-display);
+    background: #197C9D;
+    border: 2px solid #fff;
+    border-radius: var(--ts-pointer-border-radius);
+    cursor: var(--ts-pointer-cursor);
+}
+
+#ts-bar-tag {
+    left: -30px;
+    top: -38px;
+    width: var(--ts-pointer-tag-width);
+    height: var(--ts-pointer-tag-height);
+    border: 2px solid #fff;
+    border-radius: 6px;
+    position: var(--ts-pointer-tag-position);
+    background: #197C9D;
+    color: var(--ts-pointer-tag-color);
+    display: flex;
+    justify-content: var(--ts-pointer-tag-justify-content);
+    align-items: var(--ts-pointer-tag-align-items);
+    font-size: var(--ts-pointer-tag-font-size);
+    z-index: 1;
+}
+
+#ts-ctl {
+    right: 20px;
+    width: 110px;
+    height: 80%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ts-ctl-icon {
+    margin: 5px;
+    /* color: #9da8b3; */
+    color: #197C9D;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.ts-ticks {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.ts-ticks-1hr {
+    width: 2px;
+    height: 150%;
+}
+.ts-ticks-30min {
+    width: 1px;
+    height: 100%;
+}
+.ts-ticks-10min {
+    width: 1px;
+    height: 60%;
+}
+
+.ts-ticks-info {
+    position: absolute;
+    pointer-events: none;
+    font-size: 14px;
+    text-shadow: 0 0 10px #000;
+}
+.ts-ticks-info-06L {
+    top: -26px;
+}
+.ts-ticks-info-00L {
+    top: -26px;
+}
+.ts-ticks-info-nodisplay {
+    display: none;
 }
