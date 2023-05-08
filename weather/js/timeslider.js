@@ -7,8 +7,6 @@ const INFO_TIME = ['00:00' , '06:00' , '12:00' , '18:00'];
 const tRange = 24;  // Units: hr
 const tStart = NOW_UTC - tRange * 60 * MIN2MSEC;
 const tEnd = NOW_UTC;
-const tOpt = {year: 'numeric', month: '2-digit', day: '2-digit', 
-              hour: '2-digit', minute: '2-digit', hour12: false};
 const tStrStart = datetime2LSTStr(tStart);
 const tStrEnd = datetime2LSTStr(tEnd);
 var optPlay = 0;
