@@ -113,14 +113,14 @@ window.addEventListener('DOMContentLoaded' , function(){
     content.querySelectorAll('img').forEach(img => img.onerror = () => img.src = URL_ERR);
 
     // Handle Click
-    menuRn.querySelectorAll('.menu-rain-list').forEach((el , i) => {
+    menuRn.querySelectorAll('.menu-rain-li').forEach((el , i) => {
         el.onclick = function(){
             titleRn = this.dataset.title;
             tagRn = this.dataset.urlTag;
             setProduct(content , '#rain' , titleRn , tStrRn , urlRn(tDicRn , tagRn));
         }
     })
-    menuSat.querySelectorAll('.menu-sat-list').forEach((el , i) => {
+    menuSat.querySelectorAll('.menu-sat-li').forEach((el , i) => {
         el.onclick = function(){
             tagSatArea = this.dataset.urlTagArea;
             tagSatVSgPx = this.dataset.urlTagVsGPx;
@@ -132,14 +132,14 @@ window.addEventListener('DOMContentLoaded' , function(){
             setProduct(content , '#satire' , titleSatIRe , tStrSat , urlSatIRe(tDicSat , tagSatArea , tagSatIRPx));
         }
     })
-    menuTy.querySelectorAll('.menu-ty-list').forEach((el , i) => {
+    menuTy.querySelectorAll('.menu-ty-li').forEach((el , i) => {
         el.onclick = function(){
             titleTyT2 = this.dataset.title;
             tagTyT2 = this.dataset.urlTag;
             setProduct(content , '#ty-t2' , titleTyT2 , tStrTyT2 , urlTyT2(tDicTyT2 , tagTyT2));
         }
     })
-    menuSkt.querySelectorAll('.menu-skt-list').forEach((el , i) => {
+    menuSkt.querySelectorAll('.menu-skt-li').forEach((el , i) => {
         el.onclick = function(){
             titleSkt = this.dataset.title;
             tagSkt = this.dataset.urlTag;

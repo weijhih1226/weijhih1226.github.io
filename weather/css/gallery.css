@@ -72,10 +72,10 @@ input[type=radio]:checked + span {
     background-color: rgba(74, 90, 112, 1);
 }
 
-.rain-list {display: block;}
-.sat-list {display: block;}
-.ty-list {display: block;}
-.time-list {display: block;}
+.rain-li {display: block;}
+.sat-li {display: block;}
+.ty-li {display: block;}
+.time-li {display: block;}
 
 #menu>li>a {
     width: 280px;

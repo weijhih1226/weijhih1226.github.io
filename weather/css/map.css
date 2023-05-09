@@ -136,10 +136,10 @@ input[type=checkbox]:checked {
 .inmenu {
     display: none;
 }
-.rdr-list {
+.rdr-li {
     display: block;
 }
-.stn-list {
+.stn-li {
     display: block;
 }
 
