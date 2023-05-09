@@ -1,7 +1,8 @@
 :root {
     --ts-body-height-before: 5px;
     --ts-body-height-after: 10px;
-    --ts-body-background: #9da8b3;
+    --ts-body-background-before: rgba(157 , 168 , 179 , .2);
+    --ts-body-background-after: rgba(157 , 168 , 179 , .5);
     --ts-body-border-radius: 5px;
     --ts-body-display: flex;
     --ts-body-align-items: center;
@@ -41,15 +42,16 @@
     right: 160px;
     height: var(--ts-body-height-before);
     position: absolute;
-    background: var(--ts-body-background);
+    background: var(--ts-body-background-before);
     border-radius: var(--ts-body-border-radius);
     display: var(--ts-body-display);
     align-items: var(--ts-body-align-items);
     pointer-events: var(--ts-body-pointer-events);
-    transition: height .2s ease-in-out;
+    transition: all .2s ease-in-out;
 }
 #ts-body:hover {
     height: var(--ts-body-height-after);
+    background: var(--ts-body-background-after);
 }
 
 #ts-track {
