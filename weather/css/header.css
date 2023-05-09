@@ -1,4 +1,4 @@
-#header_ctn {
+#header-ctn {
     position: absolute;
     left: 0;
     right: 0;
@@ -13,11 +13,11 @@
     text-align: center;
 }
 
-#header_ctn *{
+#header-ctn *{
     color: #D0D0D0;
 }
 
-#logo_ctn {
+#logo-ctn {
     position: absolute;
     left: 1em;
 }
@@ -25,9 +25,12 @@
     font-size: 18px;
 }
 
-#nav_ctn {
+#nav-ctn {
     position: absolute;
     right: 3em;
+}
+#nav-ctn *:hover {
+    color: #30a9de;
 }
 #btn-sidemenu {
     position: absolute;
@@ -35,12 +38,12 @@
     cursor: pointer;
 }
 
-#header_ctn>div {
+#header-ctn>div {
     font-size: 24px;
 }
-#header_ctn>div * {
+#header-ctn>div * {
     transition: color .5s ease-in-out;
 }
-#header_ctn>div *:hover {
+#header-ctn>div *:hover {
     color: #fff;
 }
