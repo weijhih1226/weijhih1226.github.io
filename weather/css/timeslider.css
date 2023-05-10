@@ -8,7 +8,7 @@
     --ts-body-align-items: center;
     --ts-body-pointer-events: auto;
 
-    --ts-bar-background-before: rgba(25 , 124 , 157 , .2);
+    --ts-bar-background-before: rgba(25 , 124 , 157 , .6);
     --ts-bar-background-after: rgba(25 , 124 , 157 , .8);
 
     --ts-pointer-width: 12px;
