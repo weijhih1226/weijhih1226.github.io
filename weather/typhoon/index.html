@@ -26,6 +26,7 @@
         <script src="/weather/js/readXMLPicture.js"></script>
         <script src="/weather/js/readXMLTyphoon.js"></script>
         <script src="/weather/js/getColorbar.js"></script>
+        <script type="module" src="/weather/js/goTop.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
@@ -63,22 +64,18 @@
         });
     </script> -->
     <body>
-        <header>
-            <div class="header-inner">
-                <nav id="navbar" class="navbar fixed-top navbar-expand-lg scrolling-navbar top-nav-collapse">
-                    <div id="nav-logo">
-                        <a id="logo" href="/"><strong>小威的漂流手札</strong></a>｜<a id="sublogo" href="/weather/"><strong>觀天象</strong></a>
-                    </div>
-                    <ul>
-                        <li><a href="/weather/">Home</a></li>
-                        <li><a href="/weather/map/">Map</a></li>
-                        <li><a href="/weather/typhoon/">Typhoon</a></li>
-                        <li><a href="/weather/windy/">Windy</a></li>
-                    </ul>
-                    <div id="btn-sidemenu">
-                        <i class="icofont-navigation-menu"></i>
-                    </div>
-                </nav>
+        <header id="header-ctn">
+            <div id="logo-ctn">
+                <a id="logo" href="/"><strong>小威的漂流手札</strong></a>｜<a id="sublogo" href="/weather/"><strong>觀天象</strong></a>
+            </div>
+            <ul id="nav-ctn">
+                <li><a href="/weather/">Home</a></li>
+                <li><a href="/weather/map/">Map</a></li>
+                <li><a href="/weather/typhoon/">Typhoon</a></li>
+                <li><a href="/weather/windy/">Windy</a></li>
+            </ul>
+            <div id="btn-sidemenu">
+                <i class="icofont-navigation-menu"></i>
             </div>
         </header>
         <main>
