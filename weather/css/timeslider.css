@@ -8,6 +8,9 @@
     --ts-body-align-items: center;
     --ts-body-pointer-events: auto;
 
+    --ts-bar-background-before: rgba(25 , 124 , 157 , .2);
+    --ts-bar-background-after: rgba(25 , 124 , 157 , .8);
+
     --ts-pointer-width: 12px;
     --ts-pointer-height: 12px;
     --ts-pointer-position: absolute;
@@ -73,8 +76,12 @@
     top: 0;
     bottom: 0;
     position: absolute;
-    background: #197C9D;
+    background: var(--ts-bar-background-before);
     border-radius: 5px;
+    transition: all .2s ease-in-out;
+}
+#ts-bar:hover {
+    background: var(--ts-bar-background-after);
 }
 
 #ts-anchor {
@@ -94,6 +101,7 @@
     border: 2px solid #fff;
     border-radius: var(--ts-pointer-border-radius);
     cursor: var(--ts-pointer-cursor);
+    pointer-events: none;
 }
 
 #ts-pointer-tag {
