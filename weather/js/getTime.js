@@ -5,10 +5,10 @@ const NOW_LST = NOW_UTC + 480 * MIN2MSEC;
 const tOpt = {year: 'numeric', month: '2-digit', day: '2-digit', 
               hour: '2-digit', minute: '2-digit', hour12: false};
 
-const HOME_CWB = 'https://www.cwb.gov.tw/Data/';
-const HOME_CWB2 = 'https://npd.cwb.gov.tw/NPD/';
+const HOME_CWB = 'https://www.cwa.gov.tw/Data/';
+const HOME_CWB2 = 'https://npd.cwa.gov.tw/NPD/';
 const HOME_T2 = 'https://typhoon2000.ph/multi/models/';
-const URL_ERR = 'https://www.cwb.gov.tw/V8/assets/img/404_Yunbau.png';
+const URL_ERR = 'https://www.cwa.gov.tw/V8/assets/img/404_Yunbau.png';
 
 const isoStrRn = new Date(NOW_LST - 10 * MIN2MSEC).toISOString();       /* 10 mins delay */
 const isoStrRdr = new Date(NOW_LST - 13 * MIN2MSEC).toISOString();      /* 13 mins delay */
