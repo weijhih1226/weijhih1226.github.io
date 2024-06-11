@@ -1,12 +1,12 @@
 const homeGeojson = '/weather/map/geojson/';
-const homeCWBOpendata = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/';
-const homeCWBOpendata2 = 'https://cwbopendata.s3.ap-northeast-1.amazonaws.com/';
-const Authorization = 'CWB-D8D93D37-13E2-4637-A854-3EEFCEC990CF';
+const homeCWAOpendata = 'https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/';
+const homeCWAOpendata2 = 'https://cwaopendata.s3.ap-northeast-1.amazonaws.com/';
+const Authorization = 'CWA-D8D93D37-13E2-4637-A854-3EEFCEC990CF';
 
 const ukrainianFlag = '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path fill="#4C7BE1" d="M0 0h12v4H0z"/><path fill="#FFD500" d="M0 4h12v3H0z"/><path fill="#E0BC00" d="M0 7h12v1H0z"/></svg>';
 const leafletAttribution = '<a href="https://leafletjs.com" title="Leaflet - 一個互動式地圖的JavaScript函式庫">' + (ukrainianFlag + ' ') + 'Leaflet</a>';
 const googleAttribution = '&copy; <a href="https://www.google.com/intl/zh-tw/help/terms_maps.html" target="_blank" title="地圖來源：Google">Google</a>';
-const cwbAttribution = '&copy; <a href="https://www.cwb.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">CWB</a>';
+const cwaAttribution = '&copy; <a href="https://www.cwa.gov.tw/V8/C/information.html" target="_blank" title="氣象圖資來源：中央氣象局">CWA</a>';
 const jtwcAttribution = '&copy; <a href="https://www.metoc.navy.mil/jtwc/jtwc.html?notices" target="_blank" title="氣象圖資來源：美軍聯合颱風警報中心">JTWC</a>';
 const osmAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" title="地圖來源：OpenStreetMap">OpenStreetMap</a>';
 
@@ -14,32 +14,32 @@ const geojsonCountyUrl = `${homeGeojson}COUNTY_MOI_1090820.json`;
 const geojsonTownUrl = `${homeGeojson}TOWN_MOI_1091016.json`;
 const geojsonVillageUrl = `${homeGeojson}VILLAGE_MOI_1110426.json`;
 
-const xmlStationUrl = `${homeCWBOpendata}O-A0003-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const xmlAutoStationUrl = `${homeCWBOpendata}O-A0001-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const xmlGaugeUrl = `${homeCWBOpendata}O-A0002-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const xmlQPEUrl = `${homeCWBOpendata}O-B0045-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const xmlQPFUrl = `${homeCWBOpendata}F-B0046-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const xmlRadarUrl = `${homeCWBOpendata}O-A0059-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const xmlRainUrl = `${homeCWBOpendata}O-A0040-004?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const xmlTempUrl = `${homeCWBOpendata}O-A0038-003?Authorization=${Authorization}&downloadType=WEB&format=XML`;
-const kmzRainUrl = `${homeCWBOpendata2}DIV2/O-A0040-003.kmz`;
-const kmzLtngUrl = `${homeCWBOpendata2}DIV2/O-A0039-001.kmz`;
-const kmzTempUrl = `${homeCWBOpendata2}DIV2/O-A0038-002.kmz`;
-const kmzSatVISUrl = `${homeCWBOpendata2}MSC/O-B0033-004.kmz`;
-const kmzSatIRUrl = `${homeCWBOpendata2}MSC/O-B0033-003.kmz`;
-const imgRadarUrl = `${homeCWBOpendata2}MSC/O-A0058-005.png`;
-const imgConvUrl = `${homeCWBOpendata2}MSC/O-B0054-001.png`;
-const imgQPF12Url = `${homeCWBOpendata2}MFC/F-C0035-015.png`;
-const imgQPF24Url = `${homeCWBOpendata2}MFC/F-C0035-017.png`;
-const imgSatVISUrl = `${homeCWBOpendata2}MSC/O-C0042-008.jpg`;
-const imgSatIRcUrl = `${homeCWBOpendata2}MSC/O-C0042-002.jpg`;
-const imgSatIRgUrl = `${homeCWBOpendata2}MSC/O-C0042-004.jpg`;
-const imgSatIReUrl = `${homeCWBOpendata2}MSC/O-C0042-006.jpg`;
-const kmzTyNewsUrl = `${homeCWBOpendata}W-C0034-002?Authorization=${Authorization}&downloadType=WEB&format=KMZ`;
-const xmlTyTrackUrl = `${homeCWBOpendata}W-C0034-005?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlStationUrl = `${homeCWAOpendata}O-A0003-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlAutoStationUrl = `${homeCWAOpendata}O-A0001-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlGaugeUrl = `${homeCWAOpendata}O-A0002-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlQPEUrl = `${homeCWAOpendata}O-B0045-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlQPFUrl = `${homeCWAOpendata}F-B0046-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlRadarUrl = `${homeCWAOpendata}O-A0059-001?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlRainUrl = `${homeCWAOpendata}O-A0040-004?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const xmlTempUrl = `${homeCWAOpendata}O-A0038-003?Authorization=${Authorization}&downloadType=WEB&format=XML`;
+const kmzRainUrl = `${homeCWAOpendata2}DIV2/O-A0040-003.kmz`;
+const kmzLtngUrl = `${homeCWAOpendata2}DIV2/O-A0039-001.kmz`;
+const kmzTempUrl = `${homeCWAOpendata2}DIV2/O-A0038-002.kmz`;
+const kmzSatVISUrl = `${homeCWAOpendata2}MSC/O-B0033-004.kmz`;
+const kmzSatIRUrl = `${homeCWAOpendata2}MSC/O-B0033-003.kmz`;
+const imgRadarUrl = `${homeCWAOpendata2}MSC/O-A0058-005.png`;
+const imgConvUrl = `${homeCWAOpendata2}MSC/O-B0054-001.png`;
+const imgQPF12Url = `${homeCWAOpendata2}MFC/F-C0035-015.png`;
+const imgQPF24Url = `${homeCWAOpendata2}MFC/F-C0035-017.png`;
+const imgSatVISUrl = `${homeCWAOpendata2}MSC/O-C0042-008.jpg`;
+const imgSatIRcUrl = `${homeCWAOpendata2}MSC/O-C0042-002.jpg`;
+const imgSatIRgUrl = `${homeCWAOpendata2}MSC/O-C0042-004.jpg`;
+const imgSatIReUrl = `${homeCWAOpendata2}MSC/O-C0042-006.jpg`;
+const kmzTyNewsUrl = `${homeCWAOpendata}W-C0034-002?Authorization=${Authorization}&downloadType=WEB&format=KMZ`;
+const xmlTyTrackUrl = `${homeCWAOpendata}W-C0034-005?Authorization=${Authorization}&downloadType=WEB&format=XML`;
 const kmzJTWCUrl = 'https://www.metoc.navy.mil/jtwc/products/wp1222.kmz';
-const hdfSat065Url = `${homeCWBOpendata2}DIV4/O-A0043-001.hdf`;
-// const imgWtrMapUrl = `${homeCWBOpendata2}MFC/F-C0035-001.jpg`;
+const hdfSat065Url = `${homeCWAOpendata2}DIV4/O-A0043-001.hdf`;
+// const imgWtrMapUrl = `${homeCWAOpendata2}MFC/F-C0035-001.jpg`;
 // const imgRadarBounds = [[17.992071044171471, 115.001445629639946], [29.004257649173013, 126.514775012745119]];
 // const imgRadarBounds = [[17.9875, 114.9875], [29.0125, 126.5125]];
 // const imgRadarBounds = [[17.72, 115.00], [29.0125, 126.5125]];
@@ -48,16 +48,16 @@ const imgQPFBounds = [[21.8, 118.95], [25.8, 122.45]];
 const imgSatBounds = [[19.100625745 - 0.05, 115.976888855], [28.29937425 - 0.1, 126.02300114]];
 // const imgWtrMapBounds = [[-1, 80], [48, 175]];
 
-const optionsXmlGrd = {fillOpacity: 0.5 , attribution: cwbAttribution};
-const optionsXmlSation = {color: '#ff6363' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution};
-const optionsXmlGauge = {color: 'blue' , fillOpacity: 1 , radius: 2.5 , attribution: cwbAttribution};
-const optionsPic = {opacity: 0.5 , attribution: cwbAttribution};
-const optionsPicQPF = {opacity: 0.7 , attribution: cwbAttribution};
+const optionsXmlGrd = {fillOpacity: 0.5 , attribution: cwaAttribution};
+const optionsXmlSation = {color: '#ff6363' , fillOpacity: 1 , radius: 2.5 , attribution: cwaAttribution};
+const optionsXmlGauge = {color: 'blue' , fillOpacity: 1 , radius: 2.5 , attribution: cwaAttribution};
+const optionsPic = {opacity: 0.5 , attribution: cwaAttribution};
+const optionsPicQPF = {opacity: 0.7 , attribution: cwaAttribution};
 const optionsTyTrack = {weightLine: 2 , weightOut: 1 , weightIn: 1 , 
     colorTD: '#3388ff' , colorS: 'green' , colorM: 'yellow' , colorL: 'red' , 
     colorPastOut: '#fff' , colorPastIn: '#fff' , colorFcstOut: 'yellow' , colorFcstIn: 'red' , 
     opacityPast: .1 , opacityObs: 1 , opacityFcst: 1 , 
-    fillOpacityPast: .1 , fillOpacityObs: .1 , fillOpacityFcst: .2 , attribution: cwbAttribution}
+    fillOpacityPast: .1 , fillOpacityObs: .1 , fillOpacityFcst: .2 , attribution: cwaAttribution}
 const optionsJTWC = {attribution: jtwcAttribution}
 const optionsBnd = {
     style: {
@@ -208,8 +208,8 @@ document.addEventListener("DOMContentLoaded" , function(e){
         document.querySelector('#cbr1').checked = true;
         var radar = addLayer('xmlGrd' , 'radar' , '雷達-整合回波' , xmlRadarUrl , null , null , optionsXmlGrd)
         var ltng = addLayer('kmz' , 'ltng' , '閃電-即時觀測' , kmzLtngUrl , null , null , optionsPic)
-        var ty = addLayer('kmzTy' , 'ty' , '颱風-CWB潛勢路徑' , kmzTyNewsUrl , null , null , optionsTyTrack)
-        var ty2 = addLayer('xmlTy' , 'ty' , '颱風-CWB路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
+        var ty = addLayer('kmzTy' , 'ty' , '颱風-CWA潛勢路徑' , kmzTyNewsUrl , null , null , optionsTyTrack)
+        var ty2 = addLayer('xmlTy' , 'ty' , '颱風-CWA路徑資訊' , xmlTyTrackUrl , null , null , optionsTyTrack)
         // var sat = addLayer('kmzTy' , 'sat' , '衛星-可見光' , kmzSatVISUrl , null , null , optionsTyTrack)
         
         var geojsonCounty = getGeojson(geojsonCountyUrl , optionsBnd)
@@ -283,8 +283,8 @@ document.addEventListener("DOMContentLoaded" , function(e){
         addRemoveLayer('pic' , 'sat' , '#sat2' , '衛星-IR彩色雲圖' , imgSatIRcUrl , imgSatBounds , null , optionsPic)
         addRemoveLayer('pic' , 'sat' , '#sat3' , '衛星-IR黑白雲圖' , imgSatIRgUrl , imgSatBounds , null , optionsPic)
         addRemoveLayer('pic' , 'sat' , '#sat4' , '衛星-IR色調強化雲圖' , imgSatIReUrl , imgSatBounds , null , optionsPic)
-        addRemoveLayer('kmzTy' , 'ty' , '#ty1' , '颱風-CWB潛勢路徑' , kmzTyNewsUrl , null , ty , optionsTyTrack)
-        addRemoveLayer('xmlTy' , 'ty' , '#ty2' , '颱風-CWB路徑資訊' , xmlTyTrackUrl , null , ty2 , optionsTyTrack)
+        addRemoveLayer('kmzTy' , 'ty' , '#ty1' , '颱風-CWA潛勢路徑' , kmzTyNewsUrl , null , ty , optionsTyTrack)
+        addRemoveLayer('xmlTy' , 'ty' , '#ty2' , '颱風-CWA路徑資訊' , xmlTyTrackUrl , null , ty2 , optionsTyTrack)
         addRemoveLayer('kmzTy' , 'ty' , '#ty3' , '颱風-JTWC潛勢路徑' , kmzJTWCUrl , null , null , optionsJTWC)
 
         function addLayer(format , type , name , url , bounds , product , options) {
