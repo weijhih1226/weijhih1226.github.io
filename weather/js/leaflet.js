@@ -1,7 +1,7 @@
 const homeGeojson = '/weather/map/geojson/';
 const homeCWAOpendata = 'https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/';
 const homeCWAOpendata2 = 'https://cwaopendata.s3.ap-northeast-1.amazonaws.com/';
-const Authorization = 'CWA-D8D93D37-13E2-4637-A854-3EEFCEC990CF';
+const Authorization = 'CWA-66E3F2FA-E1FE-4F5B-B8D4-E2C7B567639C';
 
 const ukrainianFlag = '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path fill="#4C7BE1" d="M0 0h12v4H0z"/><path fill="#FFD500" d="M0 4h12v3H0z"/><path fill="#E0BC00" d="M0 7h12v1H0z"/></svg>';
 const leafletAttribution = '<a href="https://leafletjs.com" title="Leaflet - 一個互動式地圖的JavaScript函式庫">' + (ukrainianFlag + ' ') + 'Leaflet</a>';
